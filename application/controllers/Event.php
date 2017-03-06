@@ -57,7 +57,31 @@ class Event extends CI_Controller {
         if(!empty($_POST['view_name']) ||!empty($_POST['event_id']) || !empty($this->session->admin_id) || !empty($this->session->event_id)){
 
 
-            $id = $_POST['event_id'];
+
+            if(!empty($_POST['type'])) {
+
+                $data['type'] = $_POST['type'];
+                if($_POST['type'] == 'Cash' || $_POST['type'] == 'Pledge'){
+                    $data['member_id'] = $_POST['member_id'];
+                    $data['member_detail'] = $this->event_model->member_detail($_POST['member_id']);
+                    $id = $this->event_model->event_id($_POST['member_id']);
+                } elseif ($_POST['type'] == 'Cost' || $_POST['type'] == 'Payment'){
+                    //$data['item_id'] = $id;
+                    //$data['item_detail'] = $this->event_model->budget_detail($id);
+                }
+
+            } elseif(!empty($_POST['member_id'])) {
+                $data['member_detail'] = $this->event_model->member_detail($_POST['member_id']);
+                $id = $this->event_model->event_id($_POST['member_id']);
+                $data['member_id'] = $_POST['member_id'];
+            }elseif (!empty($_POST['item_id'])){
+                $data['item_id'] = $_POST['item_id'];
+                $data['item_detail'] = $this->event_model->budget_detail($_POST['item_id']);
+                $id = $this->event_model->event_iid($_POST['item_id']);
+            }
+            else {
+                $id = $_POST['event_id'];
+            }
             $data['event_details'] = $this->event_model->event_details($id);
             $data['member_details'] = $this->event_model->member_details($id);
             $data['budget_details'] = $this->event_model->budget_details($id);
@@ -67,7 +91,6 @@ class Event extends CI_Controller {
             $data['advance_sum'] = $this->event_model->advance_sum($id);
             $data['event_id'] = $id;
             $view_name = $_POST['view_name'];
-
 
             $this->load->view('event/'.$view_name,$data);
         }
@@ -257,7 +280,6 @@ class Event extends CI_Controller {
             $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {
-                //$this->load->view('event/newMember_view', $data);
                 foreach ($_POST as $key => $value){
                     $data['messages'][$key] = form_error($key);
                 }
@@ -290,13 +312,20 @@ class Event extends CI_Controller {
 
         if (!empty($this->session->admin_id)){
 
+            $data = array('success' => false, 'messages' => array());
+
             $this->form_validation->set_rules('itemname', 'Item Name', 'required');
             $this->form_validation->set_rules('itemcost', 'Item Cost', 'numeric');
             $this->form_validation->set_rules('itempaid', 'Item Paid', 'numeric');
+            $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('event/newItem_view', $data);
+                //$this->load->view('event/newItem_view', $data);
+                foreach ($_POST as $key => $value){
+                    $data['messages'][$key] = form_error($key);
+                }
             } else {
+                $data['success'] = true;
                 $values = array(
                     'item_name' => $this->input->post('itemname'),
                     'item_cost' => $this->input->post('itemcost'),
@@ -306,8 +335,9 @@ class Event extends CI_Controller {
 
                 $this->event_model->insert_budget($values);
 
-                redirect('event/home/'.$id);
+                //redirect('event/home/'.$id);
             }
+            echo json_encode($data);
         } else {
             redirect('admin');
         }
@@ -324,14 +354,21 @@ class Event extends CI_Controller {
 
         if (!empty($this->session->admin_id)){
 
+            $data = array('success' => false, 'messages' => array());
+
             $this->form_validation->set_rules('membername', 'Member Name', 'required');
             $this->form_validation->set_rules('memberpledge', 'Member Pledge', 'numeric');
             $this->form_validation->set_rules('membercash', 'Member Cash', 'numeric');
             $this->form_validation->set_rules('memberphone', 'Phone Number', 'numeric');
+            $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('event/editMember_view', $data);
+                //$this->load->view('event/editMember_view', $data);
+                foreach ($_POST as $key => $value){
+                    $data['messages'][$key] = form_error($key);
+                }
             } else {
+                $data['success'] = true;
                 $values = array(
                     'member_name' => $this->input->post('membername'),
                     'member_phone' => $this->input->post('memberphone'),
@@ -339,8 +376,9 @@ class Event extends CI_Controller {
 
                 $this->event_model->update_member($values, $id);
 
-                redirect('event/home/'.$event_id);
+                //redirect('event/home/'.$event_id);
             }
+            echo json_encode($data);
         } else {
             redirect('admin');
         }
@@ -398,21 +436,29 @@ class Event extends CI_Controller {
 
         if (!empty($this->session->admin_id)){
 
+            $data = array('success' => false, 'messages' => array());
+
             $this->form_validation->set_rules('amount', 'Amount', 'numeric|required');
+            $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('event/transaction_view', $data);
+                //$this->load->view('event/transaction_view', $data);
+                foreach ($_POST as $key => $value){
+                    $data['messages'][$key] = form_error($key);
+                }
             } else {
                 if($type == 'Pledge'){
+                    $data['success'] = true;
                     $np = $this->input->post('amount') + $this->input->post('memberpledge');
                     $values = array(
                         'member_pledge' => $np
                     );
 
                     $this->event_model->update_member($values, $id);
-                    redirect('event/edit_member/'.$id);
+                    //redirect('event/edit_member/'.$id);
                 }
                 if($type == 'Cash'){
+                    $data['success'] = true;
                     if($this->input->post('amount') > $this->input->post('memberpledge') ){
                         $np = 0;
                     }else{
@@ -425,27 +471,30 @@ class Event extends CI_Controller {
                     );
 
                     $this->event_model->update_member($values, $id);
-                    redirect('event/edit_member/'.$id);
+                    //redirect('event/edit_member/'.$id);
                 }
                 if($type == 'Cost'){
+                    $data['success'] = true;
                     $ic = $this->input->post('amount') + $this->input->post('itemcost');
                     $values = array(
                         'item_cost' => $ic
                     );
 
                     $this->event_model->update_budget($values, $id);
-                    redirect('event/edit_budget/'.$id);
+                    //redirect('event/edit_budget/'.$id);
                 }
                 if($type == 'Payment'){
+                    $data['success'] = true;
                     $ip = $this->input->post('amount') + $this->input->post('itempaid');
                     $values = array(
                         'item_paid' => $ip
                     );
 
                     $this->event_model->update_budget($values, $id);
-                    redirect('event/edit_budget/'.$id);
+                    //redirect('event/edit_budget/'.$id);
                 }
             }
+            echo json_encode($data);
         } else {
             redirect('admin');
         }

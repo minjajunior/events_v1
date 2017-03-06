@@ -44,7 +44,7 @@
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="home_view"><i class="fa fa-home nav_icon "></i><span class="nav-label">Home</span> </a></li>
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="budget_view"><i class="fa fa-money nav_icon "></i><span class="nav-label">Budget</span> </a></li>
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="member_view"><i class="fa fa-users nav_icon "></i><span class="nav-label">Members</span> </a></li>
-                        <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="reports_view"><i class="fa fa-file nav_icon "></i><span class="nav-label">Reports</span> </a></li>
+                        <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="reports_view"><i class="fa fa-file nav_icon "></i><span class="nav-label">Reports</span></a></li>
                         <?php } ?>
                         <li><a href="<?php echo site_url('admin/logout')?>" class=" hvr-bounce-to-right"><i class="fa fa-sign-out nav_icon"></i> <span class="nav-label">Logout</span> </a></li>
                     </ul>
@@ -65,26 +65,23 @@
     </div>
 </nav>
 <script>
-
     $(document).ready(function() {
 
         var getContentView = function(postData) {
-            //alert(postData['event_id']);
-            $.ajax(
-                {
-                    type:"POST",
-                    url: "<?php echo base_url('event/load_views')?>",
-                    //data:"id="+view_name,
-                    data:postData,
-                    dataType: "html",
-                    success: function(data) {
-                        $('#load_navigation_menu_view').html(data);
-                    },
-                    error: function(data) {
+            $.ajax({
+                type:"POST",
+                url: "<?php echo base_url('event/load_views')?>",
+                //data:"id="+view_name,
+                data:postData,
+                dataType: "html",
+                success: function(data) {
+                    $('#load_navigation_menu_view').html(data);
+                },
+                error: function(data) {
 
-                        alert('An error has occured trying to get the page details');
-                    }
-                });
+                    alert('An error has occured trying to get the page details');
+                }
+            });
         }
 
         $('.nav').on("click", ".menu_item", function() {
@@ -97,8 +94,5 @@
 
             getContentView(postData);
         });
-
-
-
     });
 </script>

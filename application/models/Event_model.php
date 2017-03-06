@@ -262,4 +262,13 @@ class Event_model extends CI_Model {
         $row = $query->row_array();
         return $row['event_id'];
     }
+
+    public function event_iid($id){
+        $this->db->select('event_id');
+        $this->db->from('budget');
+        $this->db->where('item_id', $id);
+        $query = $this->db->get();
+        $row = $query->row_array();
+        return $row['event_id'];
+    }
 }
