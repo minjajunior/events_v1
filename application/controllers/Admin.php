@@ -14,7 +14,6 @@ class Admin extends CI_Controller {
      * This function load Admin login page and process validation of Admin.
      */
     public function index(){
-
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required');
 
@@ -34,6 +33,9 @@ class Admin extends CI_Controller {
                 $this->load->view('admin/login_view');
             }
         }
+
+        $data['include'] = 'admin/login_view';
+
     }
 
     /**
@@ -67,6 +69,7 @@ class Admin extends CI_Controller {
      * This function load Admin home page after login process complete
      */
     public function home(){
+        $data['location'] = $this->event_model->get_location();
         $data['event'] = $this->event_model->get_event($this->session->admin_id);
 
         if (!empty($this->session->admin_id)){

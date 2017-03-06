@@ -35,6 +35,7 @@ class Event extends CI_Controller {
 	 * This function load Event home page after the event login process completed
 	 */
 	public function home($id){
+
         if (!empty($this->session->admin_id) || !empty($this->session->event_id) ) {
             $data['event_details'] = $this->event_model->event_details($id);
             $data['member_details'] = $this->event_model->member_details($id);
@@ -89,16 +90,22 @@ class Event extends CI_Controller {
 
         if (!empty($this->session->admin_id)){
 
+            $data = array('success' => false, 'messages' => array());
+
             $this->form_validation->set_rules('eventname', 'Event Name', 'required');
             $this->form_validation->set_rules('eventcode', 'Event Code', 'required|is_unique[event.event_code]');
             $this->form_validation->set_rules('eventdate', 'Event Date', 'required');
             $this->form_validation->set_rules('location', 'Event Location', 'required');
             $this->form_validation->set_rules('password', 'Password', 'required');
             $this->form_validation->set_rules('password2', 'Re-Enter Password', 'required|matches[password]');
+            $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('event/create_view', $data);
+                foreach ($_POST as $key => $value){
+                    $data['messages'][$key] = form_error($key);
+                }
             } else {
+                $data['success'] = true;
                 $values = array(
                     'event_name' => $this->input->post('eventname'),
                     'event_code' => $this->input->post('eventcode'),
@@ -110,9 +117,8 @@ class Event extends CI_Controller {
                 );
 
                 $this->event_model->create($values);
-
-                redirect('admin/home');
             }
+            echo json_encode($data);
         } else {
             redirect('admin');
         }
@@ -242,14 +248,21 @@ class Event extends CI_Controller {
 
         if (!empty($this->session->admin_id)){
 
+            $data = array('success' => false, 'messages' => array());
+
             $this->form_validation->set_rules('membername', 'Member Name', 'required');
             $this->form_validation->set_rules('memberpledge', 'Member Pledge', 'numeric');
             $this->form_validation->set_rules('membercash', 'Member Cash', 'numeric');
             $this->form_validation->set_rules('memberphone', 'Phone Number', 'numeric');
+            $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('event/newMember_view', $data);
+                //$this->load->view('event/newMember_view', $data);
+                foreach ($_POST as $key => $value){
+                    $data['messages'][$key] = form_error($key);
+                }
             } else {
+                $data['success'] = true;
                 $values = array(
                     'member_name' => $this->input->post('membername'),
                     'member_pledge' => $this->input->post('memberpledge'),
@@ -260,8 +273,9 @@ class Event extends CI_Controller {
 
                 $this->event_model->insert_member($values);
 
-                redirect('event/home/'.$id);
+                //redirect('event/home/'.$id);
             }
+            echo json_encode($data);
         } else {
             redirect('admin');
         }

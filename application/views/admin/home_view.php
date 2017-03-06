@@ -17,7 +17,71 @@ $this->load->view('shared/sidebar');
                 <a href="<?php echo base_url('admin/home')?>">Admin</a>
                 <i class="fa fa-angle-right"></i>
                 <span>Events List</span>
-                <a href="<?php echo site_url('event/create')?>" class="pull-right">Create Event</a>
+                <a href="#" class="pull-right" data-toggle="modal" data-target="#newEvent">Create Event</a>
+                <div class="modal fade" id="newEvent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h1 class="modal-title">Create Event</h1>
+                            </div>
+                            <?php
+                            $attributes = array('class' => 'form-horizontal', 'id' => 'new_event');
+                            echo form_open('event/create', $attributes);
+                            ?>
+                            <div class="modal-body">
+                                <div id="the-message"></div>
+                                <div class="form-group">
+                                    <label for="eventname" class="col-sm-4 control-label">Event Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="eventname" value="<?php echo set_value('eventname'); ?>" class="form-control1" placeholder="Event Name" id="eventname">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="eventcode" class="col-sm-4 control-label">Event Code</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="eventcode" value="<?php echo set_value('eventcode'); ?>" class="form-control1" placeholder="Event Code" id="eventcode">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="eventdate" class="col-sm-4 control-label">Event Date</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="eventdate" value="<?php echo set_value('eventdate'); ?>" class="form-control1" placeholder="YYYY-MM-DD" id="eventdate">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="location" class="col-sm-4 control-label">Event Location</label>
+                                    <div class="col-sm-8">
+                                        <select name="location" id="selector1" class="form-control1">
+                                            <option value="">Select Region</option>
+                                            <?php foreach($location as $loc){ ?>
+                                                <option value="<?php echo set_value(print $loc->location_id); ?>" id="location"><?php echo set_value(print $loc->location_name); ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-sm-4 control-label">Password</label>
+                                    <div class="col-sm-8">
+                                        <input type="password" name="password" value="<?php echo set_value('password'); ?>" class="form-control1" placeholder="Password" id="password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password2" class="col-sm-4 control-label">Re-Enter Password</label>
+                                    <div class="col-sm-8">
+                                        <input type="password" name="password2" value="<?php echo set_value('password2'); ?>" class="form-control1" placeholder="Re-Enter Password" id="password2">
+                                        <?php echo form_error('password2'); ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-danger">Submit</button>
+                            </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div>
             </h2>
         </div>
         <!--//banner-->
@@ -52,4 +116,55 @@ $this->load->view('shared/sidebar');
                 <?php } ?>
             </div>
         </div>
+
+        <script>
+            $('#new_event').submit(function(e) {
+                e.preventDefault();
+
+                var me = $(this);
+
+                $.ajax({
+                    url: me.attr('action'),
+                    type: 'post',
+                    data: me.serialize(),
+                    dataType: 'json',
+                    success: function (response) {
+                        if(response.success == true){
+                            $('#the-message').append('<div class="alert alert-success">' +
+                                '<span class="glyphicon glyphicon-ok"></span>' +
+                                ' Event Created Successfully' +
+                                '</div>');
+                            $('.form-group').removeClass('has-error')
+                                .removeClass('has-success');
+                            $('.text-danger').remove();
+
+                            // reset the form
+                            me[0].reset();
+
+                            // close the message after seconds
+                            $('.alert-success').delay(500).show(10, function() {
+                                $(this).delay(3000).hide(10, function() {
+                                    $(this).remove();
+                                    window.location.reload()
+                                    $('#newEvent').modal('hide');
+                                });
+                            })
+                        }else {
+                            $.each(response.messages, function (key, value) {
+                                var element = $('#' + key);
+                                element.closest('div.form-group')
+                                    .removeClass('has-error')
+                                    .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                                    .find('.text-danger')
+                                    .remove();
+                                element.after(value)
+                            })
+                        }
+                    }
+                });
+            });
+        </script>
+
     <?php $this->load->view('shared/footer') ?>
+
+

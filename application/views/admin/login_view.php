@@ -14,6 +14,7 @@ $this->load->view('shared/login_header');
             <h2>Admin Login</h2>
             <?php echo form_open('admin'); ?>
                 <div class="col-md-6">
+                    <div id="validation-error" class="alert-danger"></div>
                     <div class="login-mail">
                         <input type="text" name="email" value="<?php echo set_value('email'); ?>" placeholder="Email Address" required="">
                         <i class="fa fa-envelope"></i>
