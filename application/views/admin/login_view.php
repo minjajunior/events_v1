@@ -36,6 +36,8 @@ $this->load->view('shared/login_header');
                     </label>
                     <p>Do not have an account?</p>
                     <a href="<?php echo base_url('admin/register')?>" class="hvr-shutter-in-horizontal">Register</a>
+                    <p>Have an event?</p>
+                    <a href="<?php echo base_url()?>" class="hvr-shutter-in-horizontal login-sub">Event Login</a>
                 </div>
                 <div class="clearfix"> </div>
             </form>
