@@ -66,8 +66,9 @@ class Event extends CI_Controller {
                     $data['member_detail'] = $this->event_model->member_detail($_POST['member_id']);
                     $id = $this->event_model->event_id($_POST['member_id']);
                 } elseif ($_POST['type'] == 'Cost' || $_POST['type'] == 'Payment'){
-                    //$data['item_id'] = $id;
-                    //$data['item_detail'] = $this->event_model->budget_detail($id);
+                    $data['item_id'] = $_POST['item_id'];
+                    $data['item_detail'] = $this->event_model->budget_detail($_POST['item_id']);
+                    $id = $this->event_model->event_iid($_POST['item_id']);
                 }
 
             } elseif(!empty($_POST['member_id'])) {
@@ -392,25 +393,33 @@ class Event extends CI_Controller {
 
         $data['item_id'] = $id;
         $data['item_detail'] = $this->event_model->budget_detail($id);
-        $event_id = $this->event_model->event_id($id);
+        $event_id = $this->event_model->event_iid($id);
 
         if (!empty($this->session->admin_id)){
 
-            $this->form_validation->set_rules('membername', 'Member Name', 'required');
-            $this->form_validation->set_rules('memberpledge', 'Member Pledge', 'numeric');
-            $this->form_validation->set_rules('membercash', 'Member Cash', 'numeric');
+            $data = array('success' => false, 'messages' => array());
+
+            $this->form_validation->set_rules('itemname', 'Item Name', 'required');
+            $this->form_validation->set_rules('itemcost', 'Item Cost', 'numeric');
+            $this->form_validation->set_rules('itempaid', 'Item Paid', 'numeric');
+            $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('event/editBudget_view', $data);
+                //$this->load->view('event/editBudget_view', $data);
+                foreach ($_POST as $key => $value){
+                    $data['messages'][$key] = form_error($key);
+                }
             } else {
+                $data['success'] = true;
                 $values = array(
-                    'member_name' => $this->input->post('itemname'),
+                    'item_name' => $this->input->post('itemname'),
                 );
 
                 $this->event_model->update_budget($values, $id);
 
-                redirect('event/home/'.$event_id);
+                //redirect('event/home/'.$event_id);
             }
+            echo json_encode($data);
         } else {
             redirect('admin');
         }

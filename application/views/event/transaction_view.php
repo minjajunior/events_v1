@@ -51,17 +51,16 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="focusedinput" class="col-sm-2 control-label"><?php echo $type?></label>
+                    <label for="amount" class="col-sm-2 control-label"><?php echo $type?></label>
                     <div class="col-sm-8">
-                        <input  type="text" name="amount" value="" class="form-control1" id="focusedinput" placeholder="Amount">
-                        <?php echo form_error('amount'); ?>
+                        <input  type="text" name="amount" value="" class="form-control1" id="amount" placeholder="Amount">
                     </div>
                 </div>
                 <input type="hidden" name="itemcost" value="<?php echo $idt->item_cost ?>" />
                 <input type="hidden" name="itempaid" value="<?php echo $idt->item_paid ?>" />
                 <div class="form-group">
                     <div class="col-sm-8 col-md-offset-2">
-                        <button type="submit" class="btn btn-default">Add</button>
+                        <button type="submit" class="btn btn-danger pull-right">Add <?php echo $type ?></button>
                     </div>
                 </div>
             <?php } ?>
@@ -85,7 +84,7 @@
                 if(response.success == true){
                     $('#the-message').append('<div class="alert alert-success">' +
                         '<span class="glyphicon glyphicon-ok"></span>' +
-                        ' Member Updated Successfully' +
+                        'Updated Successfully' +
                         '</div>');
                     $('.form-group').removeClass('has-error')
                         .removeClass('has-success');

@@ -33,7 +33,6 @@
                     <input disabled="" type="text" name="memberpledge" value="<?php echo $md->member_pledge ?>" class="form-control1" id="disabledinput" placeholder="Member Pledge">
                 </div>
                 <div class="col-sm-2">
-                    <a href="<?php// echo site_url('event/transaction/Pledge/'.$member_id)?>"></a>
                     <a href="javascript:void(0)" class="transaction btn btn-success" type="Pledge" rel="<?php echo $member_id; ?>" id="transaction_view">Add Pledge</a>
                 </div>
             </div>

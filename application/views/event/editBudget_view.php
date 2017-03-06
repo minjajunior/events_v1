@@ -5,105 +5,127 @@
  * Date: 12/5/2016
  * Time: 10:31 AM
  */
-
-$this->load->view('shared/header');
 ?>
 
-<div class="page-container">
-    <!--/content-inner-->
-    <div class="left-content">
-        <div class="inner-content">
-            <!-- header-starts -->
-            <div class="header-section">
-                <!--menu-right-->
-                <div class="top_menu">
-                    <!--/profile_details-->
-                    <div class="profile_details_left">
-                        <h4>N ~ E ~ P</h4>
-                    </div>
-                    <div class="clearfix"></div>
-                    <!--//profile_details-->
+<div class="blank">
+    <div class="grid-form1">
+        <h3 id="forms-horizontal">Edit Item</h3>
+        <?php
+        $attributes = array('class' => 'form-horizontal', 'id' => 'edit_budget');
+        echo form_open('event/edit_budget/'.$item_id, $attributes);
+        foreach($item_detail as $idt){ ?>
+            <div id="the-message"></div>
+            <div class="form-group">
+                <label for="itemname" class="col-sm-2 control-label">Item Name</label>
+                <div class="col-sm-8">
+                    <input type="text" name="itemname" value="<?php echo $idt->item_name ?>" class="form-control1" id="itemname" placeholder="Item Name">
                 </div>
-                <!--//menu-right-->
-                <div class="clearfix"></div>
             </div>
-
-            <!-- //header-ends -->
-            <!--//outer-wp-->
-            <div class="outter-wp">
-                <!--/sub-heard-part-->
-                <div class="sub-heard-part">
-                    <ol class="breadcrumb m-b-0">
-                        <li><a href="#">Budget</a></li>
-                        <li class="active">Edit</li>
-                    </ol>
+            <div class="form-group">
+                <label for="itemcost" class="col-sm-2 control-label">Item Cost</label>
+                <div class="col-sm-8">
+                    <input disabled="" type="text" name="itemcost" value="<?php echo $idt->item_cost ?>" class="form-control1" id="itemcost" placeholder="Item Cost">
                 </div>
-                <!--/sub-heard-part-->
-                <!--/forms-->
-                <div class="forms-main">
-                    <!--/forms-inner-->
-                    <div class="forms-inner">
-                        <!--/set-2-->
-                        <div class="set-1">
-                            <div class="graph-2 general">
-                                <h3 class="inner-tittle two">Edit Item</h3>
-                                <div class="grid-1">
-                                    <div class="form-body">
-                                        <?php
-                                        $attributes = array('class' => 'form-horizontal');
-                                        echo form_open('event/edit_budget/'.$item_id, $attributes);
-                                        ?>
-                                        <?php foreach($item_detail as $idt){ ?>
-                                            <div class="form-group">
-                                                <label for="focusedinput" class="col-sm-2 control-label">Item Name</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" name="itemname" value="<?php echo $idt->item_name ?>" class="form-control1" id="focusedinput" placeholder="Item Name">
-                                                    <?php echo form_error('itemname'); ?>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="disabledinput" class="col-sm-2 control-label">Item Cost</label>
-                                                <div class="col-sm-8">
-                                                    <input disabled="" type="text" name="itemcost" value="<?php echo $idt->item_cost ?>" class="form-control1" id="disabledinput" placeholder="Item Cost">
-                                                    <?php echo form_error('itemcost'); ?>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <a href="<?php echo site_url('event/transaction/Cost/'.$item_id)?>" class="">Add Cost</a>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="focusedinput" class="col-sm-2 control-label">Item Paid</label>
-                                                <div class="col-sm-8">
-                                                    <input disabled="" type="text" name="itempaid" value="<?php echo $idt->item_paid ?>" class="form-control1" id="focusedinput" placeholder="Item Paid">
-                                                    <?php echo form_error('itempaid'); ?>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <a href="<?php echo site_url('event/transaction/Payment/'.$item_id)?>" class="">Add Payment</a>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-8 col-md-offset-2">
-                                                    <button type="submit" class="btn btn-default">Save</button>
-                                                </div>
-                                            </div>
-                                        <?php } ?>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--//set-2-->
-                    </div>
-                    <!--//forms-inner-->
+                <div class="col-sm-2">
+                    <a href="javascript:void(0)" class="transaction btn btn-success" type="Cost" rel="<?php echo $item_id; ?>" id="transaction_view">Add Cost</a>
                 </div>
-                <!--//forms-->
             </div>
-            <!--//outer-wp-->
-            <!--footer section start-->
-            <?php $this->load->view('shared/footer') ?>
-            <!--footer section end-->
-        </div>
+            <div class="form-group">
+                <label for="itempaid" class="col-sm-2 control-label">Item Paid</label>
+                <div class="col-sm-8">
+                    <input disabled="" type="text" name="itempaid" value="<?php echo $idt->item_paid ?>" class="form-control1" id="itempaid" placeholder="Item Paid">
+                </div>
+                <div class="col-sm-2">
+                    <a href="javascript:void(0)" class="transaction btn btn-success" type="Payment" rel="<?php echo $item_id; ?>" id="transaction_view">Add Payment</a>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-8 col-md-offset-2">
+                    <button type="submit" class="btn btn-danger pull-right">Save</button>
+                </div>
+            </div>
+        <?php } ?>
+        </form>
     </div>
-    <!--//content-inner-->
-    <!--/sidebar-menu-->
-    <?php $this->load->view('shared/sidebar') ?>
+</div>
+
+<script>
+    $('#edit_budget').submit(function(e) {
+        e.preventDefault();
+
+        var me = $(this);
+
+        $.ajax({
+            url: me.attr('action'),
+            type: 'post',
+            data: me.serialize(),
+            dataType: 'json',
+            success: function (response) {
+                if(response.success == true){
+                    $('#the-message').append('<div class="alert alert-success">' +
+                        '<span class="glyphicon glyphicon-ok"></span>' +
+                        ' Item Updated Successfully' +
+                        '</div>');
+                    $('.form-group').removeClass('has-error')
+                        .removeClass('has-success');
+                    $('.text-danger').remove();
+
+                    // reset the form
+                    me[0].reset();
+
+                    // close the message after seconds
+                    $('.alert-success').delay(500).show(10, function() {
+                        $(this).delay(3000).hide(10, function() {
+                            $(this).remove();
+                        });
+                    })
+                }else {
+                    $.each(response.messages, function (key, value) {
+                        var element = $('#' + key);
+                        element.closest('div.form-group')
+                            .removeClass('has-error')
+                            .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                            .find('.text-danger')
+                            .remove();
+                        element.after(value)
+                    })
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+
+        var getContentView = function(postData) {
+            $.ajax({
+                type:"POST",
+                url: "<?php echo base_url('event/load_views')?>",
+                //data:"id="+view_name,
+                data:postData,
+                dataType: "html",
+                success: function(data) {
+                    $('#load_navigation_menu_view').html(data);
+                },
+                error: function(data) {
+
+                    alert('An error has occured trying to get the page details');
+                }
+            });
+        }
+
+        $('.grid-form1').on("click", ".transaction", function() {
+            var view_name = $(this).attr("id");
+            var item_id = $(this).attr("rel");
+            var type = $(this).attr("type");
+            var postData = {
+                'view_name': view_name,
+                'item_id': item_id,
+                'type': type,
+            };
+
+            getContentView(postData);
+        });
+    });
+</script>
