@@ -44,6 +44,7 @@ class Event extends CI_Controller {
             $data['cash_sum'] = $this->event_model->cash_sum($id);
             $data['budget_sum'] = $this->event_model->budget_sum($id);
             $data['advance_sum'] = $this->event_model->advance_sum($id);
+            $data['location'] = $this->event_model->get_location();
             $data['event_id'] = $id;
             $this->load->view('event/default_view', $data);
         } else {
@@ -111,6 +112,7 @@ class Event extends CI_Controller {
      */
 	public function create(){
         $data['location'] = $this->event_model->get_location();
+        $data['type'] = $this->event_model->get_type();
 
         if (!empty($this->session->admin_id)){
 
@@ -119,9 +121,13 @@ class Event extends CI_Controller {
             $this->form_validation->set_rules('eventname', 'Event Name', 'required');
             $this->form_validation->set_rules('eventcode', 'Event Code', 'required|is_unique[event.event_code]');
             $this->form_validation->set_rules('eventdate', 'Event Date', 'required');
+            $this->form_validation->set_rules('type', 'Event Type', 'required');
             $this->form_validation->set_rules('location', 'Event Location', 'required');
             $this->form_validation->set_rules('password', 'Password', 'required');
             $this->form_validation->set_rules('password2', 'Re-Enter Password', 'required|matches[password]');
+            if($this->input->post('type') == "other") {
+                $this->form_validation->set_rules('othertext', 'Event Type', 'required');
+            }
             $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {
@@ -130,10 +136,16 @@ class Event extends CI_Controller {
                 }
             } else {
                 $data['success'] = true;
+                if($this->input->post('type') == "other") {
+                    $tv = $this->input->post('othertext');
+                }else{
+                    $tv = $this->input->post('type');
+                }
                 $values = array(
                     'event_name' => $this->input->post('eventname'),
                     'event_code' => $this->input->post('eventcode'),
                     'event_date' => $this->input->post('eventdate'),
+                    'event_type' => $tv,
                     'event_location' => $this->input->post('location'),
                     'event_password' => md5($this->input->post('password')),
                     'event_admin' => $this->session->admin_id,
@@ -146,6 +158,18 @@ class Event extends CI_Controller {
         } else {
             redirect('admin');
         }
+    }
+
+    /*
+     * This function load edit event page.
+     */
+
+    public function edit($id){
+        $data['location'] = $this->event_model->get_location();
+        $data['type'] = $this->event_model->get_type();
+        $data['event_detail'] = $this->event_model->event_detail($id);
+
+        $this->load->view('event/edit_view', $data);
     }
 
     /*

@@ -26,9 +26,6 @@ $this->load->view('shared/login_header');
                         <i class="fa fa-lock"></i>
                         <?php echo form_error('password')?>
                     </div>
-                    <!--a class="news-letter " href="#">
-                        <label class="checkbox1"><input type="checkbox" name="checkbox" ><i> </i>Forget Password</label>
-                    </a-->
                 </div>
                 <div class="col-md-6 login-do">
                     <label class="hvr-shutter-in-horizontal login-sub">

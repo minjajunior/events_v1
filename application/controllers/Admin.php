@@ -70,6 +70,7 @@ class Admin extends CI_Controller {
      */
     public function home(){
         $data['location'] = $this->event_model->get_location();
+        $data['type'] = $this->event_model->get_type();
         $data['event'] = $this->event_model->get_event($this->session->admin_id);
 
         if (!empty($this->session->admin_id)){

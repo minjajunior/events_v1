@@ -24,8 +24,11 @@
     <script src="<?php echo base_url('assets/js/jquery.slimscroll.min.js')?>"></script>
     <!-- Custom and plugin javascript -->
     <link href="<?php echo base_url('assets/css/custom.css')?>" rel="stylesheet">
+    <link href="<?php echo base_url('assets/css/jquery-ui.theme.css')?>" rel="stylesheet">
+    <link href="<?php echo base_url('assets/css/jquery-ui.structure.css')?>" rel="stylesheet">
     <script src="<?php echo base_url('assets/js/custom.js')?>"></script>
     <script src="<?php echo base_url('assets/js/screenfull.js')?>"></script>
+    <script src="<?php echo base_url('assets/js/jquery-ui.js')?>"></script>
     <script>
         $(function () {
             $('#supported').text('Supported/allowed: ' + !!screenfull.enabled);

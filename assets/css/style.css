@@ -1545,11 +1545,11 @@ label.control-label {
 }
 /*--profile--*/
 .profile{
-	min-height:800px;
+	/*min-height:800px;*/
 	padding:1em;
 }
 .profile-bottom{
-	width: 55%;
+	/*width: 55%;*/
 	margin: 0em auto;
 	    background-color: #fff;
     padding: 1em 0 ;
@@ -2341,6 +2341,7 @@ canvas#polarArea, canvas#radar, canvas#doughnut {
 .profile-bottom-img{
 	text-align:center;
 }
+
 .profile-text {
     padding-top: 1em;
 	text-align: center;

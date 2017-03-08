@@ -29,6 +29,23 @@ class Event_model extends CI_Model {
         }
     }
 
+    public function get_type(){
+        $this->db->select('*');
+        $this->db->from('type');
+        $this->db->order_by('type_name', 'asc');
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0){
+            foreach ($query->result() as $row) {
+                $response[] = $row;
+            }
+            return $response;
+        }else{
+            $response['error'] = 'Event type Not Found';
+            return $response;
+        }
+    }
+
     /*
      * This function returns the list of all events managed by one Admin.
      */
