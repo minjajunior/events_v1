@@ -26,15 +26,18 @@ $this->load->view('shared/login_header');
                         <i class="fa fa-lock"></i>
                         <?php echo form_error('password')?>
                     </div>
+                    <div class="login-do">
+                        <label class="hvr-shutter-in-horizontal login-sub">
+                            <input type="submit" value="Login">
+                        </label>
+                    </div>
                 </div>
                 <div class="col-md-6 login-do">
-                    <label class="hvr-shutter-in-horizontal login-sub">
-                        <input type="submit" value="Login">
-                    </label>
+
                     <p>Do not have an account?</p>
                     <a href="<?php echo base_url('admin/register')?>" class="hvr-shutter-in-horizontal">Register</a>
                     <p>Have an event?</p>
-                    <a href="<?php echo base_url()?>" class="hvr-shutter-in-horizontal login-sub">Event Login</a>
+                    <a href="<?php echo base_url()?>" class="hvr-shutter-in-horizontal">Event Login</a>
                 </div>
                 <div class="clearfix"> </div>
             </form>

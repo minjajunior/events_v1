@@ -17,7 +17,7 @@ $this->load->view('shared/sidebar');
             <div class="profile-bottom">
                 <div class="profile-bottom-top">
                     <?php foreach($event_details as $ed){ ?>
-                    <h3><?php echo $ed->event_name?></h3>
+                    <h3><?php echo $ed->event_name?> <a href="#" class="pull-right"><i class="fa fa-edit"></i></a></h3>
                     <div class="col-md-8 profile-text">
                         <table>
                             <tr>
@@ -48,17 +48,12 @@ $this->load->view('shared/sidebar');
                             </tr>
                         </table>
                     </div>
-                    <div class="col-md-4 profile-bottom-img">
+                    <div class="col-md-4 profile-bottom-img text-center">
                         <?php $td = date_create(date('Y-m-d')); $de = date_create($ed->event_date); $in = date_diff($td, $de); ?>
-                        <h1 class="text-center"><span><?php echo $in->format('%a days') ?></span></h1>
+                        <h1 class="text-success"><span><?php echo $in->format('%a') ?></span></h1>
+                        <p class="text-danger">Days Remaining</p>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="profile-bottom-bottom">
-                        <div class="col-md-3 profile-fo">
-                            <a href="#"><i class="fa fa-edit"></i>Edit Event</a>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
                     <?php } ?>
                 </div>
             </div>
