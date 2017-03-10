@@ -210,8 +210,6 @@ class Event extends CI_Controller {
         } else {
             redirect('admin');
         }
-
-
     }
 
     /*

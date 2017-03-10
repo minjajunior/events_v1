@@ -47,11 +47,10 @@
             <label for="type" class="col-sm-2 control-label">Event Type</label>
             <div class="col-sm-8">
                 <select name="type" id="type" class="form-control1">
-                    <option value="">Select One</option>
-                    <?php foreach($type as $t){ ?>
-                        <option value="<?php echo $t->type_name; ?>" id="type"><?php echo $t->type_name; ?></option>
-                    <?php } ?>
                     <option value="other">Other</option>
+                    <?php foreach($type as $t){?>
+                        <option value="<?php echo $t->type_name; ?>"<?php if($t->type_name == $ed->event_type){ echo set_select('type', $t->type_name, true); }  ?> id="type"><?php echo $t->type_name; ?></option>
+                    <?php } ?>
                 </select>
             </div>
         </div>
@@ -76,7 +75,7 @@
                 <select name="location" id="selector1" class="form-control1">
                     <option value="">Select Region</option>
                     <?php foreach($location as $loc){ ?>
-                        <option value="<?php echo $loc->location_id; ?>" id="location"><?php echo $loc->location_name; ?></option>
+                        <option value="<?php echo $loc->location_id; ?>" <?php if($loc->location_id == $ed->event_location){ echo set_select('location', $loc->location_id, true); } ?> id="location"><?php echo $loc->location_name; ?></option>
                     <?php } ?>
                 </select>
             </div>
