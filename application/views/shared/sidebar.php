@@ -45,6 +45,13 @@
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="budget_view"><i class="fa fa-money nav_icon "></i><span class="nav-label">Budget</span> </a></li>
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="member_view"><i class="fa fa-users nav_icon "></i><span class="nav-label">Members</span> </a></li>
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="reports_view"><i class="fa fa-file nav_icon "></i><span class="nav-label">Reports</span></a></li>
+                        <li>
+                            <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span class="nav-label">Settings</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="edit_view"><i class="fa fa-edit nav_icon"></i>Edit Event</a></li>
+                                <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right"><i class="fa fa-key nav_icon"></i>Event Password</a></li>
+                            </ul>
+                        </li>
                         <?php } ?>
                         <li><a href="<?php echo site_url('admin/logout')?>" class=" hvr-bounce-to-right"><i class="fa fa-sign-out nav_icon"></i> <span class="nav-label">Logout</span> </a></li>
                     </ul>

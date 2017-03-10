@@ -17,7 +17,7 @@ $this->load->view('shared/sidebar');
             <div class="profile-bottom">
                 <div class="profile-bottom-top">
                     <?php foreach($event_details as $ed){ ?>
-                    <h3><?php echo $ed->event_name?> <a href="#" class="pull-right"><i class="fa fa-edit"></i></a></h3>
+                    <h3><?php echo $ed->event_name?></h3>
                     <div class="col-md-8 profile-text">
                         <table>
                             <tr>

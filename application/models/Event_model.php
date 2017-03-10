@@ -191,6 +191,14 @@ class Event_model extends CI_Model {
     }
 
     /*
+     * This function update selected event details
+     */
+    public function update_event($values, $id){
+        $this->db->where('event_id', $id);
+        $this->db->update('event', $values);
+    }
+
+    /*
      * This function insert member(s) details into database
      */
     public function insert_member($values){

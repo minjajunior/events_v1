@@ -57,8 +57,6 @@ class Event extends CI_Controller {
 
         if(!empty($_POST['view_name']) ||!empty($_POST['event_id']) || !empty($this->session->admin_id) || !empty($this->session->event_id)){
 
-
-
             if(!empty($_POST['type'])) {
 
                 $data['type'] = $_POST['type'];
@@ -84,6 +82,8 @@ class Event extends CI_Controller {
             else {
                 $id = $_POST['event_id'];
             }
+            $data['location'] = $this->event_model->get_location();
+            $data['type'] = $this->event_model->get_type();
             $data['event_details'] = $this->event_model->event_details($id);
             $data['member_details'] = $this->event_model->member_details($id);
             $data['budget_details'] = $this->event_model->budget_details($id);
@@ -163,13 +163,55 @@ class Event extends CI_Controller {
     /*
      * This function load edit event page.
      */
-
     public function edit($id){
         $data['location'] = $this->event_model->get_location();
         $data['type'] = $this->event_model->get_type();
-        $data['event_detail'] = $this->event_model->event_detail($id);
+        $data['event_details'] = $this->event_model->event_details($id);
 
-        $this->load->view('event/edit_view', $data);
+        if (!empty($this->session->admin_id)){
+
+            $data = array('success' => false, 'messages' => array());
+
+            $this->form_validation->set_rules('eventname', 'Event Name', 'required');
+            if ($this->input->post('ec') != $this->input->post('eventcode')){
+                $this->form_validation->set_rules('eventcode', 'Event Code', 'required|is_unique[event.event_code]');
+            }
+            $this->form_validation->set_rules('eventdate', 'Event Date', 'required');
+            $this->form_validation->set_rules('type', 'Event Type', 'required');
+            $this->form_validation->set_rules('location', 'Event Location', 'required');
+            if($this->input->post('type') == "other") {
+                $this->form_validation->set_rules('othertext', 'Event Type', 'required');
+            }
+            $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
+
+            if ($this->form_validation->run() == FALSE) {
+                //$this->load->view('event/editMember_view', $data);
+                foreach ($_POST as $key => $value){
+                    $data['messages'][$key] = form_error($key);
+                }
+            } else {
+                $data['success'] = true;
+                if($this->input->post('type') == "other") {
+                    $tv = $this->input->post('othertext');
+                }else{
+                    $tv = $this->input->post('type');
+                }
+                $values = array(
+                    'event_name' => $this->input->post('eventname'),
+                    'event_code' => $this->input->post('eventcode'),
+                    'event_date' => $this->input->post('eventdate'),
+                    'event_type' => $tv,
+                    'event_location' => $this->input->post('location')
+                );
+
+                $this->event_model->update_event($values, $id);
+            }
+            echo json_encode($data);
+        } else {
+            redirect('admin');
+        }
+
+
     }
 
     /*
