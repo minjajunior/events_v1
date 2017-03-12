@@ -842,11 +842,6 @@ class Event extends CI_Controller {
         $this->m_pdf->pdf->WriteHTML($html_view);
 
 
-
-
-
-
-
         //force user to download the Excel file without writing it to server's HD
         ob_start();
         $this->m_pdf->pdf->Output($file_name, "D"); //download it.
