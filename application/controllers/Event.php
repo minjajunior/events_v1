@@ -759,5 +759,109 @@ class Event extends CI_Controller {
     }
 
 
+    public function pdf_reports(){
+
+        if(!empty($_POST['report_name']) ||!empty($_POST['event_id']) || !empty($this->session->admin_id) || !empty($this->session->event_id)) {
+
+            $report_name=$_POST['report_name'];
+            $event_id=$_POST['event_id'];
+
+            if($report_name=='members'){
+
+                $data['member_details'] = $this->event_model->member_details($event_id);
+                $html = $this->load->view('event/pdf_view',$data,true);
+
+                $this->download_pdf($report_name,$html);
+
+            }elseif ($report_name=='budget'){
+
+                $data['budget_details'] = $this->event_model->budget_details($event_id);
+                $html = $this->load->view('event/pdf_view',$data,true);
+
+                $this->download_pdf($report_name,$html);
+
+            }elseif ($report_name=='pledge'){
+
+                $column_heads = array(
+                    'member name' => 'member_name',
+                    'member pledge' => 'member_pledge',
+                    'member cash' => 'member_cash',
+                    'member phone' => 'member_phone',
+                );
+
+                $member_details = $this->event_model->member_details($event_id);
+                $this->download_excel_file($report_name,$member_details,$column_heads);
+
+            }elseif ($report_name=='income'){
+
+                $column_heads = array(
+                    'member name' => 'member_name',
+                    'member pledge' => 'member_pledge',
+                    'member cash' => 'member_cash',
+                    'member phone' => 'member_phone',
+                );
+
+                $member_details = $this->event_model->member_details($event_id);
+                $this->download_excel_file($report_name,$member_details,$column_heads);
+
+            }elseif ($report_name=='expenses'){
+
+                $column_heads = array(
+                    'member name' => 'member_name',
+                    'member pledge' => 'member_pledge',
+                    'member cash' => 'member_cash',
+                    'member phone' => 'member_phone',
+                );
+
+                $member_details = $this->event_model->member_details($event_id);
+                $this->download_excel_file($report_name,$member_details,$column_heads);
+
+            }
+
+
+        }
+
+
+
+
+    }
+
+
+
+    public function  download_pdf($file_name,$html_view){
+
+
+        header("Content-Type: application/pdf");//mime type
+        header('Content-Disposition: attachment;filename="Members.pdf"');//tell browser what's the file name
+        header('Cache-Control: max-age=0');//no cache
+
+        //load the PDF library
+        $this->load->library('m_pdf');
+
+        //generate the PDF from the given html
+        $this->m_pdf->pdf->WriteHTML($html_view);
+
+
+
+
+
+
+
+        //force user to download the Excel file without writing it to server's HD
+        ob_start();
+        $this->m_pdf->pdf->Output($file_name, "D"); //download it.
+        $pdfData = ob_get_contents();
+        ob_end_clean();
+
+        $response =  array(
+            'report_name' => $file_name,
+            'file' => "data:application/pdf;base64,".base64_encode($pdfData)
+        );
+
+        die(json_encode($response));
+
+    }
+
+
 
 }

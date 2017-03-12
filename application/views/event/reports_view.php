@@ -26,8 +26,8 @@
                     <a href="javascript:void(0)" class="report fa fa-file-excel-o fa-2x" rel="<?php echo $event_id; ?>" id="members"></a>
                     <p>Excel</p>
                 </td>
-                <td>
-                    <a class="fa fa-file-pdf-o fa-2x"></a>
+                <td class="report_pdf">
+                    <a href="javascript:void(0)" class="report fa fa-file-pdf-o fa-2x" rel="<?php echo $event_id; ?>" id="members"></a>
                     <p>PDF</p>
                 </td>
             </tr>
@@ -45,8 +45,8 @@
                     <a href="javascript:void(0)" class="report fa fa-file-excel-o fa-2x" rel="<?php echo $event_id; ?>" id="budget"></a>
                     <p>Excel</p>
                 </td>
-                <td>
-                    <a class="fa fa-file-pdf-o fa-2x"></a>
+                <td class="report_pdf">
+                    <a href="javascript:void(0)" class="report fa fa-file-pdf-o fa-2x" rel="<?php echo $event_id; ?>" id="budget"></a>
                     <p>PDF</p>
                 </td>
 
@@ -157,7 +157,7 @@
 $(document).ready(function() {
 
 
-    var getReport = function(postData) {
+    var getExcelReport = function(postData) {
 
         $.ajax(
             {
@@ -183,17 +183,63 @@ $(document).ready(function() {
             });
     }
 
+    $('.report_excel').on("click", ".report", function() {
+        var report_name = $(this).attr("id");
+        var event_id = $(this).attr("rel");
+        var postData = {
+            'report_name': report_name,
+            'event_id': event_id,
+        };
 
-$('.report_excel').on("click", ".report", function() {
-var report_name = $(this).attr("id");
-var event_id = $(this).attr("rel");
-var postData = {
-'report_name': report_name,
-'event_id': event_id,
-};
-
-getReport(postData);
+    getExcelReport(postData);
 
 });
-});
+
+
+
+    var getPDFReport = function(postData) {
+
+        $.ajax(
+            {
+                type:"POST",
+                url: "<?php echo base_url('event/pdf_reports')?>",
+                data:postData,
+                dataType: 'json',
+                success: function(data) {
+
+                    var $a = $("<a>");
+                    $a.attr("href",data.file);
+                    $("body").append($a);
+                    $a.attr("download",data.report_name);
+                    $a[0].click();
+                    $a.remove();
+
+                },
+
+                error: function(data) {
+
+                    alert('An error has occured while trying to get the report details, Please try again ');
+                }
+            });
+    }
+
+
+
+
+    $('.report_pdf').on("click", ".report", function() {
+        var report_name = $(this).attr("id");
+        var event_id = $(this).attr("rel");
+        var postData = {
+            'report_name': report_name,
+            'event_id': event_id,
+        };
+
+        getPDFReport(postData);
+
+    });
+
+
+    });
+
+
 </script>
