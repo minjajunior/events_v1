@@ -46,14 +46,23 @@
         <div class="form-group">
             <label for="type" class="col-sm-2 control-label">Event Type</label>
             <div class="col-sm-8">
+                <?php $ov = 1; ?>
                 <select name="type" id="type" class="form-control1">
                     <option value="other">Other</option>
                     <?php foreach($type as $t){?>
-                        <option value="<?php echo $t->type_name; ?>"<?php if($t->type_name == $ed->event_type){ echo set_select('type', $t->type_name, true); }  ?> id="type"><?php echo $t->type_name; ?></option>
+                        <option value="<?php echo $t->type_name; ?>"<?php if($t->type_name == $ed->event_type){ $ov = 0; echo set_select('type', $t->type_name, true); }  ?> id="type"><?php echo $t->type_name; ?></option>
                     <?php } ?>
                 </select>
             </div>
         </div>
+        <?php if($ov == 1) { ?>
+            <div class="form-group">
+                <label for="othertext" class="col-sm-2 control-label"></label>
+                <div class="col-sm-8">
+                    <input type="text" name="othertext" value="<?php echo $ed->event_type; ?>" class="form-control1" placeholder="Event Type" id="othertext">
+                </div>
+            </div>
+        <?php } ?>
         <div class="form-group">
             <label for="othertext" class="col-sm-2 control-label"></label>
             <div class="col-sm-8">
@@ -119,6 +128,7 @@
                     $('.alert-success').delay(500).show(10, function() {
                         $(this).delay(3000).hide(10, function() {
                             $(this).remove();
+                            window.location.reload()
                         });
                     })
                 }else {

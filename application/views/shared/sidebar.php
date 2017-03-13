@@ -49,7 +49,7 @@
                             <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span class="nav-label">Settings</span><span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="edit_view"><i class="fa fa-edit nav_icon"></i>Edit Event</a></li>
-                                <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right"><i class="fa fa-key nav_icon"></i>Event Password</a></li>
+                                <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="password_view"><i class="fa fa-key nav_icon"></i>Event Password</a></li>
                             </ul>
                         </li>
                         <?php } ?>
