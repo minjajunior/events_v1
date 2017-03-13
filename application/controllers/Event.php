@@ -213,6 +213,42 @@ class Event extends CI_Controller {
     }
 
     /*
+     * This function load edit password page.
+     */
+    public function password($id){
+        $data['location'] = $this->event_model->get_location();
+        $data['type'] = $this->event_model->get_type();
+        $data['event_details'] = $this->event_model->event_details($id);
+
+        if (!empty($this->session->admin_id)){
+
+            $data = array('success' => false, 'messages' => array());
+
+            $this->form_validation->set_rules('op', 'Old Password', 'required');
+            $this->form_validation->set_rules('password', 'Current Password', 'required|md5|matches[op]');
+            $this->form_validation->set_rules('newpassword', 'New Password', 'required');
+            $this->form_validation->set_rules('repassword', 'Re-Enter Password', 'required|matches[newpassword]');
+            $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
+
+            if ($this->form_validation->run() == FALSE) {
+                foreach ($_POST as $key => $value){
+                    $data['messages'][$key] = form_error($key);
+                }
+            } else {
+                $data['success'] = true;
+                $values = array(
+                    'event_password' => md5($this->input->post('newpassword'))
+                );
+
+                $this->event_model->update_event($values, $id);
+            }
+            echo json_encode($data);
+        } else {
+            redirect('admin');
+        }
+    }
+
+    /*
      * This function process the PHPExcel library to upload members list to the database
      */
     public function upload_members($id){
