@@ -64,8 +64,8 @@
                     <a href="javascript:void(0)" class="report fa fa-file-excel-o fa-2x" rel="<?php echo $event_id; ?>" id="pledge"></a>
                     <p>Excel</p>
                 </td>
-                <td>
-                    <a class="fa fa-file-pdf-o fa-2x"></a>
+                <td class="report_pdf">
+                    <a href="javascript:void(0)" class="report fa fa-file-pdf-o fa-2x" rel="<?php echo $event_id; ?>" id="pledge"></a>
                     <p>PDF</p>
                 </td>
 
@@ -83,8 +83,8 @@
                     <a href="javascript:void(0)" class="report fa fa-file-excel-o fa-2x" rel="<?php echo $event_id; ?>" id="income"></a>
                     <p>Excel</p>
                 </td>
-                <td>
-                    <a class="fa fa-file-pdf-o fa-2x"></a>
+                <td class="report_pdf">
+                    <a href="javascript:void(0)" class="report fa fa-file-pdf-o fa-2x" rel="<?php echo $event_id; ?>" id="income"></a>
                     <p>PDF</p>
                 </td>
 
@@ -162,7 +162,7 @@ $(document).ready(function() {
         $.ajax(
             {
                 type:"POST",
-                url: "<?php echo base_url('event/reports')?>",
+                url: "<?php echo base_url('reports/excel_reports')?>",
                 data:postData,
                 dataType: 'json',
                 success: function(data) {
@@ -202,7 +202,7 @@ $(document).ready(function() {
         $.ajax(
             {
                 type:"POST",
-                url: "<?php echo base_url('event/pdf_reports')?>",
+                url: "<?php echo base_url('reports/pdf_reports')?>",
                 data:postData,
                 dataType: 'json',
                 success: function(data) {

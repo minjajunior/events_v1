@@ -28,6 +28,7 @@ if(isset($this->session->admin_id)) {
                     <th>Member Name</th>
                     <th>Pledge</th>
                     <th>Cash</th>
+                    <th>Balance</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,6 +42,7 @@ if(isset($this->session->admin_id)) {
                         <?php } ?>
                         <td><?php echo $english_format_number = number_format($md->member_pledge, 0, '.', ',') . " Tsh."; ?></td>
                         <td><?php echo $english_format_number = number_format($md->member_cash, 0, '.', ',') . " Tsh."; ?></td>
+                        <td><?php echo $english_format_number = number_format($md->member_pledge-$md->member_cash, 0, '.', ',') . " Tsh."; ?></td>
                     </tr>
                 <?php } ?>
                 </tbody>
