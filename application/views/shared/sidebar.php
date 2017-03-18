@@ -26,7 +26,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle dropdown-at" data-toggle="dropdown"><span class=" name-caret"><?php echo $this->session->admin_name; ?> <i class="caret"></i></span></a>
                     <ul class="dropdown-menu " role="menu">
-                        <li><a href="<?php echo site_url('admin/home')?>"><i class="fa fa-user"></i>Profile</a></li>
+                        <li><a href="<?php echo site_url('admin/profile/'.$this->session->admin_id)?>"><i class="fa fa-user"></i>Profile</a></li>
                         <li><a href="<?php echo site_url('admin/logout')?>"><i class="fa fa-sign-out"></i>Logout</a></li>
                     </ul>
                 </li>
@@ -44,12 +44,13 @@
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="home_view"><i class="fa fa-home nav_icon "></i><span class="nav-label">Home</span> </a></li>
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="budget_view"><i class="fa fa-money nav_icon "></i><span class="nav-label">Budget</span> </a></li>
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="member_view"><i class="fa fa-users nav_icon "></i><span class="nav-label">Members</span> </a></li>
-                        <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="reports_view"><i class="fa fa-file nav_icon "></i><span class="nav-label">Reports</span></a></li>
+                        <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="reports_view"><i class="fa fa-files-o nav_icon "></i><span class="nav-label">Reports</span></a></li>
                         <li>
                             <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span class="nav-label">Settings</span><span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="edit_view"><i class="fa fa-edit nav_icon"></i>Edit Event</a></li>
                                 <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="password_view"><i class="fa fa-key nav_icon"></i>Event Password</a></li>
+                                <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="admin_view"><i class="fa fa-user-md nav_icon"></i>Event Admins</a></li>
                             </ul>
                         </li>
                         <?php } ?>

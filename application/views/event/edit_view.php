@@ -49,8 +49,8 @@
                 <?php $ov = 1; ?>
                 <select name="type" id="type" class="form-control1">
                     <option value="other">Other</option>
-                    <?php foreach($type as $t){?>
-                        <option value="<?php echo $t->type_name; ?>"<?php if($t->type_name == $ed->event_type){ $ov = 0; echo set_select('type', $t->type_name, true); }  ?> id="type"><?php echo $t->type_name; ?></option>
+                    <?php foreach($event_type as $et){?>
+                        <option value="<?php echo $et->type_name; ?>"<?php if($et->type_name == $ed->event_type){ $ov = 0; echo set_select('type', $et->type_name, true); }  ?> id="type"><?php echo $et->type_name; ?></option>
                     <?php } ?>
                 </select>
             </div>

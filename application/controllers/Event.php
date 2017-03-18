@@ -83,7 +83,7 @@ class Event extends CI_Controller {
                 $id = $_POST['event_id'];
             }
             $data['location'] = $this->event_model->get_location();
-            $data['type'] = $this->event_model->get_type();
+            $data['event_type'] = $this->event_model->get_type();
             $data['event_details'] = $this->event_model->event_details($id);
             $data['member_details'] = $this->event_model->member_details($id);
             $data['budget_details'] = $this->event_model->budget_details($id);
@@ -91,12 +91,13 @@ class Event extends CI_Controller {
             $data['cash_sum'] = $this->event_model->cash_sum($id);
             $data['budget_sum'] = $this->event_model->budget_sum($id);
             $data['advance_sum'] = $this->event_model->advance_sum($id);
+            $data['super_admin'] = $this->admin_model->get_super_admin($this->admin_model->admin_id($id));
+            $data['other_admin'] = $this->admin_model->get_other_admin($_POST['event_id']);
             $data['event_id'] = $id;
             $view_name = $_POST['view_name'];
 
             $this->load->view('event/'.$view_name,$data);
         }
-
     }
 
     /*
@@ -328,6 +329,7 @@ class Event extends CI_Controller {
             //read file from path
             $objPHPExcel = PHPExcel_IOFactory::load('./upload/'.$file);
             $objWorksheet = $objPHPExcel->getActiveSheet();
+            //$data['success'] = true;
 
             foreach ($objWorksheet->getRowIterator() as $row) {
                 $in = "";
@@ -360,7 +362,12 @@ class Event extends CI_Controller {
         {
             //$error = array('error' => $this->upload->display_errors());
             //$this->load->view('event/home_view', $error);
+            $data = array('success' => false, 'messages' => array($this->upload->display_errors()));
+            foreach ($_POST as $key => $value){
+                $data['messages'][$key] = form_error($key);
+            }
         }
+        echo json_encode($data);
     }
 
     /*

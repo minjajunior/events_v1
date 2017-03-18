@@ -97,8 +97,8 @@ $this->load->view('shared/sidebar');
                             <div class="col-sm-8">
                                 <select name="type" id="type" class="form-control1">
                                     <option value="">Select One</option>
-                                    <?php foreach($type as $t){ ?>
-                                        <option value="<?php echo set_value(print $t->type_name); ?>" id="type"><?php echo set_value(print $t->type_name); ?></option>
+                                    <?php foreach($event_type as $et){ ?>
+                                        <option value="<?php echo set_value(print $et->type_name); ?>" id="type"><?php echo set_value(print $et->type_name); ?></option>
                                     <?php } ?>
                                     <option value="other">Other</option>
                                 </select>

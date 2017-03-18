@@ -51,7 +51,7 @@ $this->load->view('shared/sidebar');
                     <div class="col-md-4 profile-bottom-img text-center">
                         <?php $td = date_create(date('Y-m-d')); $de = date_create($ed->event_date); $in = date_diff($td, $de); ?>
                         <h1 class="text-success"><span><?php echo $in->format('%a') ?></span></h1>
-                        <p class="text-danger">Days Remaining</p>
+                        <p>Days Remaining</p>
                     </div>
                     <div class="clearfix"></div>
                     <?php } ?>

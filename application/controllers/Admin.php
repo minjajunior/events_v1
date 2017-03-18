@@ -70,7 +70,7 @@ class Admin extends CI_Controller {
      */
     public function home(){
         $data['location'] = $this->event_model->get_location();
-        $data['type'] = $this->event_model->get_type();
+        $data['event_type'] = $this->event_model->get_type();
         $data['event'] = $this->event_model->get_event($this->session->admin_id);
 
         if (!empty($this->session->admin_id)){
@@ -79,6 +79,56 @@ class Admin extends CI_Controller {
             redirect('admin');
         }
 
+    }
+
+    public function profile($id){
+        $data['admin_details'] = $this->admin_model->admin_details($id);
+        $data['event_sum'] = $this->admin_model->event_sum($id);
+
+        if (!empty($this->session->admin_id)){
+            $this->load->view('admin/profile_view', $data);
+        } else {
+            redirect('admin');
+        }
+    }
+
+    /*
+    *This function check and add admin to the event
+    */
+    public function add_admin($id){
+
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+
+        if ($this->form_validation->run() == FALSE) {
+            echo 0;
+        } elseif(!empty($this->input->post('action'))) {
+            $value = $this->admin_model->login($this->input->post('email'));
+            if($this->input->post('action') == "add"){
+                if($value['admin_email'] == $this->input->post('email')){
+                    $values = array(
+                        'admin_id' => $value['admin_id'],
+                        'event_id' => $id,
+                    );
+                    $this->admin_model->add_admin($values);
+                    echo 3;
+                }
+            }elseif ($this->input->post('action') == "invite"){
+                // Invite logic goes here
+                echo 4;
+            }
+        }
+        else {
+            $value = $this->admin_model->login($this->input->post('email'));
+            if(empty($value)){
+                echo 1;
+            }else {
+                if($this->admin_model->check_admin($id, $value['admin_id']) > 0 or $value['admin_id'] == $this->admin_model->admin_id($id)){
+                    echo 5;
+                } else {
+                    echo 2;
+                }
+            }
+        }
     }
 
     /*
