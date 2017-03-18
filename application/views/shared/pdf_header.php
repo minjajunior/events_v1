@@ -39,6 +39,7 @@
     <script src="<?php echo base_url('assets/js/custom.js')?>"></script>
     <script src="<?php echo base_url('assets/js/screenfull.js')?>"></script>
     <script src="<?php echo base_url('assets/js/jquery-ui.js')?>"></script>
+    <script src="<?php echo base_url('assets/js/Chart.js')?>"></script>
     <script>
         $(function () {
             $('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
