@@ -20,8 +20,8 @@
                         <thead>
                         <tr>
                             <th>Member Name</th>
-                            <th>Pledge</th>
-                            <th>Cash</th>
+                            <th>Pledge (Tsh.)</th>
+                            <th>Cash (Tsh.)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -32,8 +32,8 @@
                                 <?php } else { ?>
                                     <td><?php echo $md->member_name?></td>
                                 <?php } ?>
-                                <td><?php echo $english_format_number = number_format($md->member_pledge, 0, '.', ',')." Tsh.";?></td>
-                                <td><?php echo $english_format_number = number_format($md->member_cash, 0, '.', ',')." Tsh."; ?></td>
+                                <td><?php echo $english_format_number = number_format($md->member_pledge, 0, '.', ',');?></td>
+                                <td><?php echo $english_format_number = number_format($md->member_cash, 0, '.', ','); ?></td>
                             </tr>
                         <?php } ?>
                         </tbody>

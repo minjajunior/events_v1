@@ -31,8 +31,9 @@ class Admin extends CI_Controller {
     public function register(){
 
         $this->form_validation->set_rules('fullname', 'Full Name', 'required');
+        $this->form_validation->set_message('fullname', 'Error Message');
         $this->form_validation->set_rules('email', 'E-mail Address', 'required|valid_email|is_unique[admin.admin_email]');
-        $this->form_validation->set_rules('phone', 'Phone Number', 'required');
+        $this->form_validation->set_rules('phone', 'Phone Number', 'required|is_unique[admin.admin_phone]');
         $this->form_validation->set_rules('password', 'Password', 'required');
         $this->form_validation->set_rules('password2', 'Re-Enter Password', 'required|matches[password]');
 

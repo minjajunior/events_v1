@@ -50,7 +50,7 @@ class Event extends CI_Controller
             $data['event_id'] = $id;
             $this->load->view('event/default_view', $data);
         } else {
-            redirect('event');
+            redirect('login');
         }
     }
 

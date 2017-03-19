@@ -63,5 +63,28 @@ $this->load->view('shared/sidebar');
 
         <!--Write views using Ajax-->
         <div id="load_navigation_menu_view"></div>
-        <br>
+        <script>
+            $(document).ready(function() {
+
+                var postData = {
+                    'view_name': 'home_view',
+                    'event_id': '<?php echo $event_id ?>',
+                };
+
+                $.ajax({
+                    type:"POST",
+                    url: "<?php echo base_url('event/load_views')?>",
+                    //data:"id="+view_name,
+                    data:postData,
+                    dataType: "html",
+                    success: function(data) {
+                        $('#load_navigation_menu_view').html(data);
+                    },
+                    error: function(data) {
+
+                        alert('An error has occured trying to get the page details');
+                    }
+                });
+            });
+        </script>
         <?php $this->load->view('shared/footer') ?>

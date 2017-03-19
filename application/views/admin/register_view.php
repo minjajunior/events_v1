@@ -15,27 +15,27 @@ $this->load->view('shared/login_header');
             <?php echo form_open('admin/register'); ?>
             <div class="col-md-6">
                 <div class="login-mail">
-                    <input type="text" name="fullname" value="<?php echo set_value('fullname'); ?>" placeholder="Full Name" required="">
+                    <input type="text" name="fullname" value="<?php echo set_value('fullname'); ?>" placeholder="Full Name">
                     <i class="fa fa-user"></i>
                     <?php echo form_error('fullname')?>
                 </div>
                 <div class="login-mail">
-                    <input type="text" name="email" value="<?php echo set_value('email'); ?>" placeholder="Email Address" required="">
+                    <input type="text" name="email" value="<?php echo set_value('email'); ?>" placeholder="Email Address">
                     <i class="fa fa-envelope"></i>
                     <?php echo form_error('email')?>
                 </div>
                 <div class="login-mail">
-                    <input type="text" name="phone" value="<?php echo set_value('phone'); ?>" placeholder="Phone Number" required="">
+                    <input type="text" name="phone" value="<?php echo set_value('phone'); ?>" placeholder="Phone Number">
                     <i class="fa fa-phone"></i>
                     <?php echo form_error('phone')?>
                 </div>
                 <div class="login-mail">
-                    <input type="password" name="password" value="<?php echo set_value('password'); ?>" placeholder="Password" required="">
+                    <input type="password" name="password" value="<?php echo set_value('password'); ?>" placeholder="Password">
                     <i class="fa fa-lock"></i>
                     <?php echo form_error('password')?>
                 </div>
                 <div class="login-mail">
-                    <input type="password" name="password2" value="<?php echo set_value('password2'); ?>" placeholder="Repeate Password" required="">
+                    <input type="password" name="password2" value="<?php echo set_value('password2'); ?>" placeholder="Repeate Password">
                     <i class="fa fa-lock"></i>
                     <?php echo form_error('password2')?>
                 </div>
@@ -47,8 +47,8 @@ $this->load->view('shared/login_header');
                 <label class="hvr-shutter-in-horizontal login-sub">
                     <input type="submit" value="Register">
                 </label>
-                <p>Already register</p>
-                <a href="<?php echo base_url('login')?>" class="hvr-shutter-in-horizontal">Login</a>
+                <p>Already registered?</p>
+                <a href="<?php echo base_url()?>" class="hvr-shutter-in-horizontal">Login</a>
             </div>
             </form>
             <div class="clearfix"> </div>

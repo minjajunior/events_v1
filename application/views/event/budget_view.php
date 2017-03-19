@@ -4,7 +4,8 @@
  * User: Minja Junior
  * Date: 2/20/2017
  * Time: 4:09 PM
- */?>
+ */
+?>
 
 <div class="blank">
     <?php if(isset($this->session->admin_id)){ ?>
@@ -23,8 +24,8 @@
                         <thead>
                         <tr>
                             <th>Item Name</th>
-                            <th>Cost</th>
-                            <th>Paid</th>
+                            <th>Cost (Tsh.)</th>
+                            <th>Paid (Tsh.)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -35,8 +36,8 @@
                                 <?php } else { ?>
                                     <td><?php echo $bd->item_name?></td>
                                 <?php } ?>
-                                <td><?php echo $english_format_number = number_format($bd->item_cost, 0, '.', ',')." Tsh.";?></td>
-                                <td><?php echo $english_format_number = number_format($bd->item_paid, 0, '.', ',')." Tsh."; ?></td>
+                                <td><?php echo $english_format_number = number_format($bd->item_cost, 0, '.', ',');?></td>
+                                <td><?php echo $english_format_number = number_format($bd->item_paid, 0, '.', ','); ?></td>
                             </tr>
                         <?php } ?>
                         </tbody>
@@ -107,8 +108,8 @@
                 <h2 class="modal-title">Upload Budget File</h2>
             </div>
             <?php
-            $attributes = array('class' => 'form-horizontal', 'id' => 'upload_budget');
-            echo form_open_multipart('event/upload_budget/'.$event_id, $attributes);
+                $attributes = array('class' => 'form-horizontal', 'id' => 'upload_budget');
+                echo form_open_multipart('event/upload_budget/'.$event_id, $attributes);
             ?>
             <div class="modal-body">
                 <div id="the-message"></div>
