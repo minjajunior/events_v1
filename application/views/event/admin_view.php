@@ -23,50 +23,30 @@
                 <div class="col-md-3" id="response">
                 </div>
             </div>
-
             </form>
         </div>
         <br>
         <table class="table">
             <tbody>
-            <?php $user=""; foreach($super_admin as $sa){ ?>
+            <?php
+            if (!isset($event_admin['error'])){
+                foreach($event_admin as $ea){ ?>
                 <tr class="table-row">
                     <td class="table-text">
-                        <?php if($sa->admin_id == $this->session->admin_id) { $user="sa";?>
-                            <h6><a href="<?php echo base_url('admin/profile/'.$sa->admin_id)?>" class=""><?php echo $sa->admin_name ?></a></h6>
-                        <?php } else {?>
-                            <h6><?php echo $sa->admin_name ?></h6>
-                        <?php } ?>
-                    </td>
-                    <td>
-                        <p><?php echo $sa->admin_phone ?></p>
-                    </td>
-                    <td >
-                        <p><?php echo $sa->admin_email ?></p>
-                    </td>
-                    <td>
-                        <span class="mar">Super Admin</span>
-                    </td>
-                </tr>
-            <?php }
-            if (!isset($other_admin['error'])){
-                foreach($other_admin as $oa){ ?>
-                <tr class="table-row">
-                    <td class="table-text">
-                        <?php if($user == "sa") {?>
-                            <h6><a href="<?php echo base_url('admin/profile/'.$oa->admin_id)?>" class=""><?php echo $oa->admin_name ?></a></h6>
+                        <?php if($ea->role_id == 1) { ?>
+                        <h6><a href="<?php echo base_url('admin/profile/'.$ea->admin_id)?>" class=""><?php echo $ea->admin_name ?></a></h6>
                         <?php } else { ?>
-                            <h6><?php echo $oa->admin_name ?></h6>
+                            <h6><?php echo $ea->admin_name ?></h6>
                         <?php } ?>
                     </td>
                     <td>
-                        <p><?php echo $oa->admin_phone ?></p>
+                        <p><?php echo $ea->admin_phone ?></p>
                     </td>
                     <td >
-                        <p><?php echo $oa->admin_email ?></p>
+                        <p><?php echo $ea->admin_email ?></p>
                     </td>
                     <td>
-                        <span class="mar">Admin</span>
+                        <span class="mar"><?php echo $ea->role_name?></span>
                     </td>
                 </tr>
             <?php } } ?>
@@ -162,7 +142,6 @@
                         });
                     }
                 }
-
             });
         })
     });

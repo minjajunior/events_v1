@@ -11,11 +11,11 @@ $this->load->view('shared/login_header');
     <div class="login">
         <h1><a href="<?php echo site_url('admin')?>">Events</a></h1>
         <div class="login-bottom">
-            <h2>Event Login</h2>
-            <?php echo form_open('event'); ?>
+            <h2>Login</h2>
+            <?php echo form_open('login'); ?>
             <div class="col-md-6">
                 <div class="login-mail">
-                    <input type="text" name="eventcode" value="<?php echo set_value('eventcode'); ?>" placeholder="Event Code" required="">
+                    <input type="text" name="mailcode" value="<?php echo set_value('mailcode'); ?>" placeholder="Email or Event Code" required="">
                     <i class="fa fa-codepen"></i>
                     <?php echo form_error('eventcode')?>
                 </div>
@@ -32,8 +32,8 @@ $this->load->view('shared/login_header');
                 <label class="hvr-shutter-in-horizontal login-sub">
                     <input type="submit" value="Login">
                 </label>
-                <p>Do not have an event</p>
-                <a href="<?php echo base_url('admin')?>" class="hvr-shutter-in-horizontal">Admin Login</a>
+                <p>Do not have an account?</p>
+                <a href="<?php echo base_url('admin/register')?>" class="hvr-shutter-in-horizontal">Register</a>
             </div>
             <div class="clearfix"> </div>
             </form>

@@ -36,8 +36,7 @@ class Event extends CI_Controller
     /*
      * This function load Event home page after the event login process completed
      */
-    public function home($id)
-    {
+    public function home($id) {
 
         if (!empty($this->session->admin_id) || !empty($this->session->event_id)) {
             $data['event_details'] = $this->event_model->event_details($id);
@@ -55,9 +54,7 @@ class Event extends CI_Controller
         }
     }
 
-    public function load_views()
-    {
-
+    public function load_views() {
 
         if (!empty($_POST['view_name']) || !empty($_POST['event_id']) || !empty($this->session->admin_id) || !empty($this->session->event_id)) {
 
@@ -94,22 +91,12 @@ class Event extends CI_Controller
             $data['cash_sum'] = $this->event_model->cash_sum($id);
             $data['budget_sum'] = $this->event_model->budget_sum($id);
             $data['advance_sum'] = $this->event_model->advance_sum($id);
-            $data['super_admin'] = $this->admin_model->get_super_admin($this->admin_model->admin_id($id));
-            $data['other_admin'] = $this->admin_model->get_other_admin($id);
+            $data['event_admin'] = $this->admin_model->get_admin($id);
             $data['event_id'] = $id;
             $view_name = $_POST['view_name'];
 
             $this->load->view('event/' . $view_name, $data);
         }
-    }
-
-    /*
-     * This function process Event logout process
-     */
-    public function logout()
-    {
-        $this->session->sess_destroy();
-        redirect('event');
     }
 
     /*

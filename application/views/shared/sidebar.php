@@ -27,7 +27,7 @@
                     <a href="#" class="dropdown-toggle dropdown-at" data-toggle="dropdown"><span class=" name-caret"><?php echo $this->session->admin_name; ?> <i class="caret"></i></span></a>
                     <ul class="dropdown-menu " role="menu">
                         <li><a href="<?php echo site_url('admin/profile/'.$this->session->admin_id)?>"><i class="fa fa-user"></i>Profile</a></li>
-                        <li><a href="<?php echo site_url('admin/logout')?>"><i class="fa fa-sign-out"></i>Logout</a></li>
+                        <li><a href="<?php echo site_url('login/logout')?>"><i class="fa fa-sign-out"></i>Logout</a></li>
                     </ul>
                 </li>
                 <?php } ?>
@@ -39,7 +39,7 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li><a href="<?php echo site_url('admin/home')?>" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Dashboard</span> </a></li>
+                        <li><a href="<?php echo site_url('admin')?>" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Dashboard</span> </a></li>
                         <?php if(isset($event_id)){ ?>
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="home_view"><i class="fa fa-home nav_icon "></i><span class="nav-label">Home</span> </a></li>
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="budget_view"><i class="fa fa-money nav_icon "></i><span class="nav-label">Budget</span> </a></li>
@@ -54,7 +54,7 @@
                             </ul>
                         </li>
                         <?php } ?>
-                        <li><a href="<?php echo site_url('admin/logout')?>" class=" hvr-bounce-to-right"><i class="fa fa-sign-out nav_icon"></i> <span class="nav-label">Logout</span> </a></li>
+                        <li><a href="<?php echo site_url('login/logout')?>" class=" hvr-bounce-to-right"><i class="fa fa-sign-out nav_icon"></i> <span class="nav-label">Logout</span> </a></li>
                     </ul>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                         <?php if(isset($event_id)){ ?>
                             <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="home_view"><i class="fa fa-home nav_icon "></i><span class="nav-label">Home</span> </a></li>
                         <?php } ?>
-                        <li><a href="<?php echo site_url('event/logout')?>" class=" hvr-bounce-to-right"><i class="fa fa-sign-out nav_icon"></i> <span class="nav-label">Logout</span> </a></li>
+                        <li><a href="<?php echo site_url('login/logout')?>" class=" hvr-bounce-to-right"><i class="fa fa-sign-out nav_icon"></i> <span class="nav-label">Logout</span> </a></li>
                     </ul>
                 </div>
             </div>

@@ -31,7 +31,7 @@ class Event_model extends CI_Model {
 
     public function get_type(){
         $this->db->select('*');
-        $this->db->from('type');
+        $this->db->from('event_type');
         $this->db->order_by('type_name', 'asc');
         $query = $this->db->get();
 
@@ -52,7 +52,8 @@ class Event_model extends CI_Model {
     public function get_event($id){
         $this->db->select('*');
         $this->db->from('event');
-        $this->db->where('event_admin', $id);
+        $this->db->join('event_admin', 'event.event_id = event_admin.event_id');
+        $this->db->where('event_admin.admin_id', $id);
         $this->db->order_by('event_name', 'asc');
         $query = $this->db->get();
 
@@ -166,20 +167,6 @@ class Event_model extends CI_Model {
         }else{
             $response['error'] = '0';
             return $response;
-        }
-    }
-
-    /*
-     * This function returns all events details selected by a unique event code
-     */
-    public function login($code){
-        $this->db->select('*');
-        $this->db->from('event');
-        $this->db->where('event_code', $code);
-        $query = $this->db->get();
-
-        if ($query->num_rows() > 0) {
-            return $query->row_array();
         }
     }
 
