@@ -50,25 +50,101 @@ class  Reports_model extends CI_Model{
         }
     }
 
-    public function pledge_details($event_id){
-        $amount_diff = 0;
+    public function less_pledges($event_id)
+    {
+
         $this->db->select('*');
         $this->db->from('member');
         $this->db->where('event_id', $event_id);
         $this->db->where('(member_pledge>member_cash)');
-        //$this->db->where('member_cash', $event_id);
         $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $response[] = $row;
+            }
+            return $response;
+        } else {
+            $response['error'] = '0';
+            return $response;
+        }
+    }
+
+    public function full_pledges($event_id){
+
+        $this->db->select('*');
+        $this->db->from('member');
+        $this->db->where('event_id', $event_id);
+        $this->db->where('(member_pledge=member_cash)');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $response[] = $row;
+            }
+            return $response;
+        } else {
+            $response['error'] = '0';
+            return $response;
+        }
+
+    }
+
+
+    public function get_member_categories($event_id){
+        $this->db->select('*');
+        $this->db->from('member_category');
+        $this->db->where('event_id', $event_id);
+        $this->db->order_by('category_name', 'asc');
+        $query = $this->db->get();
+
         if ($query->num_rows() > 0){
             foreach ($query->result() as $row) {
                 $response[] = $row;
             }
             return $response;
         }else{
-            $response['error'] = '0';
+            $response['error'] = 'Event type Not Found';
             return $response;
         }
+    }
 
 
+    public function get_members_categories($event_id,$cat_id){
+        $this->db->select('*');
+        $this->db->from('member');
+        $this->db->where('event_id', $event_id);
+        $this->db->where('category_id', $cat_id);
+        $this->db->order_by('member_name', 'asc');
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0){
+            foreach ($query->result() as $row) {
+                $response[] = $row;
+            }
+            return $response;
+        }else{
+            $response['error'] = 'Category type Not Found';
+            return $response;
+        }
+    }
+
+    public function get_members_amounts($paid_am,$pledge_am,$event_id){
+        $this->db->select('*');
+        $this->db->from('member');
+        $this->db->where('event_id', $event_id);
+        $this->db->where('member_pledge=', $pledge_am);
+        $this->db->where('member_cash<', $paid_am);
+        $this->db->order_by('member_name', 'asc');
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0){
+            foreach ($query->result() as $row) {
+                $response[] = $row;
+            }
+            return $response;
+        }else{
+            $response['error'] = 'Category type Not Found';
+            return $response;
+        }
     }
 
 

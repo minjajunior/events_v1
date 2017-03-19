@@ -181,9 +181,28 @@ class Reports extends CI_Controller{
 
                 $this->download_pdf($report_name,$html);
 
-            }elseif ($report_name=='pledge'){
+            }elseif ($report_name=='less_pledge'){
 
-                $data['member_details'] = $this->reports_model->pledge_details($event_id);
+                $data['member_details'] = $this->reports_model->less_pledges($event_id);
+
+                $html = $this->load->view('reports/members_pdf',$data,true);
+
+                $this->download_pdf($report_name,$html);
+
+            }elseif ($report_name=='member_cat'){
+                $cat_id = $_POST['cat_id'];
+
+                $data['member_details'] = $this->reports_model->get_members_categories($event_id,$cat_id);
+
+                $html = $this->load->view('reports/members_pdf',$data,true);
+
+                $this->download_pdf($report_name,$html);
+
+            }elseif ($report_name=='member_amounts'){
+                $paid_amount = $_POST['p_amount'];
+                $pledge_amount = $_POST['pl_amount'];
+
+                $data['member_details'] = $this->reports_model->get_members_amounts($paid_amount,$pledge_amount,$event_id);
 
                 $html = $this->load->view('reports/members_pdf',$data,true);
 
@@ -243,6 +262,9 @@ class Reports extends CI_Controller{
         die(json_encode($response));
 
     }
+
+
+
 
     public function test(){
 

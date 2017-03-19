@@ -86,6 +86,7 @@ class Event extends CI_Controller
             $data['event_type'] = $this->event_model->get_type();
             $data['event_details'] = $this->event_model->event_details($id);
             $data['member_details'] = $this->event_model->member_details($id);
+            $data['member_cat']= $this->reports_model->get_member_categories($id);
             $data['budget_details'] = $this->event_model->budget_details($id);
             $data['pledge_sum'] = $this->event_model->pledge_sum($id);
             $data['cash_sum'] = $this->event_model->cash_sum($id);
