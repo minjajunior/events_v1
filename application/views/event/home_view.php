@@ -172,16 +172,15 @@
 <script type="text/javascript">
     $(function() {
 
-        var cal = $( '#calendar' ).calendario( {
-                onDayClick : function( $el, $contentEl, dateProperties ) {
-
-                    for( var key in dateProperties ) {
-                        console.log( key + ' = ' + dateProperties[ key ] );
-                    }
-
-                },
+        var cal = $( '#calendar' ).calendario({
+            onDayClick : function( $el, $contentEl, dateProperties ) {
+                for( var key in dateProperties ) {
+                    console.log( key + ' = ' + dateProperties[ key ] );
+                }
+            },
                 caldata : codropsEvents
-            } ),
+            }),
+
             $month = $( '#custom-month' ).html( cal.getMonthName() ),
             $year = $( '#custom-year' ).html( cal.getYear() );
 

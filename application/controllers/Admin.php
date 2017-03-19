@@ -14,28 +14,15 @@ class Admin extends CI_Controller {
      * This function load Admin login page and process validation of Admin.
      */
     public function index(){
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-        $this->form_validation->set_rules('password', 'Password', 'required');
+        $data['location'] = $this->event_model->get_location();
+        $data['event_type'] = $this->event_model->get_type();
+        $data['event'] = $this->event_model->get_event($this->session->admin_id);
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('admin/login_view');
+        if (!empty($this->session->admin_id)){
+            $this->load->view('admin/home_view', $data);
         } else {
-            $value = $this->admin_model->login($this->input->post('email'));
-
-            if(!empty($value)){
-                if($value['admin_password'] == md5($this->input->post('password'))){
-                    $this->session->set_userdata($value);
-                    redirect('admin/home');
-                }else{
-                    $this->load->view('admin/login_view');
-                }
-            }else {
-                $this->load->view('admin/login_view');
-            }
+            redirect('login');
         }
-
-        $data['include'] = 'admin/login_view';
-
     }
 
     /**
@@ -69,15 +56,6 @@ class Admin extends CI_Controller {
      * This function load Admin home page after login process complete
      */
     public function home(){
-        $data['location'] = $this->event_model->get_location();
-        $data['event_type'] = $this->event_model->get_type();
-        $data['event'] = $this->event_model->get_event($this->session->admin_id);
-
-        if (!empty($this->session->admin_id)){
-            $this->load->view('admin/home_view', $data);
-        } else {
-            redirect('admin');
-        }
 
     }
 
@@ -102,7 +80,7 @@ class Admin extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             echo 0;
         } elseif(!empty($this->input->post('action'))) {
-            $value = $this->admin_model->login($this->input->post('email'));
+            $value = $this->login_model->admin_login($this->input->post('email'));
             if($this->input->post('action') == "add"){
                 if($value['admin_email'] == $this->input->post('email')){
                     $values = array(
@@ -118,7 +96,7 @@ class Admin extends CI_Controller {
             }
         }
         else {
-            $value = $this->admin_model->login($this->input->post('email'));
+            $value = $this->login_model->admin_login($this->input->post('email'));
             if(empty($value)){
                 echo 1;
             }else {
@@ -131,11 +109,4 @@ class Admin extends CI_Controller {
         }
     }
 
-    /*
-     * This function process Admin logout process
-     */
-    public function logout(){
-        $this->session->sess_destroy();
-        redirect('admin');
-    }
 }

@@ -48,7 +48,7 @@ $this->load->view('shared/login_header');
                     <input type="submit" value="Register">
                 </label>
                 <p>Already register</p>
-                <a href="<?php echo base_url('admin')?>" class="hvr-shutter-in-horizontal">Login</a>
+                <a href="<?php echo base_url('login')?>" class="hvr-shutter-in-horizontal">Login</a>
             </div>
             </form>
             <div class="clearfix"> </div>

@@ -24,20 +24,6 @@ class Admin_model extends CI_Model {
         $this->db->insert('event_admin', $values);
     }
 
-    /*
-     * This function returns all admin details selected by unique email address for login validation process
-     */
-    public function login($mail){
-        $this->db->select('*');
-        $this->db->from('admin');
-        $this->db->where('admin_email', $mail);
-        $query = $this->db->get();
-
-        if ($query->num_rows() > 0) {
-            return $query->row_array();
-        }
-    }
-
     public function admin_id($id){
         $this->db->select('event_admin');
         $this->db->from('event');
@@ -48,33 +34,13 @@ class Admin_model extends CI_Model {
     }
 
     /*
-     * This function returns the super admin.
-     */
-    public function get_super_admin($id){
-        $this->db->select('*');
-        $this->db->from('admin');
-        $this->db->where('admin_id', $id);
-        $this->db->order_by('admin_name', 'asc');
-        $query = $this->db->get();
-
-        if ($query->num_rows() > 0){
-            foreach ($query->result() as $row) {
-                $response[] = $row;
-            }
-            return $response;
-        }else{
-            $response['error'] = 'Admin Not Found';
-            return $response;
-        }
-    }
-
-    /*
      * This function returns the list of all admin manage one Event.
      */
-    public function get_other_admin($id){
+    public function get_admin($id){
         $this->db->select('*');
         $this->db->from('admin');
         $this->db->join('event_admin', 'admin.admin_id = event_admin.admin_id');
+        $this->db->join('user_role', 'user_role.role_id = event_admin.role_id');
         $this->db->where('event_admin.event_id', $id);
         $this->db->order_by('admin_name', 'asc');
         $query = $this->db->get();
