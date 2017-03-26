@@ -15,12 +15,12 @@ $this->load->view('shared/login_header');
             <?php echo form_open('login'); ?>
             <div class="col-md-6">
                 <div class="login-mail">
-                    <input type="text" name="mailcode" value="<?php echo set_value('mailcode'); ?>" placeholder="Email or Event Code" required="">
+                    <input type="text" name="mailcode" value="<?php echo set_value('mailcode'); ?>" placeholder="Email or Event Code">
                     <i class="fa fa-codepen"></i>
-                    <?php echo form_error('eventcode')?>
                 </div>
+                <?php echo form_error('mailcode')?>
                 <div class="login-mail">
-                    <input type="password" name="password" value="<?php echo set_value('password'); ?>" placeholder="Password" required="">
+                    <input type="password" name="password" value="<?php echo set_value('password'); ?>" placeholder="Password">
                     <i class="fa fa-lock"></i>
                     <?php echo form_error('password')?>
                 </div>

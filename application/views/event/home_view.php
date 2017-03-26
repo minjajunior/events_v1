@@ -141,6 +141,23 @@
             </div>
         </div>
         <div class="col-md-8">
+            <?php if (empty($this->session->admin_id)) { ?>
+            <div class="grid-form1">
+                <h3 id="forms-inline">Check your Details</h3>
+                <?php
+                $attributes = array('class' => 'form-inline', 'id' => 'member_login');
+                echo form_open('login/member/', $attributes);
+                ?>
+                    <div id="pin-responce"></div>
+                    <div class="form-group">
+                        <label for="phoneno" id="phonelabel">Phone No</label>
+                        <input type="text" name="phoneno" class="form-control" id="phoneno" placeholder="Enter phone number">
+                        <input type="hidden" name="action" value="request" id="action" />
+                    </div>
+                    <button type="submit" class="btn btn-danger btn-send">Submit</button>
+                </form>
+            </div>
+            <?php } ?>
             <div class="calendar">
                 <div class="custom-calendar-wrap custom-calendar-full">
                     <div class="custom-header">
@@ -164,6 +181,53 @@
         </div>
         <div class="clearfix"> </div>
     </div>
+
+<script>
+    $('#member_login').submit(function(e) {
+        e.preventDefault();
+
+        var me = $(this);
+
+        $.ajax({
+            url: me.attr('action'),
+            type: 'post',
+            data: me.serialize(),
+            dataType: 'json',
+            success: function (response) {
+                if(response.smsStatus == "MESSAGE_SENT"){
+                    // reset the form
+                    me[0].reset();
+                    $('#pin-responce').append('<div class="alert alert-success">' +
+                        '<i class="fa fa-check"></i>' + ' Pin Requested Successfully' +
+                        '</div>');
+                    $('#phonelabel').replaceWith('<label for="pin" id="pinlabel">Pin No</label>');
+                    $('#phoneno').replaceWith('<input type="text" name="pin" class="form-control" id="pin" placeholder="Enter pin">');
+                    $('#action').replaceWith('<input type="hidden" name="action" value="verify" id="action" />');
+                    $('.form-group').append('<input type="hidden" name="pinId" value="'+ response.pinId +'" id="pinId" />');
+
+                    // close the message after seconds
+                    $('.alert-success').delay(500).show(10, function() {
+                        $(this).delay(3000).hide(10, function() {
+                            $(this).remove();
+                        });
+                    })
+                }else if(response.verified == true){
+                    //
+                }else {
+                    /*$.each(response.messages, function (key, value) {
+                        var element = $('#' + key);
+                        element.closest('div.form-group')
+                            .removeClass('has-error')
+                            .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                            .find('.text-danger')
+                            .remove();
+                        element.after(value)
+                    })*/
+                }
+            }
+        });
+    });
+</script>
 
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/calendar.css')?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/custom_1.css')?>" />

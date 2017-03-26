@@ -20,6 +20,7 @@
                         <thead>
                         <tr>
                             <th>Member Name</th>
+                            <th>Phone Number</th>
                             <th>Pledge (Tsh.)</th>
                             <th>Cash (Tsh.)</th>
                         </tr>
@@ -30,8 +31,9 @@
                                 <?php if(isset($this->session->admin_id)){ ?>
                                     <td><a href="javascript:void(0)" class="edit_member" rel="<?php echo $md->member_id; ?>" id="editMember_view"><?php echo $md->member_name?></a></td>
                                 <?php } else { ?>
-                                    <td><?php echo $md->member_name?></td>
+                                    <td><?php echo $md->member_name ?></td>
                                 <?php } ?>
+                                <td><?php echo $md->member_phone ?></td>
                                 <td><?php echo $english_format_number = number_format($md->member_pledge, 0, '.', ',');?></td>
                                 <td><?php echo $english_format_number = number_format($md->member_cash, 0, '.', ','); ?></td>
                             </tr>
@@ -120,7 +122,7 @@
             success: function (response) {
                 if(response.success == true){
                     $('#the-message').append('<div class="alert alert-success">' +
-                        '<span class="glyphicon glyphicon-ok"></span>' +
+                        '<i class="fa fa-check"></i>' +
                         ' Member Created Successfully' +
                         '</div>');
                     $('.form-group').removeClass('has-error')
