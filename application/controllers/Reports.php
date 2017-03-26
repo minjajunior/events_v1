@@ -235,22 +235,28 @@ class Reports extends CI_Controller{
 
 
     public function  download_pdf($file_name,$html_view){
+        $file_name = $file_name.".pdf";
 
 
         header("Content-Type: application/pdf");//mime type
-        header('Content-Disposition: attachment;filename="Members.pdf"');//tell browser what's the file name
+        header("Content-Disposition: attachment;filename=".$file_name); //tell browser what's the file name
         header('Cache-Control: max-age=0');//no cache
 
         //load the PDF library
         $this->load->library('m_pdf');
 
+        $this->m_pdf->pdf->SetHTMLHeader('<div style="text-align: right; font-weight: bold;">My document</div>');
+
+        $this->m_pdf->pdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold; font-style: italic;"><tr><td width="33%"><span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td><td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td><td width="33%" style="text-align: right; ">My document</td></tr></table>');
+
+
         //generate the PDF from the given html
         $this->m_pdf->pdf->WriteHTML($html_view);
 
 
-        //force user to download the Excel file without writing it to server's HD
+        //force user to download the PDF file without writing it to server's HD
         ob_start();
-        $this->m_pdf->pdf->Output($file_name, "D"); //download it.
+        $this->m_pdf->pdf->Output($file_name, "I"); //download it.
         $pdfData = ob_get_contents();
         ob_end_clean();
 
@@ -260,16 +266,10 @@ class Reports extends CI_Controller{
         );
 
         die(json_encode($response));
-
     }
 
-
-
-
     public function test(){
-
         $this->load->view('reports/income_pdf');
-
 }
 
 
