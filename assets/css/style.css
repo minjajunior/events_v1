@@ -1365,9 +1365,9 @@ label.control-label {
 	padding: 8em 0 0;
 }
 .login-bottom{
-	width: 40%;
+	width: 25%;
 	margin: 3em auto;
-	    background-color: #fff;
+    background-color: #fff;
     padding: 2em 1em;
      border: 1px solid #ebeff6;
     border-radius: 4px;
@@ -1407,11 +1407,11 @@ label.control-label {
     background: none;	
 }
 .login-do a{
-	    font-size: 0.9em;
+    font-size: 0.9em;
     padding: 0.5em 1em;
     color: #fff;
     display: block;
-    text-align: center;	
+    text-align: center;
     text-decoration: none;    
 }
 .login-do p{

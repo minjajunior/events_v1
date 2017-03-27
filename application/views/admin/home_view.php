@@ -14,7 +14,7 @@ $this->load->view('shared/sidebar');
 
         <div class="banner">
             <h2>
-                <a href="<?php echo base_url('admin/home')?>">Admin</a>
+                <a href="<?php echo base_url('admin')?>">Admin</a>
                 <i class="fa fa-angle-right"></i>
                 <span>Events List</span>
                 <a href="#" class="pull-right" data-toggle="modal" data-target="#newEvent">Create Event</a>

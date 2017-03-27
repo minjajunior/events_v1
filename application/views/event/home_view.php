@@ -52,216 +52,449 @@
 </script>
     <!--content-->
     <div class="content-top">
-        <div class="col-md-4">
-            <div class="content-top-1">
-                <div class="col-md-6 top-content">
-                    <h5>Cash Collected</h5>
-                    <p>
-                        <?php
-                        if(isset($cash_sum)){
-                            echo $english_format_number = number_format($cash_sum, 0, '.', ',')." Tsh.";
-                        }else {
-                            echo "0 Tsh.";
-                        } ?>
-                    </p>
-                </div>
-                <div class="col-md-6 top-content1">
-                    <?php
-                    if(isset($cash_sum) && isset($budget_sum)){
-                        $cp = ($cash_sum / $budget_sum)*100; ?>
-                        <div id="demo-pie-1" class="pie-title-center" data-percent="<?php echo $cp ?>"> <span class="pie-value"></span> </div>
-                    <?php } ?>
-
-                </div>
-                <div class="clearfix"> </div>
-            </div>
-            <div class="content-top-1">
-                <div class="col-md-6 top-content">
-                    <h5>Balance</h5>
-                    <p>
-                        <?php
-                        if(isset($cash_sum) || isset($advance_sum)){
-                            $ba = $cash_sum - $advance_sum;
-                            echo $english_format_number = number_format($ba, 0, '.', ',')." Tsh.";
-                        }else {
-                            echo "0 Tsh.";
-                        } ?>
-                    </p>
-                </div>
-                <div class="col-md-6 top-content1">
-                    <?php
-                    if(isset($cash_sum) && isset($budget_sum)){
-                        $bp = (($cash_sum - $advance_sum) / $budget_sum)*100; ?>
-                        <div id="demo-pie-2" class="pie-title-center" data-percent="<?php echo $bp ?>"> <span class="pie-value"></span> </div>
-                    <?php } ?>
-                </div>
-                <div class="clearfix"> </div>
-            </div>
-            <div class="content-top-1">
-                <div class="col-md-6 top-content">
-                    <h5>Pledge</h5>
-                    <p>
-                        <?php
-                        if(isset($pledge_sum)){
-                            echo $english_format_number = number_format($pledge_sum, 0, '.', ',')." Tsh.";
-                        }else {
-                            echo "0 Tsh.";
-                        } ?>
-                    </p>
-                </div>
-                <div class="col-md-6 top-content1">
-                    <?php
-                    if(isset($budget_sum) && isset($pledge_sum)){
-                        $pp = ($pledge_sum / $budget_sum )*100; ?>
-                        <div id="demo-pie-3" class="pie-title-center" data-percent="<?php echo $pp ?>"> <span class="pie-value"></span> </div>
-                    <?php } ?>
-                </div>
-                <div class="clearfix"> </div>
-            </div>
-            <div class="content-top-1">
-                <div class="col-md-6 top-content">
-                    <h5>Budget</h5>
-                    <p>
-                        <?php
-                        if(isset($budget_sum)){
-                            echo $english_format_number = number_format($budget_sum, 0, '.', ',')." Tsh.";
-                        }else {
-                            echo "0 Tsh.";
-                        } ?>
-                    </p>
-                </div>
-                <div class="col-md-6 top-content1">
-                    <?php
-                    if(isset($advance_sum) && isset($budget_sum)){
-                        $bup = ($advance_sum / $budget_sum)*100; ?>
-                        <div id="demo-pie-4" class="pie-title-center" data-percent="<?php echo $bup ?>"> <span class="pie-value"></span> </div>
-                    <?php } ?>
-                </div>
-                <div class="clearfix"> </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <?php if (empty($this->session->admin_id)) { ?>
-            <div class="grid-form1">
-                <h3 id="forms-inline">Check your Details</h3>
-                <?php
-                $attributes = array('class' => 'form-inline', 'id' => 'member_login');
-                echo form_open('login/member/', $attributes);
-                ?>
-                    <div id="pin-responce"></div>
-                    <div class="form-group">
-                        <label for="phoneno" id="phonelabel">Phone No</label>
-                        <input type="text" name="phoneno" class="form-control" id="phoneno" placeholder="Enter phone number">
-                        <input type="hidden" name="action" value="request" id="action" />
+        <?php if (!empty($this->session->admin_id)) { ?>
+            <div class="col-md-4">
+                <div class="content-top-1">
+                    <div class="col-md-6 top-content">
+                        <h5>Cash Collected</h5>
+                        <p>
+                            <?php
+                            if(isset($cash_sum)){
+                                echo $english_format_number = number_format($cash_sum, 0, '.', ',')." Tsh.";
+                            }else {
+                                echo "0 Tsh.";
+                            } ?>
+                        </p>
                     </div>
-                    <button type="submit" class="btn btn-danger btn-send">Submit</button>
-                </form>
-            </div>
-            <?php } ?>
-            <div class="calendar">
-                <div class="custom-calendar-wrap custom-calendar-full">
-                    <div class="custom-header">
-
-                        <h3 class="custom-month-year">
-                            <span id="custom-month" class="custom-month"> </span>
-                            <span id="custom-year" class="custom-year"> </span>
-                            <nav>
-                                <span id="custom-prev" class="custom-prev"> </span>
-                                <span id="custom-next" class="custom-next"> </span>
-                                <span id="custom-current" class="custom-current" title="Got to current date"></span>
-                            </nav>
-                            <div class="clearfix"> </div>
-                        </h3>
+                    <div class="col-md-6 top-content1">
+                        <?php
+                        if(isset($cash_sum) && isset($budget_sum)){
+                            $cp = ($cash_sum / $budget_sum)*100; ?>
+                            <div id="demo-pie-1" class="pie-title-center" data-percent="<?php echo $cp ?>"> <span class="pie-value"></span> </div>
+                        <?php } ?>
                     </div>
-                    <div id="calendar" class="fc-calendar-container"> </div>
                     <div class="clearfix"> </div>
-
+                </div>
+                <div class="content-top-1">
+                    <div class="col-md-6 top-content">
+                        <h5>Balance</h5>
+                        <p>
+                            <?php
+                            if(isset($cash_sum) || isset($advance_sum)){
+                                $ba = $cash_sum - $advance_sum;
+                                echo $english_format_number = number_format($ba, 0, '.', ',')." Tsh.";
+                            }else {
+                                echo "0 Tsh.";
+                            } ?>
+                        </p>
+                    </div>
+                    <div class="col-md-6 top-content1">
+                        <?php
+                        if(isset($cash_sum) && isset($budget_sum)){
+                            $bp = (($cash_sum - $advance_sum) / $budget_sum)*100; ?>
+                            <div id="demo-pie-2" class="pie-title-center" data-percent="<?php echo $bp ?>"> <span class="pie-value"></span> </div>
+                        <?php } ?>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="content-top-1">
+                    <div class="col-md-6 top-content">
+                        <h5>Pledge</h5>
+                        <p>
+                            <?php
+                            if(isset($pledge_sum)){
+                                echo $english_format_number = number_format($pledge_sum, 0, '.', ',')." Tsh.";
+                            }else {
+                                echo "0 Tsh.";
+                            } ?>
+                        </p>
+                    </div>
+                    <div class="col-md-6 top-content1">
+                        <?php
+                        if(isset($budget_sum) && isset($pledge_sum)){
+                            $pp = ($pledge_sum / $budget_sum )*100; ?>
+                            <div id="demo-pie-3" class="pie-title-center" data-percent="<?php echo $pp ?>"> <span class="pie-value"></span> </div>
+                        <?php } ?>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="content-top-1">
+                    <div class="col-md-6 top-content">
+                        <h5>Budget</h5>
+                        <p>
+                            <?php
+                            if(isset($budget_sum)){
+                                echo $english_format_number = number_format($budget_sum, 0, '.', ',')." Tsh.";
+                            }else {
+                                echo "0 Tsh.";
+                            } ?>
+                        </p>
+                    </div>
+                    <div class="col-md-6 top-content1">
+                        <?php
+                        if(isset($advance_sum) && isset($budget_sum)){
+                            $bup = ($advance_sum / $budget_sum)*100; ?>
+                            <div id="demo-pie-4" class="pie-title-center" data-percent="<?php echo $bup ?>"> <span class="pie-value"></span> </div>
+                        <?php } ?>
+                    </div>
+                    <div class="clearfix"> </div>
                 </div>
             </div>
-        </div>
+            <div class="col-md-8">
+                <div class="blank-page">
+                    <table class="table">
+                    <tbody>
+                    <tr class="table-row">
+                        <td class="table-img">
+                            <img src="images/in.jpg" alt="" />
+                        </td>
+                        <td class="table-text">
+                            <h6> Lorem ipsum</h6>
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo</p>
+                        </td>
+                        <td>
+                            <span class="fam">Family</span>
+                        </td>
+                        <td class="march">
+                            in 5 days
+                        </td>
+
+                        <td >
+                            <i class="fa fa-star-half-o icon-state-warning"></i>
+
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-img">
+                            <img src="images/in1.jpg" alt="" />
+                        </td>
+                        <td class="table-text">
+                            <h6> Lorem ipsum</h6>
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo</p>
+                        </td>
+                        <td>
+                            <span class="mar">Market</span>
+                        </td>
+                        <td class="march">
+                            in 5 days
+                        </td>
+
+                        <td >
+                            <i class="fa fa-star-half-o icon-state-warning"></i>
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-img">
+                            <img src="images/in2.jpg" alt="" />
+                        </td>
+                        <td class="table-text">
+                            <h6> Lorem ipsum</h6>
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo</p>
+                        </td>
+                        <td>
+                            <span class="work">work</span>
+                        </td>
+                        <td class="march">
+                            in 5 days
+                        </td>
+
+                        <td >
+                            <i class="fa fa-star-half-o icon-state-warning"></i>
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-img">
+                            <img src="images/in3.jpg" alt="" />
+                        </td>
+                        <td class="table-text">
+                            <h6> Lorem ipsum</h6>
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo</p>
+                        </td>
+                        <td>
+                            <span class="fam">Family</span>
+                        </td>
+                        <td class="march">
+                            in 4 days
+                        </td>
+
+                        <td >
+                            <i class="fa fa-star-half-o icon-state-warning"></i>
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-img">
+                            <img src="images/in4.jpg" alt="" />
+                        </td>
+                        <td class="table-text">
+                            <h6> Lorem ipsum</h6>
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo</p>
+                        </td>
+                        <td>
+                            <span class="ur">urgent</span>
+                        </td>
+                        <td class="march">
+                            in 4 days
+                        </td>
+
+                        <td >
+                            <i class="fa fa-star-half-o icon-state-warning"></i>
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-img">
+                            <img src="images/in5.jpg" alt="" />
+                        </td>
+                        <td class="table-text">
+                            <h6> Lorem ipsum</h6>
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo</p>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td class="march">
+                            in 3 days
+                        </td>
+
+                        <td >
+                            <i class="fa fa-star-half-o icon-state-warning"></i>
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-img">
+                            <img src="images/in6.jpg" alt="" />
+                        </td>
+                        <td class="table-text">
+                            <h6> Lorem ipsum</h6>
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo</p>
+                        </td>
+                        <td>
+                            <span class="fam">Family</span>
+                        </td>
+                        <td class="march">
+                            in 2 days
+                        </td>
+
+                        <td >
+                            <i class="fa fa-star-half-o icon-state-warning"></i>
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-img">
+                            <img src="images/in7.jpg" alt="" />
+                        </td>
+                        <td class="table-text">
+                            <h6> Lorem ipsum</h6>
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo</p>
+                        </td>
+                        <td>
+                            <span class="ur">urgent</span>
+                        </td>
+                        <td class="march">
+                            in 2 days
+                        </td>
+
+                        <td >
+                            <i class="fa fa-star-half-o icon-state-warning"></i>
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-img">
+                            <img src="images/in8.jpg" alt="" />
+                        </td>
+                        <td class="table-text">
+                            <h6> Lorem ipsum</h6>
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo</p>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td class="march">
+                            in 2 days
+                        </td>
+
+                        <td >
+                            <i class="fa fa-star-half-o icon-state-warning"></i>
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-img">
+                            <img src="images/in9.jpg" alt="" />
+                        </td>
+                        <td class="table-text">
+                            <h6> Lorem ipsum</h6>
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo</p>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td class="march">
+                            in 2 days
+                        </td>
+
+                        <td >
+                            <i class="fa fa-star-half-o icon-state-warning"></i>
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-img">
+                            <img src="images/in10.jpg" alt="" />
+                        </td>
+                        <td class="table-text">
+                            <h6> Lorem ipsum</h6>
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo</p>
+                        </td>
+                        <td>
+                            <span class="mar">Market</span>
+                        </td>
+                        <td class="march">
+                            in 1 days
+                        </td>
+
+                        <td >
+                            <i class="fa fa-star-half-o icon-state-warning"></i>
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-img">
+                            <img src="images/in11.jpg" alt="" />
+                        </td>
+                        <td class="table-text">
+                            <h6> Lorem ipsum</h6>
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo</p>
+                        </td>
+                        <td>
+                            <span class="ur">urgent</span>
+                        </td>
+                        <td class="march">
+                            in 1 days
+                        </td>
+
+                        <td >
+                            <i class="fa fa-star-half-o icon-state-warning"></i>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        <?php } else if (!empty($this->session->member_phone)) { ?>
+            <div class="col-md-8">
+                <div class="content-top-1 col-md-6">
+                    <div class="col-md-6 top-content">
+                        <h5>Cash Collected</h5>
+                        <p>
+                            <?php
+                            if(isset($cash_sum)){
+                                echo $english_format_number = number_format($cash_sum, 0, '.', ',')." Tsh.";
+                            }else {
+                                echo "0 Tsh.";
+                            } ?>
+                        </p>
+                    </div>
+                    <div class="col-md-6 top-content1">
+                        <?php
+                        if(isset($cash_sum) && isset($budget_sum)){
+                            $cp = ($cash_sum / $budget_sum)*100; ?>
+                            <div id="demo-pie-1" class="pie-title-center" data-percent="<?php echo $cp ?>"> <span class="pie-value"></span> </div>
+                        <?php } ?>
+
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="content-top-1 col-md-6">
+                    <div class="col-md-6 top-content">
+                        <h5>Balance</h5>
+                        <p>
+                            <?php
+                            if(isset($cash_sum) || isset($advance_sum)){
+                                $ba = $cash_sum - $advance_sum;
+                                echo $english_format_number = number_format($ba, 0, '.', ',')." Tsh.";
+                            }else {
+                                echo "0 Tsh.";
+                            } ?>
+                        </p>
+                    </div>
+                    <div class="col-md-6 top-content1">
+                        <?php
+                        if(isset($cash_sum) && isset($budget_sum)){
+                            $bp = (($cash_sum - $advance_sum) / $budget_sum)*100; ?>
+                            <div id="demo-pie-2" class="pie-title-center" data-percent="<?php echo $bp ?>"> <span class="pie-value"></span> </div>
+                        <?php } ?>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="content-top-1 col-md-6">
+                    <div class="col-md-6 top-content">
+                        <h5>Pledge</h5>
+                        <p>
+                            <?php
+                            if(isset($pledge_sum)){
+                                echo $english_format_number = number_format($pledge_sum, 0, '.', ',')." Tsh.";
+                            }else {
+                                echo "0 Tsh.";
+                            } ?>
+                        </p>
+                    </div>
+                    <div class="col-md-6 top-content1">
+                        <?php
+                        if(isset($budget_sum) && isset($pledge_sum)){
+                            $pp = ($pledge_sum / $budget_sum )*100; ?>
+                            <div id="demo-pie-3" class="pie-title-center" data-percent="<?php echo $pp ?>"> <span class="pie-value"></span> </div>
+                        <?php } ?>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="content-top-1 col-md-6">
+                    <div class="col-md-6 top-content">
+                        <h5>Budget</h5>
+                        <p>
+                            <?php
+                            if(isset($budget_sum)){
+                                echo $english_format_number = number_format($budget_sum, 0, '.', ',')." Tsh.";
+                            }else {
+                                echo "0 Tsh.";
+                            } ?>
+                        </p>
+                    </div>
+                    <div class="col-md-6 top-content1">
+                        <?php
+                        if(isset($advance_sum) && isset($budget_sum)){
+                            $bup = ($advance_sum / $budget_sum)*100; ?>
+                            <div id="demo-pie-4" class="pie-title-center" data-percent="<?php echo $bup ?>"> <span class="pie-value"></span> </div>
+                        <?php } ?>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="profile-bottom">
+                    <div class="profile-bottom-top">
+                        <?php foreach($member_detail as $md){ ?>
+                            <h3>Your Details</h3>
+                            <div class="col-md-12 profile-text">
+                                <table>
+                                    <tr>
+                                        <td>Your Name</td>
+                                        <td>:</td>
+                                        <td><?php echo $md->member_name ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Your Pledge</td>
+                                        <td> :</td>
+                                        <td><?php echo $md->member_pledge ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cash Paid</td>
+                                        <td>:</td>
+                                        <td><?php echo $md->member_cash; ?></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="clearfix"></div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
         <div class="clearfix"> </div>
     </div>
-
-<script>
-    $('#member_login').submit(function(e) {
-        e.preventDefault();
-
-        var me = $(this);
-
-        $.ajax({
-            url: me.attr('action'),
-            type: 'post',
-            data: me.serialize(),
-            dataType: 'json',
-            success: function (response) {
-                if(response.smsStatus == "MESSAGE_SENT"){
-                    // reset the form
-                    me[0].reset();
-                    $('#pin-responce').append('<div class="alert alert-success">' +
-                        '<i class="fa fa-check"></i>' + ' Pin Requested Successfully' +
-                        '</div>');
-                    $('#phonelabel').replaceWith('<label for="pin" id="pinlabel">Pin No</label>');
-                    $('#phoneno').replaceWith('<input type="text" name="pin" class="form-control" id="pin" placeholder="Enter pin">');
-                    $('#action').replaceWith('<input type="hidden" name="action" value="verify" id="action" />');
-                    $('.form-group').append('<input type="hidden" name="pinId" value="'+ response.pinId +'" id="pinId" />');
-
-                    // close the message after seconds
-                    $('.alert-success').delay(500).show(10, function() {
-                        $(this).delay(3000).hide(10, function() {
-                            $(this).remove();
-                        });
-                    })
-                }else if(response.verified == true){
-                    //
-                }else {
-                    /*$.each(response.messages, function (key, value) {
-                        var element = $('#' + key);
-                        element.closest('div.form-group')
-                            .removeClass('has-error')
-                            .addClass(value.length > 0 ? 'has-error' : 'has-success')
-                            .find('.text-danger')
-                            .remove();
-                        element.after(value)
-                    })*/
-                }
-            }
-        });
-    });
-</script>
-
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/calendar.css')?>" />
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/custom_1.css')?>" />
-<script type="text/javascript" src="<?php echo base_url('assets/js/jquery.calendario.js')?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/js/data.js')?>"></script>
-<script type="text/javascript">
-    $(function() {
-
-        var cal = $( '#calendar' ).calendario({
-            onDayClick : function( $el, $contentEl, dateProperties ) {
-                for( var key in dateProperties ) {
-                    console.log( key + ' = ' + dateProperties[ key ] );
-                }
-            },
-                caldata : codropsEvents
-            }),
-
-            $month = $( '#custom-month' ).html( cal.getMonthName() ),
-            $year = $( '#custom-year' ).html( cal.getYear() );
-
-        $( '#custom-next' ).on( 'click', function() {
-            cal.gotoNextMonth( updateMonthYear );
-        } );
-        $( '#custom-prev' ).on( 'click', function() {
-            cal.gotoPreviousMonth( updateMonthYear );
-        } );
-        $( '#custom-current' ).on( 'click', function() {
-            cal.gotoNow( updateMonthYear );
-        } );
-
-        function updateMonthYear() {
-            $month.html( cal.getMonthName() );
-            $year.html( cal.getYear() );
-        }
-
-    });
-</script>

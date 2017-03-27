@@ -25,11 +25,10 @@ class Login_model extends CI_Model {
     /*
      * This function returns all events details selected by a unique event code
      */
-    public function event_login($code)
-    {
+    public function member_login($number) {
         $this->db->select('*');
-        $this->db->from('event');
-        $this->db->where('event_code', $code);
+        $this->db->from('member');
+        $this->db->where('member_phone', $number);
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
