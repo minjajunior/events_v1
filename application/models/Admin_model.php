@@ -15,6 +15,7 @@ class Admin_model extends CI_Model {
      */
     public function register($values){
         $this->db->insert('admin', $values);
+
     }
 
     /*
@@ -95,4 +96,14 @@ class Admin_model extends CI_Model {
         $query = $this->db->get();
         return $query->num_rows();
     }
+
+    public function invite_admin($values,$event_id){
+        $this->db->insert('admin', $values);
+        $id = $this->db->insert_id();
+        $role_id =2;
+        $this->db->insert('event_admin', array('event_id'=>$event_id,'admin_id' =>$id,'role_id' =>$role_id));
+
+    }
+
+
 }

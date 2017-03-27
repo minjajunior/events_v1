@@ -92,8 +92,72 @@ class Admin extends CI_Controller {
                     echo 3;
                 }
             }elseif ($this->input->post('action') == "invite"){
-                // Invite logic goes here
-                echo 4;
+
+
+
+                $email = $this->input->post('email');
+
+                //generate a token
+                $token = md5(microtime (TRUE)*100000);
+                //hash token to be stored on db
+
+                $token_to_db = hash('sha256',$token);
+                //expire time to be stored on db
+                $expire_time = date("Y-m-d H:i:s",time()+3600);
+                //array for updating database
+                $data = array(
+                    'token_expire' => $expire_time,
+                    'admin_email'=>$email,
+                    'hashed_token' => $token_to_db
+                );
+
+
+                $result = $this->admin_model->invite_admin($data,$id);
+
+
+
+                if($result){
+                    //user id and token to be sent to email
+
+                    $token_to_email= $token;
+                    $site_url = site_url();
+
+                    $from = "admin@demicorp.co.tz";
+                    $to = $email;
+                    $subject = "Demi Events - Admin Invitation";
+                    $message = " 
+                        <html>
+                        <head>
+                        <title>Dermi Corp | Admin Invitation</title>
+                        </head>
+                        <body>
+                                <h4>Hello Sir/Madam,</h4>    
+                                <p>Please visit the following link to accept and complete your invitation</p>
+                                <a href='$site_url/access/password/change_password/$user_type/$user_id/$token_to_email'>
+                                    Click here to change your password</a>
+                                <p>The invitaion link will expire in 1hour.</p>
+                                <p>Sincerely,</p>
+                                <p>Dermi Corp Admin.</p>
+                        </body></html>";
+                    //sending email
+
+                    echo 4;
+
+                    $email_result =  send($from,$to,$subject,$message);
+//                    if($email_result){
+//                        //on success sending email
+//                        echo 4;
+//                    }else {
+//                        //on failure sending email
+//                        echo 6;
+//                    }//end inner else
+                }else{
+                    //on failure to store
+                    echo 7;
+
+
+                }//end else if $result
+
             }
         }
         else {
