@@ -38,65 +38,70 @@ class Event extends CI_Controller
      */
     public function home($id) {
 
-        if (!empty($this->session->admin_id) || !empty($this->session->event_id)) {
+        if (!empty($this->session->admin_id) || !empty($this->session->member_phone)) {
             $data['event_details'] = $this->event_model->event_details($id);
-            $data['member_details'] = $this->event_model->member_details($id);
-            $data['budget_details'] = $this->event_model->budget_details($id);
-            $data['pledge_sum'] = $this->event_model->pledge_sum($id);
-            $data['cash_sum'] = $this->event_model->cash_sum($id);
-            $data['budget_sum'] = $this->event_model->budget_sum($id);
-            $data['advance_sum'] = $this->event_model->advance_sum($id);
-            $data['location'] = $this->event_model->get_location();
             $data['event_id'] = $id;
             $this->load->view('event/default_view', $data);
-        } else {
+
+        }else{
             redirect('login');
         }
     }
 
     public function load_views() {
 
-        if (!empty($_POST['view_name']) || !empty($_POST['event_id']) || !empty($this->session->admin_id) || !empty($this->session->event_id)) {
+        if (!empty($this->session->admin_id)) {
 
-            if (!empty($_POST['type'])) {
+            if(!empty($_POST['view_name']) || !empty($_POST['event_id'])){
+                if (!empty($_POST['type'])) {
 
-                $data['type'] = $_POST['type'];
-                if ($_POST['type'] == 'Cash' || $_POST['type'] == 'Pledge') {
-                    $data['member_id'] = $_POST['member_id'];
+                    $data['type'] = $_POST['type'];
+                    if ($_POST['type'] == 'Cash' || $_POST['type'] == 'Pledge') {
+                        $data['member_id'] = $_POST['member_id'];
+                        $data['member_detail'] = $this->event_model->member_detail($_POST['member_id']);
+                        $id = $this->event_model->event_id($_POST['member_id']);
+                    } elseif ($_POST['type'] == 'Cost' || $_POST['type'] == 'Payment') {
+                        $data['item_id'] = $_POST['item_id'];
+                        $data['item_detail'] = $this->event_model->budget_detail($_POST['item_id']);
+                        $id = $this->event_model->event_iid($_POST['item_id']);
+                    }
+
+                } elseif (!empty($_POST['member_id'])) {
                     $data['member_detail'] = $this->event_model->member_detail($_POST['member_id']);
                     $id = $this->event_model->event_id($_POST['member_id']);
-                } elseif ($_POST['type'] == 'Cost' || $_POST['type'] == 'Payment') {
+                    $data['member_id'] = $_POST['member_id'];
+                } elseif (!empty($_POST['item_id'])) {
                     $data['item_id'] = $_POST['item_id'];
                     $data['item_detail'] = $this->event_model->budget_detail($_POST['item_id']);
                     $id = $this->event_model->event_iid($_POST['item_id']);
+                } else {
+                    $id = $_POST['event_id'];
                 }
+                $data['location'] = $this->event_model->get_location();
+                $data['event_type'] = $this->event_model->get_type();
+                $data['event_details'] = $this->event_model->event_details($id);
+                $data['member_details'] = $this->event_model->member_details($id);
+                $data['member_cat']= $this->reports_model->get_member_categories($id);
+                $data['budget_details'] = $this->event_model->budget_details($id);
+                $data['pledge_sum'] = $this->event_model->pledge_sum($id);
+                $data['cash_sum'] = $this->event_model->cash_sum($id);
+                $data['budget_sum'] = $this->event_model->budget_sum($id);
+                $data['advance_sum'] = $this->event_model->advance_sum($id);
+                $data['event_admin'] = $this->admin_model->get_admin($id);
+                $data['event_id'] = $id;
+                $view_name = $_POST['view_name'];
 
-            } elseif (!empty($_POST['member_id'])) {
-                $data['member_detail'] = $this->event_model->member_detail($_POST['member_id']);
-                $id = $this->event_model->event_id($_POST['member_id']);
-                $data['member_id'] = $_POST['member_id'];
-            } elseif (!empty($_POST['item_id'])) {
-                $data['item_id'] = $_POST['item_id'];
-                $data['item_detail'] = $this->event_model->budget_detail($_POST['item_id']);
-                $id = $this->event_model->event_iid($_POST['item_id']);
-            } else {
-                $id = $_POST['event_id'];
+                $this->load->view('event/' . $view_name, $data);
             }
-            $data['location'] = $this->event_model->get_location();
-            $data['event_type'] = $this->event_model->get_type();
-            $data['event_details'] = $this->event_model->event_details($id);
-            $data['member_details'] = $this->event_model->member_details($id);
-            $data['member_cat']= $this->reports_model->get_member_categories($id);
-            $data['budget_details'] = $this->event_model->budget_details($id);
+        } elseif (!empty($this->session->member_phone)) {
+            $id = $_POST['event_id'];
+            $view_name = $_POST['view_name'];
+            $data['member_detail'] = $this->event_model->member_data($id, $this->session->member_phone);
             $data['pledge_sum'] = $this->event_model->pledge_sum($id);
             $data['cash_sum'] = $this->event_model->cash_sum($id);
             $data['budget_sum'] = $this->event_model->budget_sum($id);
             $data['advance_sum'] = $this->event_model->advance_sum($id);
-            $data['event_admin'] = $this->admin_model->get_admin($id);
-            $data['event_id'] = $id;
-            $view_name = $_POST['view_name'];
-
-            $this->load->view('event/' . $view_name, $data);
+            $this->load->view('event/'.$view_name, $data);
         }
     }
 

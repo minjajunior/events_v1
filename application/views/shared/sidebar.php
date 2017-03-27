@@ -57,12 +57,12 @@
                     </ul>
                 </div>
             </div>
-        <?php } elseif(!empty($this->session->event_id)) {?>
+        <?php } elseif(!empty($this->session->member_phone)) {?>
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <?php if(isset($event_id)){ ?>
-                            <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="home_view"><i class="fa fa-home nav_icon "></i><span class="nav-label">Home</span> </a></li>
+                        <?php if(isset($this->session->member_phone)){ ?>
+                            <li><a href="<?php echo site_url('member') ?>" class="hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Dashboard</span> </a></li>
                         <?php } ?>
                         <li><a href="<?php echo site_url('login/logout')?>" class=" hvr-bounce-to-right"><i class="fa fa-sign-out nav_icon"></i> <span class="nav-label">Logout</span> </a></li>
                     </ul>

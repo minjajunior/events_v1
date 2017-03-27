@@ -13,7 +13,7 @@ $this->load->view('shared/login_header');
         <div class="login-bottom">
             <h2>Admin Register</h2>
             <?php echo form_open('admin/register'); ?>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="login-mail">
                     <input type="text" name="fullname" value="<?php echo set_value('fullname'); ?>" placeholder="Full Name">
                     <i class="fa fa-user"></i>
@@ -43,7 +43,7 @@ $this->load->view('shared/login_header');
                     <label class="checkbox1"><input type="checkbox" name="checkbox" ><i> </i>I agree with the terms</label>
                 </a-->
             </div>
-            <div class="col-md-6 login-do">
+            <div class="col-md-12 login-do">
                 <label class="hvr-shutter-in-horizontal login-sub">
                     <input type="submit" value="Register">
                 </label>

@@ -26,11 +26,6 @@ $this->load->view('shared/sidebar');
                                 <td><?php echo date_format(date_create($ed->event_date), 'l, jS F Y') ?></td>
                             </tr>
                             <tr>
-                                <td>Event Code</td>
-                                <td> :</td>
-                                <td><?php echo $ed->event_code ?></td>
-                            </tr>
-                            <tr>
                                 <td>Event Type</td>
                                 <td> :</td>
                                 <td><?php echo $ed->event_type ?></td>
@@ -38,13 +33,7 @@ $this->load->view('shared/sidebar');
                             <tr>
                                 <td>Event Location </td>
                                 <td>:</td>
-                                <td>
-                                    <?php foreach($location as $loc){
-                                        if($loc->location_id == $ed->event_location){
-                                            echo $loc->location_name;
-                                        }
-                                    } ?>
-                                </td>
+                                <td><?php echo $ed->location_name; ?></td>
                             </tr>
                         </table>
                     </div>

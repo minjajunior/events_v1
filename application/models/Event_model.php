@@ -69,12 +69,35 @@ class Event_model extends CI_Model {
     }
 
     /*
+     * This function returns the list of all events registered to one Member.
+     */
+    public function member_event($pn){
+        $this->db->select('*');
+        $this->db->from('event');
+        $this->db->join('member', 'event.event_id = member.event_id');
+        $this->db->where('member.member_phone', $pn);
+        $this->db->order_by('event_name', 'asc');
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0){
+            foreach ($query->result() as $row) {
+                $response[] = $row;
+            }
+            return $response;
+        }else{
+            $response['error'] = 'Event Not Found';
+            return $response;
+        }
+    }
+
+    /*
      * This function returns the events details of one selected event.
      */
     public function event_details($id){
         $this->db->select('*');
         $this->db->from('event');
-        $this->db->where('event_id', $id);
+        $this->db->join('location', 'event.event_location = location.location_id');
+        $this->db->where('event.event_id', $id);
         $query = $this->db->get();
 
         if ($query->num_rows() > 0){
@@ -116,6 +139,28 @@ class Event_model extends CI_Model {
         $this->db->select('*');
         $this->db->from('member');
         $this->db->where('member_id', $id);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0){
+            foreach ($query->result() as $row) {
+                $response[] = $row;
+            }
+            return $response;
+        }else{
+            $response['error'] = '0';
+            return $response;
+        }
+    }
+
+    /*
+     * This function returns member details of the selected member
+     */
+    public function member_data($id, $pn){
+        $this->db->select('*');
+        $this->db->from('member');
+        $this->db->join('event', 'event.event_id = member.event_id');
+        $this->db->where('member.event_id', $id);
+        $this->db->where('member.member_phone', $pn);
         $query = $this->db->get();
 
         if ($query->num_rows() > 0){
