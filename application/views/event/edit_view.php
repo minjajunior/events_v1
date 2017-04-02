@@ -216,9 +216,25 @@
                                         });
                                     });
                                 }else if (response == 4){
+
                                     $('#rea').remove();
                                     $('.input-group').removeClass('has-error')
                                         .addClass('has-error').append('<div id="rea">Admin Invited Successful</div>');
+                                    $('.text-danger').remove();
+
+                                    $('#add_admin')[0].reset();
+
+                                    // close the message after seconds
+                                    $('#rea').delay(500).show(10, function() {
+                                        $(this).delay(3000).hide(10, function() {
+                                            $(this).remove();
+                                            //window.location.reload()
+                                        });
+                                    });
+                                }else if (response == 6){
+                                    $('#rea').remove();
+                                    $('.input-group').removeClass('has-error')
+                                        .addClass('has-error').append('<div id="rea">Failed to send an email</div>');
                                     $('.text-danger').remove();
 
                                     $('#add_admin')[0].reset();
