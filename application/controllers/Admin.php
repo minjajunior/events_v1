@@ -103,10 +103,10 @@ class Admin extends CI_Controller {
 
                 $token_to_db = hash('sha256',$token);
                 //expire time to be stored on db
-                $expire_time = date("Y-m-d H:i:s",time()+3600);
+                $expire_time = date("Y-m-d H:i:s",time()+604800);
                 //array for updating database
                 $data = array(
-                    'token_expire' => $expire_time,
+                    'reg_status' => 0,
                     'admin_email'=>$email,
                     'hashed_token' => $token_to_db
                 );
@@ -114,16 +114,17 @@ class Admin extends CI_Controller {
 
                 $result = $this->admin_model->invite_admin($data,$id);
 
-
-
-                if($result){
+                if(isset($result) && is_numeric($result)){
                     //user id and token to be sent to email
 
                     $token_to_email= $token;
+                    $admin_id =  base64_encode($id);
                     $site_url = site_url();
+                    $email_url = $site_url. 'admin/admin_invite/'.$admin_id.'/'.$token_to_email;
 
-                    $from = "admin@demicorp.co.tz";
-                    $to = $email;
+                    $from = "demicorp@localhost";
+                    //$to = $email;
+                    $to = "demi@localhost";
                     $subject = "Demi Events - Admin Invitation";
                     $message = " 
                         <html>
@@ -133,24 +134,31 @@ class Admin extends CI_Controller {
                         <body>
                                 <h4>Hello Sir/Madam,</h4>    
                                 <p>Please visit the following link to accept and complete your invitation</p>
-                                <a href='$site_url/access/password/change_password/$user_type/$user_id/$token_to_email'>
-                                    Click here to change your password</a>
-                                <p>The invitaion link will expire in 1hour.</p>
+                                <a href='$email_url'>
+                                    Click here to accept and complete your invitation</a>
+                                <p>The invitation link will expire in 7 Days.</p>
                                 <p>Sincerely,</p>
                                 <p>Dermi Corp Admin.</p>
                         </body></html>";
                     //sending email
 
-                    echo 4;
+                    $this->email->from($from, 'Demi Corp');
+                    $this->email->to($to);
 
-                    $email_result =  send($from,$to,$subject,$message);
-//                    if($email_result){
-//                        //on success sending email
-//                        echo 4;
-//                    }else {
-//                        //on failure sending email
-//                        echo 6;
-//                    }//end inner else
+                    $this->email->subject($subject);
+                    $this->email->message($message);
+
+
+
+                   // $email_result =
+                    if($this->email->send()){
+                        //on success sending email
+                        echo 4;
+                    }else {
+                        show_error($this->email->print_debugger());
+                        //on failure sending email
+                        //echo 6;
+                    }//end inner else
                 }else{
                     //on failure to store
                     echo 7;
@@ -172,6 +180,67 @@ class Admin extends CI_Controller {
                 }
             }
         }
+    }
+
+
+    public function admin_invite($admin_id,$token){
+
+        $admin_id = base64_decode($admin_id);
+        $token = base64_decode($token);
+
+        //hash token to be matched with db
+        $token_to_email = hash('sha256', $token);
+
+
+        $result = $this->admin_model->admin_info($admin_id);
+
+
+        //$token_expire = $result[0]['token_expire'];
+        $token_to_db = $result[0]['hashed_token'];
+
+        if(($token_to_db == $token_to_email)){
+
+            $this->form_validation->set_rules('fullname', 'Full Name', 'required');
+            $this->form_validation->set_message('fullname', 'Error Message');
+            $this->form_validation->set_rules('phone', 'Phone Number', 'required|is_unique[admin.admin_phone]');
+            $this->form_validation->set_rules('password', 'Password', 'required');
+            $this->form_validation->set_rules('password2', 'Re-Enter Password', 'required|matches[password]');
+
+            if ($this->form_validation->run() == FALSE) {
+
+                $data['admin_id']= $admin_id;
+                $data['token'] = $token;
+
+                $this->load->view('admin/invite_view',$data);
+            } else {
+                $values = array(
+                    'admin_name' => $this->input->post('fullname'),
+                    'admin_phone' => $this->input->post('phone'),
+                    'reg_status'=>1,
+                    'admin_password' => md5($this->input->post('password'))
+                );
+
+                $this->admin_model->update_admin($admin_id,$values);
+
+                redirect('admin');
+            }
+
+
+        }else{
+
+
+            //else load the forgot password view with the expire time error on it
+
+
+
+
+        }
+
+
+
+
+
+
     }
 
 }
