@@ -28,6 +28,17 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="location" class="col-sm-2 control-label">Group</label>
+                <div class="col-sm-8">
+                    <select name="group" id="selector1" class="form-control1">
+                        <option value="">Select Group</option>
+                        <?php foreach($member_group as $mg){ ?>
+                            <option value="<?php echo $mg->group_id; ?>" <?php if($mg->group_id == $md->group_id){ echo set_select('group', $mg->group_id, true); } ?> id="group"><?php echo $mg->group_name; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="disabledinput" class="col-sm-2 control-label">Member Pledge</label>
                 <div class="col-sm-8">
                     <input disabled="" type="text" name="memberpledge" value="<?php echo $md->member_pledge ?>" class="form-control1" id="disabledinput" placeholder="Member Pledge">
@@ -56,49 +67,7 @@
 </div>
 
 <script>
-    $('#edit_member').submit(function(e) {
-        e.preventDefault();
 
-        var me = $(this);
-
-        $.ajax({
-            url: me.attr('action'),
-            type: 'post',
-            data: me.serialize(),
-            dataType: 'json',
-            success: function (response) {
-                if(response.success == true){
-                    $('#the-message').append('<div class="alert alert-success">' +
-                        '<span class="glyphicon glyphicon-ok"></span>' +
-                        ' Member Updated Successfully' +
-                        '</div>');
-                    $('.form-group').removeClass('has-error')
-                        .removeClass('has-success');
-                    $('.text-danger').remove();
-
-                    // reset the form
-                    me[0].reset();
-
-                    // close the message after seconds
-                    $('.alert-success').delay(500).show(10, function() {
-                        $(this).delay(3000).hide(10, function() {
-                            $(this).remove();
-                        });
-                    })
-                }else {
-                    $.each(response.messages, function (key, value) {
-                        var element = $('#' + key);
-                        element.closest('div.form-group')
-                            .removeClass('has-error')
-                            .addClass(value.length > 0 ? 'has-error' : 'has-success')
-                            .find('.text-danger')
-                            .remove();
-                        element.after(value)
-                    })
-                }
-            }
-        });
-    });
 </script>
 
 <script>
@@ -108,7 +77,6 @@
             $.ajax({
                 type:"POST",
                 url: "<?php echo base_url('event/load_views')?>",
-                //data:"id="+view_name,
                 data:postData,
                 dataType: "html",
                 success: function(data) {
@@ -132,6 +100,58 @@
             };
 
             getContentView(postData);
+        });
+
+        $('#edit_member').submit(function(e) {
+            e.preventDefault();
+
+            var me = $(this);
+
+            $.ajax({
+                url: me.attr('action'),
+                type: 'post',
+                data: me.serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    if(response.success == true){
+
+                        $('#the-message').append('<div class="alert alert-success">' +
+                            '<i class="fa fa-check"></i>' +
+                            ' Member Updated Successfully' +
+                            '</div>');
+                        $('.form-group').removeClass('has-error')
+                            .removeClass('has-success');
+                        $('.text-danger').remove();
+
+                        // reset the form
+                        me[0].reset();
+
+                        // close the message after seconds
+                        $('.alert-success').delay(500).show(10, function() {
+                            $(this).delay(3000).hide(10, function() {
+                                $(this).remove();
+                                var postData = {
+                                    'view_name' : 'editMember_view',
+                                    'member_id' : '<?php echo $member_id ?>'
+                                };
+                                getContentView(postData);
+                            });
+                        });
+
+                    }else {
+                        $.each(response.messages, function (key, value) {
+                            var element = $('#' + key);
+                            element.closest('div.form-group')
+                                .removeClass('has-error')
+                                .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                                .find('.text-danger')
+                                .remove();
+                            element.after(value)
+                        });
+                    }
+                },
+
+            });
         });
     });
 </script>

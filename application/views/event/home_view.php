@@ -56,6 +56,27 @@
             <div class="col-md-4">
                 <div class="content-top-1">
                     <div class="col-md-6 top-content">
+                        <h5>Pledge</h5>
+                        <p>
+                            <?php
+                            if(isset($pledge_sum)){
+                                echo $english_format_number = number_format($pledge_sum, 0, '.', ',')." Tsh.";
+                            }else {
+                                echo "0 Tsh.";
+                            } ?>
+                        </p>
+                    </div>
+                    <div class="col-md-6 top-content1">
+                        <?php
+                        if(isset($budget_sum) && isset($pledge_sum)){
+                            $pp = ($pledge_sum / $budget_sum )*100; ?>
+                            <div id="demo-pie-3" class="pie-title-center" data-percent="<?php echo $pp ?>"> <span class="pie-value"></span> </div>
+                        <?php } ?>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="content-top-1">
+                    <div class="col-md-6 top-content">
                         <h5>Cash Collected</h5>
                         <p>
                             <?php
@@ -93,27 +114,6 @@
                         if(isset($cash_sum) && isset($budget_sum)){
                             $bp = (($cash_sum - $advance_sum) / $budget_sum)*100; ?>
                             <div id="demo-pie-2" class="pie-title-center" data-percent="<?php echo $bp ?>"> <span class="pie-value"></span> </div>
-                        <?php } ?>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-                <div class="content-top-1">
-                    <div class="col-md-6 top-content">
-                        <h5>Pledge</h5>
-                        <p>
-                            <?php
-                            if(isset($pledge_sum)){
-                                echo $english_format_number = number_format($pledge_sum, 0, '.', ',')." Tsh.";
-                            }else {
-                                echo "0 Tsh.";
-                            } ?>
-                        </p>
-                    </div>
-                    <div class="col-md-6 top-content1">
-                        <?php
-                        if(isset($budget_sum) && isset($pledge_sum)){
-                            $pp = ($pledge_sum / $budget_sum )*100; ?>
-                            <div id="demo-pie-3" class="pie-title-center" data-percent="<?php echo $pp ?>"> <span class="pie-value"></span> </div>
                         <?php } ?>
                     </div>
                     <div class="clearfix"> </div>

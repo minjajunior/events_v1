@@ -50,52 +50,6 @@
 </div>
 
 <script>
-    $('#edit_budget').submit(function(e) {
-        e.preventDefault();
-
-        var me = $(this);
-
-        $.ajax({
-            url: me.attr('action'),
-            type: 'post',
-            data: me.serialize(),
-            dataType: 'json',
-            success: function (response) {
-                if(response.success == true){
-                    $('#the-message').append('<div class="alert alert-success">' +
-                        '<span class="glyphicon glyphicon-ok"></span>' +
-                        ' Item Updated Successfully' +
-                        '</div>');
-                    $('.form-group').removeClass('has-error')
-                        .removeClass('has-success');
-                    $('.text-danger').remove();
-
-                    // reset the form
-                    me[0].reset();
-
-                    // close the message after seconds
-                    $('.alert-success').delay(500).show(10, function() {
-                        $(this).delay(3000).hide(10, function() {
-                            $(this).remove();
-                        });
-                    })
-                }else {
-                    $.each(response.messages, function (key, value) {
-                        var element = $('#' + key);
-                        element.closest('div.form-group')
-                            .removeClass('has-error')
-                            .addClass(value.length > 0 ? 'has-error' : 'has-success')
-                            .find('.text-danger')
-                            .remove();
-                        element.after(value)
-                    })
-                }
-            }
-        });
-    });
-</script>
-
-<script>
     $(document).ready(function() {
 
         var getContentView = function(postData) {
@@ -126,6 +80,55 @@
             };
 
             getContentView(postData);
+        });
+
+        $('#edit_budget').submit(function(e) {
+            e.preventDefault();
+
+            var me = $(this);
+
+            $.ajax({
+                url: me.attr('action'),
+                type: 'post',
+                data: me.serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    if(response.success == true){
+                        $('#the-message').append('<div class="alert alert-success">' +
+                            '<i class="fa fa-check"></i>' +
+                            ' Item Updated Successfully' +
+                            '</div>');
+                        $('.form-group').removeClass('has-error')
+                            .removeClass('has-success');
+                        $('.text-danger').remove();
+
+                        // reset the form
+                        me[0].reset();
+
+                        // close the message after seconds
+                        $('.alert-success').delay(500).show(10, function() {
+                            $(this).delay(3000).hide(10, function() {
+                                $(this).remove();
+                                var postData = {
+                                    'view_name' : 'editBudget_view',
+                                    'item_id' : '<?php echo $item_id ?>'
+                                };
+                                getContentView(postData);
+                            });
+                        })
+                    }else {
+                        $.each(response.messages, function (key, value) {
+                            var element = $('#' + key);
+                            element.closest('div.form-group')
+                                .removeClass('has-error')
+                                .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                                .find('.text-danger')
+                                .remove();
+                            element.after(value)
+                        })
+                    }
+                }
+            });
         });
     });
 </script>

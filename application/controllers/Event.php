@@ -81,7 +81,7 @@ class Event extends CI_Controller
                 $data['event_type'] = $this->event_model->get_type();
                 $data['event_details'] = $this->event_model->event_details($id);
                 $data['member_details'] = $this->event_model->member_details($id);
-                $data['member_cat']= $this->reports_model->get_member_categories($id);
+                $data['member_group']= $this->reports_model->get_member_group($id);
                 $data['budget_details'] = $this->event_model->budget_details($id);
                 $data['pledge_sum'] = $this->event_model->pledge_sum($id);
                 $data['cash_sum'] = $this->event_model->cash_sum($id);
@@ -118,12 +118,9 @@ class Event extends CI_Controller
             $data = array('success' => false, 'messages' => array());
 
             $this->form_validation->set_rules('eventname', 'Event Name', 'required');
-            $this->form_validation->set_rules('eventcode', 'Event Code', 'required|is_unique[event.event_code]');
             $this->form_validation->set_rules('eventdate', 'Event Date', 'required');
             $this->form_validation->set_rules('type', 'Event Type', 'required');
             $this->form_validation->set_rules('location', 'Event Location', 'required');
-            $this->form_validation->set_rules('password', 'Password', 'required');
-            $this->form_validation->set_rules('password2', 'Re-Enter Password', 'required|matches[password]');
             if ($this->input->post('type') == "other") {
                 $this->form_validation->set_rules('othertext', 'Event Type', 'required');
             }
@@ -142,12 +139,10 @@ class Event extends CI_Controller
                 }
                 $values = array(
                     'event_name' => $this->input->post('eventname'),
-                    'event_code' => $this->input->post('eventcode'),
                     'event_date' => $this->input->post('eventdate'),
                     'event_type' => $tv,
                     'event_location' => $this->input->post('location'),
-                    'event_password' => md5($this->input->post('password')),
-                    'event_admin' => $this->session->admin_id,
+                    'created_by' => $this->session->admin_id,
                     'event_paid' => '0'
                 );
 
@@ -464,13 +459,10 @@ class Event extends CI_Controller
             $data = array('success' => false, 'messages' => array());
 
             $this->form_validation->set_rules('membername', 'Member Name', 'required');
-            $this->form_validation->set_rules('memberpledge', 'Member Pledge', 'numeric');
-            $this->form_validation->set_rules('membercash', 'Member Cash', 'numeric');
             $this->form_validation->set_rules('memberphone', 'Phone Number', 'numeric');
             $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {
-                //$this->load->view('event/editMember_view', $data);
                 foreach ($_POST as $key => $value) {
                     $data['messages'][$key] = form_error($key);
                 }
@@ -479,6 +471,7 @@ class Event extends CI_Controller
                 $values = array(
                     'member_name' => $this->input->post('membername'),
                     'member_phone' => $this->input->post('memberphone'),
+                    'group_id' => $this->input->post('group')
                 );
 
                 $this->event_model->update_member($values, $id);
@@ -553,45 +546,44 @@ class Event extends CI_Controller
 
         if (!empty($this->session->admin_id)) {
 
-            $data = array('success' => false, 'messages' => array());
+            $data = array('success' => false, 'messages' => array(), 'id' => $id);
 
             $this->form_validation->set_rules('amount', 'Amount', 'numeric|required');
             $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {
-                //$this->load->view('event/transaction_view', $data);
                 foreach ($_POST as $key => $value) {
                     $data['messages'][$key] = form_error($key);
                 }
             } else {
                 if ($type == 'Pledge') {
                     $data['success'] = true;
+                    $data['view_name'] = 'editMember_view';
                     $np = $this->input->post('amount') + $this->input->post('memberpledge');
                     $values = array(
                         'member_pledge' => $np
                     );
 
                     $this->event_model->update_member($values, $id);
-                    //redirect('event/edit_member/'.$id);
                 }
                 if ($type == 'Cash') {
                     $data['success'] = true;
-                    if ($this->input->post('amount') > $this->input->post('memberpledge')) {
+                    $data['view_name'] = 'editMember_view';
+                    /*if ($this->input->post('amount') > $this->input->post('memberpledge')) {
                         $np = 0;
                     } else {
                         $np = $this->input->post('memberpledge') - $this->input->post('amount');
-                    }
+                    }*/
                     $nc = $this->input->post('amount') + $this->input->post('membercash');
                     $values = array(
-                        'member_pledge' => $np,
                         'member_cash' => $nc
                     );
 
                     $this->event_model->update_member($values, $id);
-                    //redirect('event/edit_member/'.$id);
                 }
                 if ($type == 'Cost') {
                     $data['success'] = true;
+                    $data['view_name'] = 'editBudget_view';
                     $ic = $this->input->post('amount') + $this->input->post('itemcost');
                     $values = array(
                         'item_cost' => $ic
@@ -602,13 +594,13 @@ class Event extends CI_Controller
                 }
                 if ($type == 'Payment') {
                     $data['success'] = true;
+                    $data['view_name'] = 'editBudget_view';
                     $ip = $this->input->post('amount') + $this->input->post('itempaid');
                     $values = array(
                         'item_paid' => $ip
                     );
 
                     $this->event_model->update_budget($values, $id);
-                    //redirect('event/edit_budget/'.$id);
                 }
             }
             echo json_encode($data);

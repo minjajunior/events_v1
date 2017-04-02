@@ -8,13 +8,10 @@
 
 ?>
 
-<div class="blank" >
+<div class="content-top" >
 
-
-
-    <div class="blank-page col-md-8">
-
-        <div class="grid_3 grid_5">
+    <div class="col-md-8">
+        <div class="blank-page">
             <h3 class="head-top">Custom Reports</h3>
             <div class="but_list">
                 <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
@@ -57,11 +54,9 @@
                                     </tr>
                                     </tbody>
                                 </table>
-
                             </div>
 
                             <div class="">
-
                                 <div class="grid-form1">
                                     <h4 id="forms-horizontal">A list of members based on the defined member categories</h4>
                                     <form class="form-horizontal">
@@ -70,8 +65,8 @@
                                             <div class="col-sm-6">
                                                 <?php $ov = 1; ?>
                                                 <select name="type" rel="<?php echo $event_id; ?>" id="m_cat" class="form-control1">
-                                                    <?php foreach($member_cat as $mc){?>
-                                                        <option  value="<?php echo $mc->category_id; ?>" ><?php echo $mc->category_name; ?></option>
+                                                    <?php foreach($member_group as $mg){?>
+                                                        <option  value="<?php echo $mg->group_id; ?>" ><?php echo $mg->group_name; ?></option>
                                                     <?php  } ?>
                                                 </select>
                                             </div>
@@ -111,9 +106,7 @@
                             </div>
                         </div>
 
-
                         <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
-
                             <div class="well well-sm">
                                 <table class="table">
                                     <tbody>
@@ -141,8 +134,6 @@
                                 </table>
 
                             </div>
-
-
                         </div>
 
 
@@ -153,16 +144,14 @@
 <!--                            <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan, sartorial keffiyeh echo park vegan.</p>-->
 <!--                        </div>-->
 
-
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 
-    <div class="col-md-4 blank-page">
+    <div class="col-md-4 ">
+        <div class="blank-page">
         <h4>Basic Reports</h4>
         <hr/>
         <table class="table">
@@ -201,15 +190,10 @@
 
             </tbody>
         </table>
-
-
+        </div>
     </div>
-
-
-    </div>
-
-
-
+    <div class="clearfix"> </div>
+</div>
 <script>
 
     $( document ).ready(function() {

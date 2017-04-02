@@ -29,6 +29,7 @@
     <script src="<?php echo base_url('assets/js/custom.js')?>"></script>
     <script src="<?php echo base_url('assets/js/screenfull.js')?>"></script>
     <script src="<?php echo base_url('assets/js/jquery-ui.js')?>"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <script>
         $(function () {
             $('#supported').text('Supported/allowed: ' + !!screenfull.enabled);

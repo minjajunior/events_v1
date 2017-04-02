@@ -71,12 +71,6 @@ $this->load->view('shared/sidebar');
                                 <input type="text" name="eventname" value="<?php echo set_value('eventname'); ?>" class="form-control1" placeholder="Event Name" id="eventname">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="eventcode" class="col-sm-4 control-label">Event Code</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="eventcode" value="<?php echo set_value('eventcode'); ?>" class="form-control1" placeholder="Event Code" id="eventcode">
-                            </div>
-                        </div>
                         <script>
                             $(document).ready(function() {
                                 $("#eventdate").datepicker({
@@ -128,19 +122,6 @@ $this->load->view('shared/sidebar');
                                         <option value="<?php echo set_value(print $loc->location_id); ?>" id="location"><?php echo set_value(print $loc->location_name); ?></option>
                                     <?php } ?>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="col-sm-4 control-label">Password</label>
-                            <div class="col-sm-8">
-                                <input type="password" name="password" value="<?php echo set_value('password'); ?>" class="form-control1" placeholder="Password" id="password">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password2" class="col-sm-4 control-label">Re-Enter Password</label>
-                            <div class="col-sm-8">
-                                <input type="password" name="password2" value="<?php echo set_value('password2'); ?>" class="form-control1" placeholder="Re-Enter Password" id="password2">
-                                <?php echo form_error('password2'); ?>
                             </div>
                         </div>
                     </div>

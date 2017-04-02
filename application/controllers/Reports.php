@@ -192,7 +192,7 @@ class Reports extends CI_Controller{
             }elseif ($report_name=='member_cat'){
                 $cat_id = $_POST['cat_id'];
 
-                $data['member_details'] = $this->reports_model->get_members_categories($event_id,$cat_id);
+                $data['member_details'] = $this->reports_model->get_members_group($event_id,$cat_id);
 
                 $html = $this->load->view('reports/members_pdf',$data,true);
 

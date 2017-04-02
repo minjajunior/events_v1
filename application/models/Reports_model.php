@@ -89,11 +89,11 @@ class  Reports_model extends CI_Model{
     }
 
 
-    public function get_member_categories($event_id){
+    public function get_member_group($event_id){
         $this->db->select('*');
-        $this->db->from('member_category');
+        $this->db->from('member_group');
         $this->db->where('event_id', $event_id);
-        $this->db->order_by('category_name', 'asc');
+        $this->db->order_by('group_name', 'asc');
         $query = $this->db->get();
 
         if ($query->num_rows() > 0){
@@ -108,12 +108,12 @@ class  Reports_model extends CI_Model{
     }
 
 
-    public function get_members_categories($event_id,$cat_id){
+    public function get_members_group($event_id,$grp_id){
         $this->db->select('*');
         $this->db->from('member');
         $this->db->where('event_id', $event_id);
-        $this->db->where('category_id', $cat_id);
-        $this->db->order_by('member_name', 'asc');
+        $this->db->where('group_id', $grp_id);
+        $this->db->order_by('group_name', 'asc');
         $query = $this->db->get();
 
         if ($query->num_rows() > 0){

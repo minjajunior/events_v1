@@ -26,6 +26,7 @@
                             <th>Item Name</th>
                             <th>Cost (Tsh.)</th>
                             <th>Paid (Tsh.)</th>
+                            <th>Balance (Tsh.)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -38,6 +39,7 @@
                                 <?php } ?>
                                 <td><?php echo $english_format_number = number_format($bd->item_cost, 0, '.', ',');?></td>
                                 <td><?php echo $english_format_number = number_format($bd->item_paid, 0, '.', ','); ?></td>
+                                <td><?php echo $english_format_number = number_format($bd->item_cost-$bd->item_paid, 0, '.', ','); ?></td>
                             </tr>
                         <?php } ?>
                         </tbody>

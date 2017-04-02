@@ -83,7 +83,7 @@
             success: function (response) {
                 if(response.success == true){
                     $('#the-message').append('<div class="alert alert-success">' +
-                        '<span class="glyphicon glyphicon-ok"></span>' +
+                        '<i class="fa fa-check"></i>' +
                         'Updated Successfully' +
                         '</div>');
                     $('.form-group').removeClass('has-error')
@@ -97,6 +97,18 @@
                     $('.alert-success').delay(500).show(10, function() {
                         $(this).delay(3000).hide(10, function() {
                             $(this).remove();
+                            if (response.view_name == 'editBudget_view'){
+                                var postData = {
+                                    'view_name' : response.view_name,
+                                    'item_id' : response.id,
+                                };
+                            } else {
+                                var postData = {
+                                    'view_name' : response.view_name,
+                                    'member_id' : response.id,
+                                };
+                            }
+                            getContentView(postData);
                         });
                     })
                 }else {
@@ -113,4 +125,20 @@
             }
         });
     });
+
+    var getContentView = function(postData) {
+        $.ajax({
+            type:"POST",
+            url: "<?php echo base_url('event/load_views')?>",
+            data:postData,
+            dataType: "html",
+            success: function(data) {
+                $('#load_navigation_menu_view').html(data);
+            },
+            error: function(data) {
+
+                alert('An error has occured trying to get the page details');
+            }
+        });
+    }
 </script>

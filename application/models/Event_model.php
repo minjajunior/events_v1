@@ -117,8 +117,8 @@ class Event_model extends CI_Model {
     public function member_details($id){
         $this->db->select('*');
         $this->db->from('member');
-        $this->db->order_by('member_name', 'asc');
         $this->db->where('event_id', $id);
+        $this->db->order_by('member_name', 'asc');
         $query = $this->db->get();
 
         if ($query->num_rows() > 0){
@@ -269,7 +269,7 @@ class Event_model extends CI_Model {
         $this->db->where('event_id', $id);
         $query = $this->db->get();
         $row = $query->row_array();
-        return $row['member_pledge'];
+        return $row['member_pledge'] ;
     }
 
     /*

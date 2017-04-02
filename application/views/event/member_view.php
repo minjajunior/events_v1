@@ -16,13 +16,14 @@
                 No members found. Create <a href="#" data-toggle="modal" data-target="#newMember">new member</a> or upload your members file.
             <?php } else { ?>
                 <div class="tables">
-                    <table class="table table-hover">
+                    <table class="table table-hover" id="members-list">
                         <thead>
                         <tr>
                             <th>Member Name</th>
                             <th>Phone Number</th>
                             <th>Pledge (Tsh.)</th>
                             <th>Cash (Tsh.)</th>
+                            <th>Balance (Tsh.)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -36,6 +37,11 @@
                                 <td><?php echo $md->member_phone ?></td>
                                 <td><?php echo $english_format_number = number_format($md->member_pledge, 0, '.', ',');?></td>
                                 <td><?php echo $english_format_number = number_format($md->member_cash, 0, '.', ','); ?></td>
+                                <?php if($md->member_pledge >= $md->member_cash) {
+                                    $balance = $md->member_pledge - $md->member_cash;
+                                } else { $balance = 0; } ?>
+                                <td><?php echo $english_format_number = number_format($balance, 0, '.', ','); ?></td>
+
                             </tr>
                         <?php } ?>
                         </tbody>
@@ -109,54 +115,9 @@
 </div>
 
 <script>
-    $('#new_member').submit(function(e) {
-        e.preventDefault();
-
-        var me = $(this);
-
-        $.ajax({
-            url: me.attr('action'),
-            type: 'post',
-            data: me.serialize(),
-            dataType: 'json',
-            success: function (response) {
-                if(response.success == true){
-                    $('#the-message').append('<div class="alert alert-success">' +
-                        '<i class="fa fa-check"></i>' +
-                        ' Member Created Successfully' +
-                        '</div>');
-                    $('.form-group').removeClass('has-error')
-                        .removeClass('has-success');
-                    $('.text-danger').remove();
-
-                    // reset the form
-                    me[0].reset();
-
-                    // close the message after seconds
-                    $('.alert-success').delay(500).show(10, function() {
-                        $(this).delay(3000).hide(10, function() {
-                            $(this).remove();
-                            window.location.reload()
-                            $('#newMember').modal('hide');
-                        });
-                    })
-                }else {
-                    $.each(response.messages, function (key, value) {
-                        var element = $('#' + key);
-                        element.closest('div.form-group')
-                            .removeClass('has-error')
-                            .addClass(value.length > 0 ? 'has-error' : 'has-success')
-                            .find('.text-danger')
-                            .remove();
-                        element.after(value)
-                    })
-                }
-            }
-        });
-    });
-</script>
-<script>
     $(document).ready(function() {
+
+        /*$('#members-list').DataTable();*/
 
         var getContentView = function(postData) {
             $.ajax({
@@ -184,6 +145,52 @@
             };
 
             getContentView(postData);
+        });
+
+        $('#new_member').submit(function(e) {
+            e.preventDefault();
+
+            var me = $(this);
+
+            $.ajax({
+                url: me.attr('action'),
+                type: 'post',
+                data: me.serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    if(response.success == true){
+                        $('#the-message').append('<div class="alert alert-success">' +
+                            '<i class="fa fa-check"></i>' +
+                            ' Member Created Successfully' +
+                            '</div>');
+                        $('.form-group').removeClass('has-error')
+                            .removeClass('has-success');
+                        $('.text-danger').remove();
+
+                        // reset the form
+                        me[0].reset();
+
+                        // close the message after seconds
+                        $('.alert-success').delay(500).show(10, function() {
+                            $(this).delay(3000).hide(10, function() {
+                                $(this).remove();
+                                window.location.reload()
+                                $('#newMember').modal('hide');
+                            });
+                        })
+                    }else {
+                        $.each(response.messages, function (key, value) {
+                            var element = $('#' + key);
+                            element.closest('div.form-group')
+                                .removeClass('has-error')
+                                .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                                .find('.text-danger')
+                                .remove();
+                            element.after(value)
+                        })
+                    }
+                }
+            });
         });
     });
 </script>
