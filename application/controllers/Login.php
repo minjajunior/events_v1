@@ -10,29 +10,24 @@
 class Login extends CI_Controller {
 
     public function index(){
-
         if(isset($this->session->admin_id)){
             redirect('admin');
         } elseif (isset($this->session->member_phone)){
             redirect('member');
         } else {
             $this->form_validation->set_rules('mailphone', 'Phone or Email', 'required');
-
             if ($this->form_validation->run() == FALSE) {
                 $this->load->view('login/login_view');
             } else {
                 if(!empty($this->login_model->member_login($this->input->post('mailphone')))) {
                     $curl = curl_init();
-
                     if (!empty($this->input->post('pin'))){
                         $data = array('verified' => true, 'msisdn'=>'255712431242');
                         echo json_encode($data);
-
                         //json_decode(json_encode($data['msisdn']));
                         $value = array('member_phone' => json_decode(json_encode($data['msisdn'])));
                         $this->session->set_userdata($value);
                         /*$pin = $this->input->post('pin');
-
                         curl_setopt_array($curl, array(
                             CURLOPT_URL => "http://api.infobip.com/2fa/1/pin/".$this->input->post('pinId')."/verify",
                             CURLOPT_RETURNTRANSFER => true,
@@ -48,12 +43,9 @@ class Login extends CI_Controller {
                                 "content-type: application/json"
                             ),
                         ));
-
                         $response = curl_exec($curl);
                         $err = curl_error($curl);
-
                         curl_close($curl);
-
                         if ($err) {
                             echo "cURL Error #:" . $err;
                         } else {
@@ -63,7 +55,6 @@ class Login extends CI_Controller {
                         $data = array('smsStatus' => 'MESSAGE_SENT', 'pinId'=>'12345', 'to' =>'255712431242');
                         echo json_encode($data);
                         /*$pn = $this->input->post('phoneno');
-
                         curl_setopt_array($curl, array(
                             CURLOPT_URL => "http://api.infobip.com/2fa/1/pin?ncNeeded=true",
                             CURLOPT_RETURNTRANSFER => true,
@@ -79,37 +70,17 @@ class Login extends CI_Controller {
                                 "content-type: application/json"
                             ),
                         ));
-
                         $response = curl_exec($curl);
                         $err = curl_error($curl);
-
                         curl_close($curl);
-
                         if ($err) {
                             echo "cURL Error #:" . $err;
                         } else {
                             echo $response;
                         }*/
                     }
-
-            }elseif(!empty($this->login_model->admin_login($this->input->post('mailphone')))) {
                 }elseif(!empty($this->login_model->admin_login($this->input->post('mailphone')))) {
                     if(!empty($this->input->post('password'))) {
-
-                $value = $this->login_model->admin_login($this->input->post('mailphone'));
-
-                if($value['reg_status']==1){
-
-                if(!empty($this->input->post('password'))){
-
-                        if($value['admin_password'] == md5($this->input->post('password'))){
-                            $this->session->set_userdata($value);
-                            $data = array('verified' => true, 'user' => 'admin');
-                            echo json_encode($data);
-                        }else{
-                            $data = array('loginStatus' => 'password');
-                            echo json_encode($data);
-                        }
                         $value = $this->login_model->admin_login($this->input->post('mailphone'));
                         if(!empty($value)){
                             if($value['admin_password'] == md5($this->input->post('password'))){
@@ -121,21 +92,6 @@ class Login extends CI_Controller {
                                 echo json_encode($data);
                             }
                         }
-
-                }else {
-                    $data = array('loginStatus' => 'admin', 'email' => $this->input->post('mailphone'));
-                    echo json_encode($data);
-                }
-
-            }else{
-                    $data = array('loginStatus' => 'reg_status');
-                    echo json_encode($data);
-
-                }
-
-            } else {
-                $data = array('loginStatus' => false);
-                echo json_encode($data);
                     }else {
                         $data = array('loginStatus' => 'admin', 'email' => $this->input->post('mailphone'));
                         echo json_encode($data);
@@ -147,6 +103,8 @@ class Login extends CI_Controller {
             }
         }
     }
+
+
 
     public function forgot_password(){
         $this->form_validation->set_rules("email","Email","required|valid_email");
