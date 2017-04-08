@@ -26,7 +26,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle dropdown-at" data-toggle="dropdown"><span class=" name-caret"><?php echo $this->session->admin_name; ?> <i class="caret"></i></span></a>
                     <ul class="dropdown-menu " role="menu">
-                        <li><a href="<?php echo site_url('admin/profile/'.$this->session->admin_id)?>"><i class="fa fa-user"></i>Profile</a></li>
+                        <li><a href="<?php echo site_url('admin/profile/'.base64_encode($this->session->admin_id))?>"><i class="fa fa-user"></i>Profile</a></li>
                         <li><a href="<?php echo site_url('login/logout')?>"><i class="fa fa-sign-out"></i>Logout</a></li>
                     </ul>
                 </li>
@@ -45,13 +45,16 @@
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="budget_view"><i class="fa fa-money nav_icon "></i><span class="nav-label">Budget</span> </a></li>
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="member_view"><i class="fa fa-users nav_icon "></i><span class="nav-label">Members</span> </a></li>
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="reports_view"><i class="fa fa-files-o nav_icon "></i><span class="nav-label">Reports</span></a></li>
+                        <?php } ?>
                         <li>
                             <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span class="nav-label">Settings</span><span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="edit_view"><i class="fa fa-edit nav_icon"></i>Edit Event</a></li>
+                                <?php if(isset($event_id)){ ?>
+                                <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="settings_view"><i class="fa fa-edit nav_icon"></i>Event Settings</a></li>
+                                <?php } ?>
+                                <li><a href="#" class="menu_item hvr-bounce-to-right"><i class="fa fa-user-secret nav_icon"></i> Admin Settings</a></li>
                             </ul>
                         </li>
-                        <?php } ?>
                         <li><a href="<?php echo site_url('login/logout')?>" class=" hvr-bounce-to-right"><i class="fa fa-sign-out nav_icon"></i> <span class="nav-label">Logout</span> </a></li>
                     </ul>
                 </div>

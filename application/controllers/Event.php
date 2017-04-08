@@ -37,6 +37,7 @@ class Event extends CI_Controller
      * This function load Event home page after the event login process completed
      */
     public function home($id) {
+        $id = base64_decode($id);
 
         if (!empty($this->session->admin_id) || !empty($this->session->member_phone)) {
             $data['event_details'] = $this->event_model->event_details($id);
@@ -88,6 +89,8 @@ class Event extends CI_Controller
                 $data['budget_sum'] = $this->event_model->budget_sum($id);
                 $data['advance_sum'] = $this->event_model->advance_sum($id);
                 $data['event_admin'] = $this->admin_model->get_admin($id);
+                $data['admin_role'] = $this->admin_model->get_role($id);
+                $data['sms_list'] = $this->member_model->sms_list($id);
                 $data['event_id'] = $id;
                 $view_name = $_POST['view_name'];
 
@@ -108,8 +111,7 @@ class Event extends CI_Controller
     /*
      * This function load Create event page and process validation of event creation.
      */
-    public function create()
-    {
+    public function create() {
         $data['location'] = $this->event_model->get_location();
         $data['type'] = $this->event_model->get_type();
 
@@ -157,8 +159,7 @@ class Event extends CI_Controller
     /*
      * This function load edit event page.
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         $data['location'] = $this->event_model->get_location();
         $data['type'] = $this->event_model->get_type();
         $data['event_details'] = $this->event_model->event_details($id);
@@ -210,8 +211,7 @@ class Event extends CI_Controller
     /*
      * This function load edit password page.
      */
-    public function password($id)
-    {
+    public function password($id) {
         $data['location'] = $this->event_model->get_location();
         $data['type'] = $this->event_model->get_type();
         $data['event_details'] = $this->event_model->event_details($id);
@@ -247,8 +247,7 @@ class Event extends CI_Controller
     /*
      * This function process the PHPExcel library to upload members list to the database
      */
-    public function upload_members($id)
-    {
+    public function upload_members($id) {
 
         $config['upload_path'] = './upload/';
         $config['allowed_types'] = 'xlsx|xls';
@@ -305,8 +304,7 @@ class Event extends CI_Controller
     /*
      * This function process the PHPExcel library to upload budget items to the database
      */
-    public function upload_budget($id)
-    {
+    public function upload_budget($id) {
 
         $config['upload_path'] = './upload/';
         $config['allowed_types'] = 'xlsx|xls';
@@ -364,8 +362,7 @@ class Event extends CI_Controller
     /*
      * This function load new member registration page and process validation of adding new member
      */
-    public function new_member($id)
-    {
+    public function new_member($id) {
 
         $data['event_id'] = $id;
 
@@ -390,6 +387,7 @@ class Event extends CI_Controller
                     'member_pledge' => $this->input->post('memberpledge'),
                     'member_cash' => $this->input->post('membercash'),
                     'member_phone' => $this->input->post('memberphone'),
+                    'group_id' => $this->input->post('group'),
                     'event_id' => $id
                 );
 
@@ -406,8 +404,7 @@ class Event extends CI_Controller
     /*
      * This function load new budget item page and process validation of adding new budget item
      */
-    public function new_item($id)
-    {
+    public function new_item($id) {
 
         $data['event_id'] = $id;
 
@@ -447,8 +444,7 @@ class Event extends CI_Controller
     /*
      * This function load member details to the edit member page and process validation of updating member details
      */
-    public function edit_member($id)
-    {
+    public function edit_member($id) {
 
         $data['member_id'] = $id;
         $data['member_detail'] = $this->event_model->member_detail($id);
@@ -488,8 +484,7 @@ class Event extends CI_Controller
      * This function load budget item details to the budget item edit page and process validation of updating
      * budget item details
      */
-    public function edit_budget($id)
-    {
+    public function edit_budget($id) {
 
         $data['item_id'] = $id;
         $data['item_detail'] = $this->event_model->budget_detail($id);
@@ -532,8 +527,7 @@ class Event extends CI_Controller
      * Cost = This is the amount budget item cost
      * Payment = This is the amount budget item paid
      **/
-    public function transaction($type, $id)
-    {
+    public function transaction($type, $id) {
 
         $data['type'] = $type;
         if ($type == 'Cash' || $type == 'Pledge') {
@@ -612,8 +606,7 @@ class Event extends CI_Controller
     /*
      * This function process the download of Member template excel file and Budget Template excel file
      */
-    public function template($name)
-    {
+    public function template($name) {
         if ($name == 'member') {
             redirect(base_url('templates/MemberTemplate.xlsx'));
         } elseif ($name == 'budget') {
@@ -624,8 +617,7 @@ class Event extends CI_Controller
     /*
      * This is the test function to test the upload of the document
      */
-    public function do_upload()
-    {
+    public function do_upload() {
         $config['upload_path'] = './upload/';
         $config['allowed_types'] = 'xls|xlsx';
         $config['max_size'] = 0;

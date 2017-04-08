@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="location" class="col-sm-2 control-label">Group</label>
+                <label for="group" class="col-sm-2 control-label">Group</label>
                 <div class="col-sm-8">
                     <select name="group" id="selector1" class="form-control1">
                         <option value="">Select Group</option>

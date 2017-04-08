@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Created by PhpStorm.
  * User: Minja Junior
  * Date: 11/21/2016
@@ -53,6 +53,7 @@ class Event_model extends CI_Model {
         $this->db->select('*');
         $this->db->from('event');
         $this->db->join('event_admin', 'event.event_id = event_admin.event_id');
+        $this->db->join('location', 'event.event_location = location.location_id');
         $this->db->where('event_admin.admin_id', $id);
         $this->db->order_by('event_name', 'asc');
         $query = $this->db->get();
@@ -220,6 +221,9 @@ class Event_model extends CI_Model {
      */
     public function create($values){
         $this->db->insert('event', $values);
+        $event_id = $this->db->insert_id();
+        $role_id =1;
+        $this->db->insert('event_admin', array('event_id'=>$event_id,'admin_id' =>$this->session->admin_id,'role_id' =>$role_id));
     }
 
     /*

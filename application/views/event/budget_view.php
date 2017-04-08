@@ -32,11 +32,7 @@
                         <tbody>
                         <?php foreach($budget_details as $bd){ ?>
                             <tr>
-                                <?php if(isset($this->session->admin_id)){ ?>
-                                    <td><a href="javascript:void(0)" class="edit_budget" rel="<?php echo $bd->item_id; ?>" id="editBudget_view"><?php echo $bd->item_name?></a></td>
-                                <?php } else { ?>
-                                    <td><?php echo $bd->item_name?></td>
-                                <?php } ?>
+                                <td><a href="javascript:void(0)" class="edit_budget" rel="<?php echo $bd->item_id; ?>" id="editBudget_view"><?php echo $bd->item_name?></a></td>
                                 <td><?php echo $english_format_number = number_format($bd->item_cost, 0, '.', ',');?></td>
                                 <td><?php echo $english_format_number = number_format($bd->item_paid, 0, '.', ','); ?></td>
                                 <td><?php echo $english_format_number = number_format($bd->item_cost-$bd->item_paid, 0, '.', ','); ?></td>
