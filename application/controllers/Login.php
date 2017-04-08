@@ -87,10 +87,13 @@ class Login extends CI_Controller {
                 }
 
             }elseif(!empty($this->login_model->admin_login($this->input->post('mailphone')))) {
-                if(!empty($this->input->post('password'))) {
 
-                    $value = $this->login_model->admin_login($this->input->post('mailphone'));
-                    if(!empty($value)){
+                $value = $this->login_model->admin_login($this->input->post('mailphone'));
+
+                if($value['reg_status']==1){
+
+                if(!empty($this->input->post('password'))){
+
                         if($value['admin_password'] == md5($this->input->post('password'))){
                             $this->session->set_userdata($value);
                             $data = array('verified' => true, 'user' => 'admin');
@@ -99,12 +102,18 @@ class Login extends CI_Controller {
                             $data = array('loginStatus' => 'password');
                             echo json_encode($data);
                         }
-                    }
 
                 }else {
                     $data = array('loginStatus' => 'admin', 'email' => $this->input->post('mailphone'));
                     echo json_encode($data);
                 }
+
+            }else{
+                    $data = array('loginStatus' => 'reg_status');
+                    echo json_encode($data);
+
+                }
+
             } else {
                 $data = array('loginStatus' => false);
                 echo json_encode($data);

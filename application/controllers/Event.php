@@ -308,15 +308,27 @@ class Event extends CI_Controller
     public function upload_budget($id)
     {
 
+        //print_r($_POST['budget']);
+        //print_r($_FILES);
+        //$filename = $_FILES['budget_file']['name'];
+        //$userfile = $this->input->post($_FILES);
+        //print_r($filename);
+
+
         $config['upload_path'] = './upload/';
         $config['allowed_types'] = 'xlsx|xls';
-        $config['max_size'] = 0;
+        $config['max_size'] =0;
 
         $this->load->library('upload', $config);
 
-        if ($this->upload->do_upload('budget')) {
+        //print_r(is_writable($config['upload_path']));
+
+
+        if ($this->upload->do_upload('budget_file')){
+
             $data = array('upload_data' => $this->upload->data());
             $file = $data['upload_data']['file_name'];
+            //$file = $_FILES['budget']['name'];
             //load the excel library
             $this->load->library('excel');
             //read file from path
@@ -349,7 +361,11 @@ class Event extends CI_Controller
                     $this->event_model->insert_budget($values);
                 }
             }
-            redirect('event/home/' . $id);
+
+            $data = array('success' => true, 'messages' => array($this->upload->display_errors()));
+            //redirect('event/home/' . $id);
+            echo json_encode($data);
+
         } else {
             //$error = array('error' => $this->upload->display_errors());
             //$this->load->view('event/home_view', $error);
@@ -357,6 +373,7 @@ class Event extends CI_Controller
             foreach ($_POST as $key => $value){
                 $data['messages'][$key] = form_error($key);
             }
+
         }
         echo json_encode($data);
     }

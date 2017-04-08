@@ -40,17 +40,113 @@ class Admin extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('admin/register_view');
         } else {
+
+            //generate a token
+            $token = md5(microtime (TRUE)*100000);
+            //hash token to be stored on db
+
+            $token_to_db = hash('sha256',$token);
+
             $values = array(
                 'admin_name' => $this->input->post('fullname'),
                 'admin_email' => $this->input->post('email'),
                 'admin_phone' => $this->input->post('phone'),
-                'admin_password' => md5($this->input->post('password'))
+                'admin_password' => md5($this->input->post('password')),
+                'hashed_token'=>$token_to_db,
+                'reg_status'=>0
             );
 
-            $this->admin_model->register($values);
+            $admin_id = $this->admin_model->register($values);
 
-            redirect('admin');
+            if(isset($admin_id) && is_numeric($admin_id)){
+
+                $token_to_email = base64_encode($token);
+                $admin_id = base64_encode($admin_id);
+                $site_url = site_url();
+                $email_url = $site_url . 'admin/admin_confirm/' . $admin_id . '/' . $token_to_email;
+
+                $from = "demicorp@localhost";
+                //$to = $email;
+                $to = "demi@localhost";
+                $subject = "Demi Events - Account Confirmation";
+                $message = " 
+                        <html>
+                        <head>
+                        <title>Demi Events - Account Confirmation</title>
+                        </head>
+                        <body>
+                                <h4>Hello Sir/Madam,</h4>    
+                                <p>You just signed up for Demi Events. Please follow this link to confirm that this is your e-mail address.</p>
+                                <a href='$email_url'>
+                                    Click here to confirm your registration</a>                                
+                                <p>Sincerely,</p>
+                                <p>Dermi Corp Admin.</p>
+                        </body></html>";
+                //sending email
+
+                $this->email->from($from, 'Demi Corp');
+                $this->email->to($to);
+
+                $this->email->subject($subject);
+                $this->email->message($message);
+
+
+                if($this->email->send()){
+
+                    $data['email_status']= '<div class="alert alert-danger">Registration successfully, Email Sent</div>';
+                    $this->load->view('admin/register_view', $data);
+                    //on success sending email
+
+                }else {
+                    show_error($this->email->print_debugger());
+                    //on failure sending email
+
+                }//end inner else
+
+            }else{
+                $data['reg_status']= '<div class="alert alert-danger">Something went wrong! Please complete your registration again</div>';
+                $this->load->view('admin/register_view', $data);
+            }
+
         }
+    }
+
+
+    public function admin_confirm($admin_id,$token){
+
+        $admin_id_decoded = base64_decode($admin_id);
+        $token_decoded = base64_decode($token);
+
+        //hash token to be matched with db
+        $token_to_email = hash('sha256', $token_decoded);
+
+
+        $result = $this->admin_model->admin_info($admin_id_decoded);
+
+
+        //$token_expire = $result[0]['token_expire'];
+        $token_to_db = $result[0]['hashed_token'];
+        $reg_status =$result[0]['reg_status'];
+
+        if(($token_to_db == $token_to_email)&&($reg_status==0)){
+
+
+                $values = array(
+                    'reg_status'=>1);
+
+                $this->admin_model->update_admin($admin_id_decoded,$values);
+
+                $data['reg_status']= '<div class="alert alert-danger">Your registration completed successfully! You can now login </div>';
+                $this->load->view('login/login_view',$data);
+
+
+        }else if(($token_to_db == $token_to_email)&&($reg_status==1)){
+
+            $data['reg_status']= '<div class="alert alert-danger">Your registration completed successfully! You can now login </div>';
+            $this->load->view('login/login_view',$data);
+
+        }
+
     }
 
     /*
@@ -117,8 +213,8 @@ class Admin extends CI_Controller {
                 if(isset($result) && is_numeric($result)){
                     //user id and token to be sent to email
 
-                    $token_to_email= $token;
-                    $admin_id =  base64_encode($id);
+                    $token_to_email= base64_encode($token);
+                    $admin_id =  base64_encode($result);
                     $site_url = site_url();
                     $email_url = $site_url. 'admin/admin_invite/'.$admin_id.'/'.$token_to_email;
 
@@ -136,7 +232,7 @@ class Admin extends CI_Controller {
                                 <p>Please visit the following link to accept and complete your invitation</p>
                                 <a href='$email_url'>
                                     Click here to accept and complete your invitation</a>
-                                <p>The invitation link will expire in 7 Days.</p>
+                                
                                 <p>Sincerely,</p>
                                 <p>Dermi Corp Admin.</p>
                         </body></html>";
@@ -185,20 +281,21 @@ class Admin extends CI_Controller {
 
     public function admin_invite($admin_id,$token){
 
-        $admin_id = base64_decode($admin_id);
-        $token = base64_decode($token);
+        $admin_id_decoded = base64_decode($admin_id);
+        $token_decoded = base64_decode($token);
 
         //hash token to be matched with db
-        $token_to_email = hash('sha256', $token);
+        $token_to_email = hash('sha256', $token_decoded);
 
 
-        $result = $this->admin_model->admin_info($admin_id);
+        $result = $this->admin_model->admin_info($admin_id_decoded);
 
 
         //$token_expire = $result[0]['token_expire'];
         $token_to_db = $result[0]['hashed_token'];
+        $reg_status =$result[0]['reg_status'];
 
-        if(($token_to_db == $token_to_email)){
+        if(($token_to_db == $token_to_email)&&($reg_status==0)){
 
             $this->form_validation->set_rules('fullname', 'Full Name', 'required');
             $this->form_validation->set_message('fullname', 'Error Message');
@@ -220,26 +317,19 @@ class Admin extends CI_Controller {
                     'admin_password' => md5($this->input->post('password'))
                 );
 
-                $this->admin_model->update_admin($admin_id,$values);
+                $this->admin_model->update_admin($admin_id_decoded,$values);
 
-                redirect('admin');
+                $data['reg_status']= '<div class="alert alert-danger">Your registration completed successfully! You can now login </div>';
+                $this->load->view('login/login_view',$data);
             }
 
 
-        }else{
+        }else if(($token_to_db == $token_to_email)&&($reg_status==1)){
 
-
-            //else load the forgot password view with the expire time error on it
-
-
-
+            $data['reg_status']= '<div class="alert alert-danger">Your registration completed successfully! You can now login </div>';
+            $this->load->view('login/login_view',$data);
 
         }
-
-
-
-
-
 
     }
 

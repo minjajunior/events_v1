@@ -41,7 +41,21 @@ $this->load->view('shared/login_header');
             <div class="clearfix"> </div>
             </form>
         </div>
+
     </div>
+
+<?php
+if(isset($reg_status)){ ?>
+    <script>
+        $('#login-response').append('<div class="alert alert-danger">Your registration completed successfully! Use your email to login</div>');
+        $('.alert-danger').delay(500).show(10, function() {
+            $(this).delay(3000).hide(10, function() {
+                $(this).remove();
+            });
+        });
+    </script>
+<?php } ?>
+
 
     <script>
         $('#login_form').submit(function(e) {
@@ -71,6 +85,13 @@ $this->load->view('shared/login_header');
                             '</div>');
                     } else if(response.loginStatus == 'password'){
                         $('#login-response').append('<div class="alert alert-danger">Sorry! Your have entered the wrong password</div>');
+                        $('.alert-danger').delay(500).show(10, function() {
+                            $(this).delay(3000).hide(10, function() {
+                                $(this).remove();
+                            });
+                        });
+                    }else if(response.loginStatus == 'reg_status'){
+                        $('#login-response').append('<div class="alert alert-danger">Sorry! You have not completed registration</div>');
                         $('.alert-danger').delay(500).show(10, function() {
                             $(this).delay(3000).hide(10, function() {
                                 $(this).remove();

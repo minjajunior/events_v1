@@ -13,6 +13,7 @@ $this->load->view('shared/login_header');
         <div class="login-bottom">
             <h2>Admin Register</h2>
             <?php echo form_open('admin/register'); ?>
+            <div id="reg-response"></div>
             <div class="col-md-12">
                 <div class="login-mail">
                     <input type="text" name="fullname" value="<?php echo set_value('fullname'); ?>" placeholder="Full Name">
@@ -54,4 +55,27 @@ $this->load->view('shared/login_header');
             <div class="clearfix"> </div>
         </div>
     </div>
-<?php $this->load->view('shared/login_footer') ?>
+
+<?php
+if(isset($reg_status)){ ?>
+    <script>
+        $('#reg-response').append('<div class="alert alert-danger">Something went wrong! Please complete your registration again</div>');
+            $('.alert-danger').delay(500).show(10, function() {
+            $(this).delay(3000).hide(10, function() {
+                $(this).remove();
+            });
+        });
+    </script>
+<?php }else if(isset($email_status)){ ?>
+<script>
+    $('#reg-response').append('<div class="alert alert-info">Registration successfully, Check your mailbox to confirm your email address</div>');
+    $('.alert-danger').delay(500).show(10, function() {
+        $(this).delay(3000).hide(10, function() {
+            $(this).remove();
+        });
+    });
+</script>
+
+<?php }
+$this->load->view('shared/login_footer')
+?>

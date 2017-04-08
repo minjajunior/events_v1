@@ -118,7 +118,7 @@
                 <div class="form-group">
                     <label for="budget" class="col-sm-4 control-label">Browse File</label>
                     <div class="col-sm-8">
-                        <input type="file" accept=".xls,.xlsx" name="budget" id="budget">
+                        <input type="file" accept=".xls,.xlsx" name="budget_file" id="budget">
                         <p class="help-block">Upload .xls or .xlsx file</p>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
     $('#new_item').submit(function(e) {
         e.preventDefault();
 
-        var me = $(this);
+
 
         $.ajax({
             url: me.attr('action'),
@@ -184,12 +184,18 @@
         e.preventDefault();
 
         var form = $(this);
+        var formD = $(form)[0];
+        var formData = new FormData(formD);
 
         $.ajax({
             url: form.attr('action'),
             type: 'post',
-            data: form.serialize(),
+            //data: form.serialize(),
+            data : formData,
             dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
             success: function (response) {
                 if(response.success == true){
                     $('#the-message').append('<div class="alert alert-success">' +

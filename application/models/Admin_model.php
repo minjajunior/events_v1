@@ -15,7 +15,8 @@ class Admin_model extends CI_Model {
      */
     public function register($values){
         $this->db->insert('admin', $values);
-
+        $id = $this->db->insert_id();
+        return $id;
     }
 
     /*
@@ -122,7 +123,7 @@ class Admin_model extends CI_Model {
 
     public function update_admin($id,$values){
 
-        $this->db->where('admin.admin_id', $id);
+        $this->db->where('admin_id', $id);
         $result =  $this->db->update('admin', $values);
 
         if($result){

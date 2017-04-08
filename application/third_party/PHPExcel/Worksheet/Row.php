@@ -89,4 +89,6 @@ class PHPExcel_Worksheet_Row
 	public function getCellIterator($startColumn = 'A', $endColumn = null) {
 		return new PHPExcel_Worksheet_RowCellIterator($this->_parent, $this->_rowIndex, $startColumn, $endColumn);
 	}
+	
+	
 }
