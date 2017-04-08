@@ -44,7 +44,11 @@ $this->load->view('shared/sidebar');
                     <div class="col-md-4 profile-fo">
                         <h4><?php echo $event_sum; ?></h4>
                         <p>Events</p>
-                        <a href="<?php echo base_url('admin/home')?>" class="pro1"><i class="fa fa-list"></i>View Events</a>
+                        <?php if ($admin_id == $this->session->admin_id ) { ?>
+                        <a href="<?php echo base_url('admin')?>" class="pro1"><i class="fa fa-list"></i>View Events</a>
+                        <?php } else { ?>
+                            <a href="#" ><i class="fa fa-remove"></i>Remove Admin</a>
+                        <?php } ?>
                     </div>
                     <?php } ?>
                     <div class="clearfix"></div>

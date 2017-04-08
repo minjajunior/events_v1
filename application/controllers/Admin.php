@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Created by PhpStorm.
  * User: Minja Junior
  * Date: 11/21/2016
@@ -10,10 +10,10 @@
  */
 class Admin extends CI_Controller {
 
-    /**
-     * This function load Admin login page and process validation of Admin.
+    /*
+     * This function load Admin home page after login process complete
      */
-    public function index(){
+    public function index() {
         $data['location'] = $this->event_model->get_location();
         $data['event_type'] = $this->event_model->get_type();
         $data['event'] = $this->event_model->get_event($this->session->admin_id);
@@ -25,13 +25,12 @@ class Admin extends CI_Controller {
         }
     }
 
-    /**
-     *This function load Admin Registration page and process registration validation.
+    /*
+     * This function load Admin Registration page and process registration validation.
      */
-    public function register(){
+    public function register() {
 
         $this->form_validation->set_rules('fullname', 'Full Name', 'required');
-        $this->form_validation->set_message('fullname', 'Error Message');
         $this->form_validation->set_rules('email', 'E-mail Address', 'required|valid_email|is_unique[admin.admin_email]');
         $this->form_validation->set_rules('phone', 'Phone Number', 'required|is_unique[admin.admin_phone]');
         $this->form_validation->set_rules('password', 'Password', 'required');
@@ -108,6 +107,7 @@ class Admin extends CI_Controller {
                 $this->load->view('admin/register_view', $data);
             }
 
+            redirect('login');
         }
     }
 
@@ -150,15 +150,13 @@ class Admin extends CI_Controller {
     }
 
     /*
-     * This function load Admin home page after login process complete
+     * This function load the details of the admin selected by id
      */
-    public function home(){
-
-    }
-
-    public function profile($id){
+    public function profile($id) {
+        $id = base64_decode($id);
         $data['admin_details'] = $this->admin_model->admin_details($id);
         $data['event_sum'] = $this->admin_model->event_sum($id);
+        $data['admin_id'] = $id;
 
         if (!empty($this->session->admin_id)){
             $this->load->view('admin/profile_view', $data);
@@ -168,8 +166,8 @@ class Admin extends CI_Controller {
     }
 
     /*
-    *This function check and add admin to the event
-    */
+     * This function check and add admin to the event
+     */
     public function add_admin($id){
 
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
@@ -187,9 +185,8 @@ class Admin extends CI_Controller {
                     $this->admin_model->add_admin($values);
                     echo 3;
                 }
-            }elseif ($this->input->post('action') == "invite"){
-
-
+            }
+            elseif ($this->input->post('action') == "invite"){
 
                 $email = $this->input->post('email');
 
@@ -269,7 +266,7 @@ class Admin extends CI_Controller {
             if(empty($value)){
                 echo 1;
             }else {
-                if($this->admin_model->check_admin($id, $value['admin_id']) > 0 or $value['admin_id'] == $this->admin_model->admin_id($id)){
+                if($this->admin_model->check_admin($id, $value['admin_id']) > 0 ){
                     echo 5;
                 } else {
                     echo 2;

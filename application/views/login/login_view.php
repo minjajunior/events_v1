@@ -19,15 +19,6 @@ $this->load->view('shared/login_header');
                 <div class="login-mail">
                     <input type="text" name="mailphone" id="mailphone" value="<?php echo set_value('mailphone'); ?>" placeholder="Eg: 2557XXXXXXXX or Email">
                 </div>
-                <?php echo form_error('mailphone')?>
-                <!--div class="login-mail">
-                    <input type="password" name="password" value="<?php echo set_value('password'); ?>" placeholder="Password">
-                    <i class="fa fa-lock"></i>
-                    <?php //echo form_error('password')?>
-                </div>
-                <!--a class="news-letter " href="#">
-                    <label class="checkbox1"><input type="checkbox" name="checkbox" ><i> </i>Forget Password</label>
-                </a-->
             </div>
             <div class="col-md-12 login-do">
                 <label class="hvr-shutter-in-horizontal login-sub">

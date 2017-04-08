@@ -28,15 +28,19 @@ $this->load->view('shared/sidebar');
                         <thead>
                         <tr>
                             <th>Event Name</th>
+                            <th>Event Type</th>
                             <th>Event Date</th>
+                            <th>Event Location</th>
                             <th>Event Fee</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php foreach($event as $eve){ ?>
                             <tr>
-                                <td><a href="<?php echo site_url('event/home/'.$eve->event_id) ?>"><?php echo $eve->event_name ?></a></td>
-                                <td><?php echo date_format(date_create($eve->event_date), 'l, jS F Y') ?></td>
+                                <td><a href="<?php echo site_url('event/home/'.base64_encode($eve->event_id)) ?>"><?php echo $eve->event_name ?></a></td>
+                                <td><?php echo $eve->event_type?></td>
+                                <td><?php echo date_format(date_create($eve->event_date), 'D, jS M Y') ?></td>
+                                <td><?php echo $eve->location_name?></td>
                                 <?php if ($eve->event_paid == 0){ ?>
                                     <td>Not Paid</td>
                                 <?php } else { ?>
@@ -148,7 +152,7 @@ $this->load->view('shared/sidebar');
                     success: function (response) {
                         if(response.success == true){
                             $('#the-message').append('<div class="alert alert-success">' +
-                                '<span class="glyphicon glyphicon-ok"></span>' +
+                                '<i class="fa fa-check"></i>' +
                                 ' Event Created Successfully' +
                                 '</div>');
                             $('.form-group').removeClass('has-error')

@@ -34,7 +34,7 @@ $this->load->view('shared/sidebar');
                     <tbody>
                     <?php foreach($event as $eve){ ?>
                         <tr>
-                            <td><a href="<?php echo site_url('event/home/'.$eve->event_id) ?>"><?php echo $eve->event_name ?></a></td>
+                            <td><a href="<?php echo site_url('event/home/'.base64_encode($eve->event_id)) ?>"><?php echo $eve->event_name ?></a></td>
                             <td><?php echo date_format(date_create($eve->event_date), 'l, jS F Y') ?></td>
                             <?php if ($eve->event_paid == 0){ ?>
                                 <td>Not Paid</td>
