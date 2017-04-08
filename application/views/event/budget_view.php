@@ -114,7 +114,7 @@
                 <div class="form-group">
                     <label for="budget" class="col-sm-4 control-label">Browse File</label>
                     <div class="col-sm-8">
-                        <input type="file" accept=".xls,.xlsx" name="budget_file" id="budget">
+                        <input type="file" accept=".xls,.xlsx" name="budget" id="budget">
                         <p class="help-block">Upload .xls or .xlsx file</p>
                     </div>
                 </div>

@@ -41,6 +41,8 @@
                             <div class="col-md-3">
                                 <a href="#" class="pull-right" data-toggle="modal" data-target="#newGroup" data-placement="bottom" title="Create Group">&nbsp;<i class="fa fa-users"></i>&nbsp;</a>
                                 <a href="#" class="pull-right" data-toggle="modal" data-target="#newMember" data-placement="bottom" title="New Member">&nbsp;<i class="fa fa-user-plus"></i>&nbsp;</a>
+                                <a href="#" class="pull-right" data-toggle="modal" data-target="#uploadMembers" data-placement="bottom" title="Upload Members File">&nbsp;<i class="fa fa-upload"></i>&nbsp;</a>
+
                             </div>
                         </h4>
                         <div class="tables">
@@ -217,6 +219,37 @@
 </div>
 
 
+<div class="modal fade" id="uploadMembers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h2 class="modal-title">Upload Members File</h2>
+            </div>
+            <?php
+            $attributes = array('class' => 'form-horizontal', 'id' => 'upload_members');
+            echo form_open_multipart('event/upload_members/'.$event_id, $attributes);
+            ?>
+            <div class="modal-body">
+                <div id="the-message"></div>
+                <div class="form-group">
+                    <label for="members" class="col-sm-4 control-label">Browse File</label>
+                    <div class="col-sm-8">
+                        <input type="file" accept=".xls,.xlsx" name="members" id="members">
+                        <p class="help-block">Upload .xls or .xlsx file</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger">Upload</button>
+            </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
 
 <script>
     $(document).ready(function() {
@@ -287,6 +320,60 @@
                 }
             });
         });
+
+
+        $('#upload_members').submit(function(e) {
+            e.preventDefault();
+
+            var form = $(this);
+            var formD = $(form)[0];
+            var formData = new FormData(formD);
+
+            $.ajax({
+                url: form.attr('action'),
+                type: 'post',
+                //data: form.serialize(),
+                data : formData,
+                dataType: 'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if(response.success == true){
+                        $('#the-message').append('<div class="alert alert-success">' +
+                            '<span class="glyphicon glyphicon-ok"></span>' +
+                            ' Members Uploaded Successfully' +
+                            '</div>');
+                        $('.form-group').removeClass('has-error')
+                            .removeClass('has-success');
+                        $('.text-danger').remove();
+
+                        // reset the form
+                        form[0].reset();
+
+                        // close the message after seconds
+                        $('.alert-success').delay(500).show(10, function() {
+                            $(this).delay(3000).hide(10, function() {
+                                $(this).remove();
+                                window.location.reload()
+                                $('#upload_budget').modal('hide');
+                            });
+                        })
+                    }else {
+                        $.each(response.messages, function (key, value) {
+                            var element = $('#' + key);
+                            element.closest('div.form-group')
+                                .removeClass('has-error')
+                                .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                                .find('.text-danger')
+                                .remove();
+                            element.after(value)
+                        })
+                    }
+                }
+            });
+        });
+
 
         $('#new_group').submit(function(e) {
             e.preventDefault();
