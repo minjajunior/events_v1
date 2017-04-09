@@ -106,25 +106,13 @@ class Login extends CI_Controller {
 
 
 
-    public function forgot_password(){
-        $this->form_validation->set_rules("email","Email","required|valid_email");
-        $this->form_validation->set_message('required',' is required');
-        if($this->form_validation->run() !== FALSE){
-            //setting a field to be verified on db
-            $data = array(
-                'email'=>$_POST['email']
-            );
-            //verifying email on non student table
-            $user_data['data'] =$this->manage_users->get_non_student($data);
+    public function password(){
 
-            if($user_data['data'] == NULL){
-                //verfying email on student table
-                $user_data['data'] =$this->manage_users->get_student($data);
-            }//end if $user_data['data'] == NULL
+            $email = $_POST['email'];
 
-            if($user_data['data'] != NULL){
-                $email = $user_data['data'][0]['email'];
-                $user = ucfirst($user_data['data'][0]['first_name']);
+            $value = $this->login_model->admin_login($email);
+
+            if(!empty($value)){
                 //generate a token
                 $token = md5(microtime (TRUE)*100000);
                 //hash token to be stored on db
@@ -133,111 +121,122 @@ class Login extends CI_Controller {
                 //expire time to be stored on db
                 $expire_time = date("Y-m-d H:i:s",time()+3600);
                 //array for updating database
-                $data = array(
+                $values = array(
                     'token_expire' => $expire_time,
                     'hashed_token' => $token_to_db
                 );
-                if( isset($user_data['data'][0]['role']) && isset($user_data['data'][0]['user_id'])){
-                    $user_id = $user_data['data'][0]['user_id'];
-                    $result = $this->manage_users->update_non_student($user_id,$data);
-                    $user_type = base64_encode('non_student');
-                }else{
-                    $user_id = $user_data['data'][0]['student_id'];
-                    $result = $this->manage_users->update_student($user_id,$data);
-                    $user_type = base64_encode('student');
-                }
-                if($result){
-                    //user id and token to be sent to email
-                    $user_id = base64_encode($user_id);
-                    $token_to_email= $token;
-                    $site_url = site_url();
 
-                    $from = "admin@promas.com";
-                    $to = $email;
-                    $subject = "Change password";
-                    $message = " 
+                    $result = $this->admin_model->update_admin($value['admin_id'],$values);
+
+                    if($result){
+
+                        //user id and token to be sent to email
+                        //
+                        $name = $value['admin_name'];
+                        $admin_id = base64_encode($value['admin_id']);
+                        $token_to_email= base64_encode($token);
+                        $site_url = site_url();
+                        $email_url = $site_url .'login/forgot_password/'.$admin_id. '/'.$token_to_email;
+
+                        $from = "demicorp@localhost";
+                        //$to = $email;
+                        $to = "demi@localhost";
+                        $subject = "Change password";
+                        $message = "
                         <html>
                         <head>
                         <title>Dermi Corp | Change password</title>
                         </head>
                         <body>
-                                <h4>Hello $user,</h4>    
+                                <h4>Hello $name</h4>    
                                 <p>Please visit the following link to change your password</p>
-                                <a href='$site_url/access/password/change_password/$user_type/$user_id/$token_to_email'>
+                                <a href='$email_url'>
                                     Click here to change your password</a>
                                 <p>This verification code will expire in 1hour.</p>
                                 <p>Sincerely,</p>
                                 <p>Dermi Corp Admin.</p>
                         </body></html>";
                     //sending email
-                    $email_result =  send($from,$to,$subject,$message);
-                    if($email_result){
-                        //on success sending email
-                        $data['message'] = "<div class='alert alert-success fade in text-center'> A link has been sent, Check your <b>email inbox</b> if not found check your <b>spam folder</b>. A link expires after <b>1 hour<b></b></div>";
-                        $this->load->view('access/forgot_password',$data);
-                    }else {
-                        //on failure sending email
-                        $data['message'] = "<div class='alert alert-danger fade in text-center'> Email has not been sent, Please try again.</div>";
-                        $this->load->view('access/forgot_password',$data);
-                    }//end inner else
-                }else{
-                    //on failure to store
-                    $data['message'] = "<div class='alert alert-warning fade in text-center'>Failed to send link please try again</div>";
-                    $this->load->view('access/forgot_password', $data);
+                        $this->email->from($from, 'Demi Corp');
+                        $this->email->to($to);
 
+                        $this->email->subject($subject);
+                        $this->email->message($message);
+
+                        if($this->email->send()){
+
+                            $data = array('success' => true);
+
+                        }else {
+
+                            $data = array('success' => false, 'messages' => $this->email->print_debugger());
+
+                        }//end inner else
+
+                        }else{
+                        //Failure to store token
+                            $data = array('success' => false, 'messages' =>'Token' );
 
                 }//end else if $result
 
             }else{
-                $data['message'] = "<div class='alert alert-warning fade in text-center'>Email was not found, Please use registered email</div>";
-                $this->load->view('access/forgot_password',$data);
+                //Failure to find the email
+                $data = array('success' => false, 'messages' =>'Email' );
             }//end outer else
 
-        }else{
-            $data['message'] = "<div class='alert alert-warning fade in text-center'>Email can not be empty</div>";
-            $this->load->view('access/forgot_password',$data);
-
-
-        }// end else $this->form_validation->run() !== FALSE
+        echo json_encode($data);
 
     }//end function forgot
 
-    public function change_password($user_type,$user_id,$hashed_token){
+    public function forgot_password($admin_id,$token){
 
-        //decoding user id and user type
-        $user_type = base64_decode($user_type);
-        $user_id = base64_decode($user_id);
+        $admin_id_decoded = base64_decode($admin_id);
+        $token_decoded = base64_decode($token);
 
         //hash token to be matched with db
-        $token_to_email = hash('sha256', $hashed_token);
+        $token_to_email = hash('sha256', $token_decoded);
 
+        $result = $this->admin_model->admin_info($admin_id_decoded);
 
-        if($user_type=='student'){
-            $data = array(
-                'student_id'=>$user_id,
-            );
-            $user_data['data'] =$this->manage_users->get_student($data);
-        }elseif ($user_type=='non_student') {
-            $data = array(
-                'non_student_users.user_id'=>$user_id,
-            );
-            $user_data['data'] =   $this->manage_users->get_non_student($data);
-        }//// end else if $user_type=='non_student'
-        $token_expire = $user_data['data'][0]['token_expire'];
-        $token_to_db = $user_data['data'][0]['hashed_token'];
+        $token_expire = $result[0]['token_expire'];
+        $token_to_db = $result[0]['hashed_token'];
 
-        if((strtotime($token_expire) > time()) &&($token_to_db == $token_to_email)){
-            $data['user_id'] =$user_id;
-            $data['user_type']=$user_type;
-            $data['message']= "<div class=\"alert alert-info fade in text-center\"> Hello " . ucfirst($user_data['data'][0]['first_name']).", Create your new password</div>";
-            $this->load->view('access/change_password', $data);
+        if((strtotime($token_expire) > time()) && $token_to_db == $token_to_email){
+
+            $data['id']= $admin_id_decoded;
+            $this->load->view('admin/change_pass_view', $data);
         }else{
-            //else load the forgor password view with the expire time error on it
-            $data['message']= "<div class=\"alert alert-warning fade in text-center\">Verification code has expired, Send a new link again</div>";
-            $this->load->view('access/forgot_password',$data);
+            //else load the forgot password view with the expire time error on it
+            $data['pass_expire']= "Code expired";
+            $this->load->view('login/login_view',$data);
         }
     }//end function change password
 
+    public function change_password(){
+
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('password2', 'Re-Enter Password', 'required|matches[password]');
+
+        if ($this->form_validation->run() == FALSE) {
+            $data['id'] = $this->input->post('di');
+            $this->load->view('admin/change_pass_view',$data);
+        } else {
+            $values = array(
+                'admin_password' => md5($this->input->post('password')),
+                );
+
+            if(!empty($this->admin_model->update_admin($this->input->post('di'),$values))){
+                $data['pass_change'] = "Pass changed";
+                $this->load->view('login/login_view', $data);
+            }else{
+                $data['id'] = $this->input->post('di');
+                $this->load->view('admin/change_pass_view',$data);
+            }
+
+        }
+
+
+    }
 
     /*
     * This function process logout process

@@ -20,13 +20,13 @@ $this->load->view('shared/login_header');
                     <input type="text" name="mailphone" id="mailphone" value="<?php echo set_value('mailphone'); ?>" placeholder="Eg: 2557XXXXXXXX or Email">
                 </div>
             </div>
-            <div class="col-md-12 login-do">
+            <div class="col-md-12 login-do pass-do">
                 <label class="hvr-shutter-in-horizontal login-sub">
                     <input type="submit" name="next" id="next" value="Next">
                 </label>
                 <div id="reg-link">
                     <p>Do not have an account ?</p>
-                    <a href="<?php echo base_url('admin/register')?>" class="hvr-shutter-in-horizontal"><b>Register</b></a>
+                    <a href="<?php echo base_url('admin/register')?>" class="hvr-shutter-in-horizontal "><b>Register</b></a>
                 </div>
             </div>
             <div class="clearfix"> </div>
@@ -38,13 +38,32 @@ $this->load->view('shared/login_header');
 <?php
 if(isset($reg_status)){ ?>
     <script>
-        $('#login-response').append('<div class="alert alert-danger">Your registration completed successfully! Use your email to login</div>');
+        $('#login-response').append('<div class="alert alert-success">Your registration completed successfully! Use your email to login</div>');
         $('.alert-danger').delay(500).show(10, function() {
             $(this).delay(3000).hide(10, function() {
                 $(this).remove();
             });
         });
     </script>
+<?php } else if(isset($pass_expire)){ ?>
+    <script>
+    $('#login-response').append('<div class="alert alert-danger">Verification code has expired, Reset your password again</div>');
+    $('.alert-danger').delay(500).show(10, function() {
+        $(this).delay(3000).hide(10, function() {
+            $(this).remove();
+        });
+    });
+    </script>
+<?php } else if(isset($pass_change)){ ?>
+    <script>
+    $('#login-response').append('<div class="alert alert-success">Password changed successfully, You can now login</div>');
+    $('.alert-danger').delay(500).show(10, function() {
+        $(this).delay(3000).hide(10, function() {
+            $(this).remove();
+        });
+    });
+    </script>
+
 <?php } ?>
 
 
@@ -72,7 +91,7 @@ if(isset($reg_status)){ ?>
                         $('.login-mail').append('<input type="hidden" name="mailphone" value="'+ response.email +'" id="email" />');
                         $('#next').replaceWith('<input type="submit" name="submit" value="login" id="submit" />');
                         $('#reg-link').replaceWith('<div id="pass-link"><p>Forgot Password ?</p>' +
-                            '<a href="<?php echo base_url('admin/register')?>" class="hvr-shutter-in-horizontal"><b>Reset Password</b></a>' +
+                            '<a href="javascript:void(0)" class="pass-f-link hvr-shutter-in-horizontal" value="'+ response.email +'"><b>Reset Password</b></a>' +
                             '</div>');
                     } else if(response.loginStatus == 'password'){
                         $('#login-response').append('<div class="alert alert-danger">Sorry! Your have entered the wrong password</div>');
@@ -113,5 +132,51 @@ if(isset($reg_status)){ ?>
                 }
             });
         });
+
+        $( document ).ready(function() {
+
+        $('.pass-do').on("click", ".pass-f-link", function() {
+
+            //alert('Hello');
+            var email = $(this).attr("value");
+
+            var postData = {
+                'email': email,
+            };
+
+            $.ajax({
+                    type:"POST",
+                    url: "<?php echo base_url('login/password')?>",
+                    data:postData,
+                    dataType: 'json',
+                    success: function(response){
+
+                        if (response.success == true) {
+                            $('#login-response').append('<div class="alert alert-success"> Check your mailbox, Password link has been sent to your email</div>');
+                            $('.alert-danger').delay(500).show(10, function () {
+                                $(this).delay(3000).hide(10, function () {
+                                    $(this).remove();
+                                });
+                            });
+                        }else if(response.success == false){
+                            $('#login-response').append('<div class="alert alert-danger">Please! Try again to reset your password</div>');
+                            $('.alert-danger').delay(500).show(10, function () {
+                                $(this).delay(3000).hide(10, function () {
+                                    $(this).remove();
+                                });
+                            });
+
+                        }
+
+
+
+                    }
+            });
+
+        });
+
+        });
+
+
     </script>
 <?php $this->load->view('shared/login_footer') ?>

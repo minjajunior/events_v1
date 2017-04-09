@@ -133,7 +133,6 @@
         e.preventDefault();
 
 
-
         $.ajax({
             url: me.attr('action'),
             type: 'post',
