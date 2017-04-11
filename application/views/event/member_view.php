@@ -32,19 +32,20 @@
                     <div class="blank-page">
                         <h4>
                             <div class="col-md-3"> All Members</div>
-                            <div class="col-md-6">
-                                <div class="input-group input-group-in">
-                                    <input type="text" id="search" onkeyup="searchFunction()" class="form-control2 input-search" placeholder="Search...">
-                                    <span class="input-group-btn"><button class="btn btn-danger" type="button"><i class="fa fa-search"></i></button></span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="#" class="pull-right" data-toggle="modal" data-target="#newGroup" data-placement="bottom" title="Create Group">&nbsp;<i class="fa fa-users"></i>&nbsp;</a>
-                                <a href="#" class="pull-right" data-toggle="modal" data-target="#newMember" data-placement="bottom" title="New Member">&nbsp;<i class="fa fa-user-plus"></i>&nbsp;</a>
-                                <a href="#" class="pull-right" data-toggle="modal" data-target="#uploadMembers" data-placement="bottom" title="Upload Members File">&nbsp;<i class="fa fa-upload"></i>&nbsp;</a>
-
+                            <div class="col-md-9">
+                                <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#newGroup" data-placement="bottom" title="Create Group"><i class="fa fa-users"></i> Create Group</a>&nbsp;
+                                <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#newMember" data-placement="bottom" title="New Member"><i class="fa fa-user-plus"></i> New Member</a>&nbsp;
+                                <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#uploadMembers" data-placement="bottom" title="Upload Members File"><i class="fa fa-upload"></i> Upload Members</a>
+                                <a href="<?php echo site_url('event/template/member')?>" class="btn btn-xs btn-success pull-right" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" >&nbsp;<i class="fa fa-download"></i> Download Template&nbsp;</a>
                             </div>
                         </h4>
+                        <br><br>
+                        <div class="col-md-6">
+                            <div class="input-group input-group-in">
+                                <input type="text" id="search" onkeyup="searchFunction()" class="form-control2 input-search" placeholder="Search...">
+                                <span class="input-group-btn"><button class="btn btn-danger" type="button"><i class="fa fa-search"></i></button></span>
+                            </div>
+                        </div>
                         <div class="tables">
                             <table class="table table-hover" id="members-list">
                                 <thead>
@@ -113,17 +114,6 @@
             </div>
         <?php } ?>
         <div class="clearfix"> </div>
-        <br>
-        <div class="blank-page">
-            <a class="btn btn-danger" href="<?php echo site_url('event/template/member')?>" >Download Member Template</a>
-            <?php echo form_open_multipart('event/upload_members/'.$event_id); ?>
-            <div class="form-group">
-                <input type="file" name="members">
-                <p class="help-block">Upload .xls or .xlsx file</p>
-            </div>
-            <button type="submit" name="submit" class="btn btn-danger">Upload</button>
-            </form>
-        </div>
     <?php } ?>
 </div>
 
@@ -248,8 +238,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-
-
 
 <script>
     $(document).ready(function() {

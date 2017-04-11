@@ -11,9 +11,9 @@
     <?php if(isset($this->session->admin_id)){ ?>
         <div class="blank-page">
             <h4>Budget
-                <a href="#" class="pull-right" data-toggle="modal" data-target="#newItem" data-placement="bottom" title="Add Budget Item">&nbsp;<i class="fa fa-plus-square"></i>&nbsp;</a>
-                <a href="#" class="pull-right" data-toggle="modal" data-target="#uploadBudget" data-placement="bottom" title="Upload Budget File">&nbsp;<i class="fa fa-upload"></i>&nbsp;</a>
-                <a href="<?php echo site_url('event/template/budget')?>" class="pull-right" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" >&nbsp;<i class="fa fa-download"></i>&nbsp;</a>
+                <a href="#" class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#newItem" data-placement="bottom" title="Add Budget Item">&nbsp;<i class="fa fa-plus-square"></i> New Item&nbsp;</a>
+                <a href="#" class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#uploadBudget" data-placement="bottom" title="Upload Budget File">&nbsp;<i class="fa fa-upload"></i> Upload Budget&nbsp;</a>
+                <a href="<?php echo site_url('event/template/budget')?>" class="btn btn-sm btn-success pull-right" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" >&nbsp;<i class="fa fa-download"></i> Download Template&nbsp;</a>
             </h4>
             <hr>
             <?php if (isset($budget_details['error']) && $budget_details['error'] == "0") {?>
@@ -44,16 +44,6 @@
             <?php } ?>
         </div>
         <div class="clearfix"> </div>
-        <br>
-        <div class="blank-page">
-            <?php echo form_open_multipart('event/upload_budget/'.$event_id); ?>
-            <div class="form-group">
-                <input type="file" accept=".xls,.xlsx" name="budget">
-                <p class="help-block">Upload .xls or .xlsx file</p>
-            </div>
-            <button type="submit" name="submit" class="btn btn-danger">Upload</button>
-            </form>
-        </div>
     <?php } ?>
 </div>
 
