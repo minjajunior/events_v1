@@ -42,6 +42,7 @@ echo $pdf_h;
                 <td><?php echo $md->member_name ?></td>
                 <td><?php echo $english_format_number = number_format($md->member_pledge, 0, '.', ','); ?></td>
                 <td><?php echo $english_format_number = number_format($md->member_cash, 0, '.', ','); ?></td>
+                <td><?php echo $md->member_phone ?></td>
                 <td><?php echo $english_format_number = number_format($md->member_pledge-$md->member_cash, 0, '.', ','); ?></td>
             </tr>
             <?php $i++; } ?>
