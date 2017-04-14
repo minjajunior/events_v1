@@ -374,51 +374,6 @@ class Event extends CI_Controller
             //redirect('event/home/' . $id);
             //echo json_encode($data);
 
-        }if ($this->upload->do_upload('budget')){
-
-            $data = array('upload_data' => $this->upload->data());
-            $file = $data['upload_data']['file_name'];
-            //$file = $_FILES['budget']['name'];
-            //load the excel library
-            $this->load->library('excel');
-            //read file from path
-            $objPHPExcel = PHPExcel_IOFactory::load('./upload/' . $file);
-            $objWorksheet = $objPHPExcel->getActiveSheet();
-            //$data['success'] = true;
-
-            foreach ($objWorksheet->getRowIterator() as $row) {
-
-                $in = "";
-                $ic = "0";
-                $ip = "0";
-                $cellIterator = $row->getCellIterator();
-                $cellIterator->setIterateOnlyExistingCells(true);
-                foreach ($cellIterator as $cell) {
-                    if ($cell->getColumn() == "A") {
-                        $in = $cell->getValue();
-                    } elseif ($cell->getColumn() == "B") {
-                        $ic = $cell->getValue();
-                    } elseif ($cell->getColumn() == "C") {
-                        $ip = $cell->getValue();
-                    }
-                }
-                if ($in != "Item Name") {
-                    $values = array(
-                        'item_name' => $in,
-                        'item_cost' => $ic,
-                        'item_paid' => $ip,
-                        'event_id' => $id
-                    );
-                    $this->event_model->insert_budget($values);
-                }
-
-
-            }
-
-            $data = array('success' => true);
-            //redirect('event/home/' . $id);
-            //echo json_encode($data);
-
         } else {
             //$error = array('error' => $this->upload->display_errors());
             //$this->load->view('event/home_view', $error);

@@ -8,24 +8,22 @@
  * Time: 14:34
  */
 
+echo $pdf_h;
+?>
 
 
-$this->load->view('shared/pdf_header');
-
-if(isset($this->session->admin_id)) {
-    ?>
+<div class="content-top">
+    <div class="col-md-12">
 <div class="blank-page">
-    <h4>Members</h4>
-    <hr>
-
+    <h3 class="head-top"><?php echo $report_name; ?></h3><hr>
 
     <?php if (isset($member_details['error']) && $member_details['error'] == "0") { ?>
         No members found. Create <a href="#" data-toggle="modal" data-target="#newMember">new
             member</a> or upload your members file.
     <?php } else { ?>
 
-    <div class="" data-example-id="">
-        <table class="table table-bordered">
+    <div class="tables">
+        <table class="table table-striped">
             <thead>
             <tr>
                 <th>#</th>
@@ -51,11 +49,17 @@ if(isset($this->session->admin_id)) {
             </tbody>
         </table>
     </div>
+    <?php } ?>
 
-    <?php }
 
-    }
+</div>
 
-    $this->load->view('shared/pdf_footer');
+    </div>
 
-    ?>
+
+</div>
+
+</div>
+
+</body>
+</html>

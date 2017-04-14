@@ -166,61 +166,125 @@ class Reports extends CI_Controller{
 
             $report_name=$_POST['report_name'];
             $event_id=$_POST['event_id'];
+            $admin_id=$this->session->admin_id;
 
             if($report_name=='members'){
 
                 $data['member_details'] = $this->reports_model->member_details($event_id);
+                $data['event_details'] = $this->event_model->event_details($event_id);
+                $data['admin_details'] = $this->admin_model->admin_details($admin_id);
+                $data['report_name'] = 'Members Report';
+                $pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
+
+                $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
+
                 $html = $this->load->view('reports/members_pdf',$data,true);
 
-                $this->download_pdf($report_name,$html);
+                $this->download_pdf($pdf_name,$html);
 
             }elseif ($report_name=='budget'){
 
+
                 $data['budget_details'] = $this->reports_model->budget_details($event_id);
+                $data['event_details'] = $this->event_model->event_details($event_id);
+                $data['admin_details'] = $this->admin_model->admin_details($admin_id);
+                $data['report_name'] = 'Budget Report';
+                $pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
+
+                $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
+
                 $html = $this->load->view('reports/budget_pdf',$data,true);
 
-                $this->download_pdf($report_name,$html);
+
+                //$html = $this->load->view('test',$data,true);
+                //$pdf_h = $this->load->view('shared/pdf_h',$data,true);
+
+                $this->download_pdf($pdf_name,$html);
 
             }elseif ($report_name=='less_pledge'){
 
                 $data['member_details'] = $this->reports_model->less_pledges($event_id);
+                $data['event_details'] = $this->event_model->event_details($event_id);
+                $data['admin_details'] = $this->admin_model->admin_details($admin_id);
+                $data['report_name'] = 'Members Report';
+                $pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
+
+                $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
 
                 $html = $this->load->view('reports/members_pdf',$data,true);
 
-                $this->download_pdf($report_name,$html);
+                $this->download_pdf($pdf_name,$html);
+
+            }elseif ($report_name=='full_pledge'){
+
+                $data['member_details'] = $this->reports_model->full_pledges($event_id);
+                $data['event_details'] = $this->event_model->event_details($event_id);
+                $data['admin_details'] = $this->admin_model->admin_details($admin_id);
+                $data['report_name'] = 'Members Report';
+                $pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
+
+                $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
+
+                $html = $this->load->view('reports/members_pdf',$data,true);
+
+                $this->download_pdf($pdf_name,$html);
 
             }elseif ($report_name=='member_cat'){
                 $cat_id = $_POST['cat_id'];
 
                 $data['member_details'] = $this->reports_model->get_members_group($event_id,$cat_id);
+                $data['event_details'] = $this->event_model->event_details($event_id);
+                $data['admin_details'] = $this->admin_model->admin_details($admin_id);
+                $data['report_name'] = 'Members Report';
+                $pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
+
+                $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
 
                 $html = $this->load->view('reports/members_pdf',$data,true);
 
-                $this->download_pdf($report_name,$html);
+                $this->download_pdf($pdf_name,$html);
 
             }elseif ($report_name=='member_amounts'){
                 $paid_amount = $_POST['p_amount'];
                 $pledge_amount = $_POST['pl_amount'];
 
                 $data['member_details'] = $this->reports_model->get_members_amounts($paid_amount,$pledge_amount,$event_id);
+                $data['event_details'] = $this->event_model->event_details($event_id);
+                $data['admin_details'] = $this->admin_model->admin_details($admin_id);
+                $data['report_name'] = 'Budget Report';
+                $pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
+
+                $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
 
                 $html = $this->load->view('reports/members_pdf',$data,true);
 
-                $this->download_pdf($report_name,$html);
+                $this->download_pdf($pdf_name,$html);
 
             }elseif ($report_name=='income'){
 
                 $data['budget_details'] = $this->reports_model->budget_details($event_id);
+                $data['event_details'] = $this->event_model->event_details($event_id);
+                $data['admin_details'] = $this->admin_model->admin_details($admin_id);
+                $data['report_name'] = 'Budget Report';
+                $pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
+
+                $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
                 $html = $this->load->view('reports/income_pdf',$data,true);
 
-                $this->download_pdf($report_name,$html);
+                $this->download_pdf($pdf_name,$html);
 
             }elseif ($report_name=='expenses'){
 
                 $data['budget_details'] = $this->reports_model->budget_details($event_id);
+                $data['event_details'] = $this->event_model->event_details($event_id);
+                $data['admin_details'] = $this->admin_model->admin_details($admin_id);
+                $data['report_name'] = 'Budget Report';
+                $pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
+
+                $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
                 $html = $this->load->view('reports/budget_pdf',$data,true);
 
-                $this->download_pdf($report_name,$html);
+                $this->download_pdf($pdf_name,$html);
 
             }
 
@@ -235,8 +299,8 @@ class Reports extends CI_Controller{
 
 
     public function  download_pdf($file_name,$html_view){
-        $file_name = $file_name.".pdf";
 
+        $file_name = $file_name.".pdf";
 
         header("Content-Type: application/pdf");//mime type
         header("Content-Disposition: attachment;filename=".$file_name); //tell browser what's the file name
@@ -245,9 +309,27 @@ class Reports extends CI_Controller{
         //load the PDF library
         $this->load->library('m_pdf');
 
-        $this->m_pdf->pdf->SetHTMLHeader('<div style="text-align: right; font-weight: bold;">My document</div>');
+        //$this->m_pdf->pdf->SetHTMLHeader('<img class="pull-right" src="' . base_url() . 'assets/images/demi.png">');
+        //$this->m_pdf->pdf->SetHTMLHeader($pdf_h);
+        $this->m_pdf->pdf->SetHTMLFooter('
+            <table  width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold; font-style: italic;">
+                <tr>
+                    <td width="33%"><span style="font-weight: bold; font-style: italic;">www.demievents.co.tz</span></td>
+                    <td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td>
+                    <td width="33%" style="text-align: right; "> {DATE Y-m-j} </td>
+                </tr>
+            </table>
+            ');
 
-        $this->m_pdf->pdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold; font-style: italic;"><tr><td width="33%"><span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td><td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td><td width="33%" style="text-align: right; ">My document</td></tr></table>');
+
+//        $this->m_pdf->pdf->AddPage('', // L - landscape, P - portrait
+//            '', '', '', '',
+//            5, // margin_left
+//            5, // margin right
+//            60, // margin top
+//            30, // margin bottom
+//            0, // margin header
+//            0); // margin footer
 
 
         //generate the PDF from the given html
@@ -269,7 +351,18 @@ class Reports extends CI_Controller{
     }
 
     public function test(){
-        $this->load->view('reports/income_pdf');
+        $event_id = 1;
+        $admin_id =1 ;
+        $data['budget_details'] = $this->reports_model->budget_details($event_id);
+        $data['event_details'] = $this->event_model->event_details($event_id);
+        $data['admin_details'] = $this->admin_model->admin_details($admin_id);
+
+        //$html = $this->load->view('reports/budget_pdf',$data,true);
+        //$html = $this->load->view('test',$data,true);
+
+
+        //$data['budget_details'] = $this->reports_model->budget_details($event_id);
+        $this->load->view('test',$data);
 }
 
 

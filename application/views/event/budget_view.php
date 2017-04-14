@@ -208,8 +208,8 @@
                     $('.alert-success').delay(500).show(10, function() {
                         $(this).delay(3000).hide(10, function() {
                             $(this).remove();
-                            window.location.reload()
-                            $('#upload_budget').modal('hide');
+                            //window.location.reload()
+                            $('#uploadBudget').modal('hide');
                         });
                     })
                 }else {
