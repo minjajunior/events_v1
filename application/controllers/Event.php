@@ -347,7 +347,7 @@ class Event extends CI_Controller
                     $ic = "0";
                     $ip = "0";
                     $cellIterator = $row->getCellIterator();
-                    $cellIterator->setIterateOnlyExistingCells(false);
+                    $cellIterator->setIterateOnlyExistingCells(true);
                     foreach ($cellIterator as $cell) {
                         if ($cell->getColumn() == "A") {
                             $in = $cell->getValue();
