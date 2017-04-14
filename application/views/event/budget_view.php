@@ -7,6 +7,14 @@
  */
 ?>
 
+<div class="banner">
+    <h2>
+        <a href="<?php echo site_url('event/home/'.base64_encode($event_id)) ?>">Event</a>
+        <i class="fa fa-angle-right"></i>
+        <span>Budget</span>
+    </h2>
+</div>
+
 <div class="blank">
     <?php if(isset($this->session->admin_id)){ ?>
         <div class="blank-page">
@@ -27,6 +35,7 @@
                             <th>Cost (Tsh.)</th>
                             <th>Paid (Tsh.)</th>
                             <th>Balance (Tsh.)</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -36,6 +45,10 @@
                                 <td><?php echo $english_format_number = number_format($bd->item_cost, 0, '.', ',');?></td>
                                 <td><?php echo $english_format_number = number_format($bd->item_paid, 0, '.', ','); ?></td>
                                 <td><?php echo $english_format_number = number_format($bd->item_cost-$bd->item_paid, 0, '.', ','); ?></td>
+                                <td>
+                                    <a href="javascript:void(0)" class="edit_budget" rel="<?php echo $bd->item_id; ?>" id="editBudget_view"><i class="fa fa-edit"></i> </a>
+                                    <a href="javascript:void(0)" class="edit_budget" rel="<?php echo $bd->item_id; ?>" id="editBudget_view"><i class="fa fa-trash"></i> </a>
+                                </td>
                             </tr>
                         <?php } ?>
                         </tbody>
@@ -100,7 +113,7 @@
                 echo form_open_multipart('event/upload_budget/'.$event_id, $attributes);
             ?>
             <div class="modal-body">
-                <div id="the-message"></div>
+                <div id="upload-response"></div>
                 <div class="form-group">
                     <label for="budget" class="col-sm-4 control-label">Browse File</label>
                     <div class="col-sm-8">
@@ -117,106 +130,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-
-<script>
-    $('#new_item').submit(function(e) {
-        e.preventDefault();
-
-
-        $.ajax({
-            url: me.attr('action'),
-            type: 'post',
-            data: me.serialize(),
-            dataType: 'json',
-            success: function (response) {
-                if(response.success == true){
-                    $('#the-message').append('<div class="alert alert-success">' +
-                        '<span class="glyphicon glyphicon-ok"></span>' +
-                        ' Item Created Successfully' +
-                        '</div>');
-                    $('.form-group').removeClass('has-error')
-                        .removeClass('has-success');
-                    $('.text-danger').remove();
-
-                    // reset the form
-                    me[0].reset();
-
-                    // close the message after seconds
-                    $('.alert-success').delay(500).show(10, function() {
-                        $(this).delay(3000).hide(10, function() {
-                            $(this).remove();
-                            window.location.reload()
-                            $('#newItem').modal('hide');
-                        });
-                    })
-                }else {
-                    $.each(response.messages, function (key, value) {
-                        var element = $('#' + key);
-                        element.closest('div.form-group')
-                            .removeClass('has-error')
-                            .addClass(value.length > 0 ? 'has-error' : 'has-success')
-                            .find('.text-danger')
-                            .remove();
-                        element.after(value)
-                    })
-                }
-            }
-        });
-    });
-</script>
-<script>
-    $('#upload_budget').submit(function(e) {
-        e.preventDefault();
-
-        var form = $(this);
-        var formD = $(form)[0];
-        var formData = new FormData(formD);
-
-        $.ajax({
-            url: form.attr('action'),
-            type: 'post',
-            //data: form.serialize(),
-            data : formData,
-            dataType: 'json',
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                if(response.success == true){
-                    $('#the-message').append('<div class="alert alert-success">' +
-                        '<span class="glyphicon glyphicon-ok"></span>' +
-                        ' Budget Uploaded Successfully' +
-                        '</div>');
-                    $('.form-group').removeClass('has-error')
-                        .removeClass('has-success');
-                    $('.text-danger').remove();
-
-                    // reset the form
-                    form[0].reset();
-
-                    // close the message after seconds
-                    $('.alert-success').delay(500).show(10, function() {
-                        $(this).delay(3000).hide(10, function() {
-                            $(this).remove();
-                            window.location.reload()
-                            $('#upload_budget').modal('hide');
-                        });
-                    })
-                }else {
-                    $.each(response.messages, function (key, value) {
-                        var element = $('#' + key);
-                        element.closest('div.form-group')
-                            .removeClass('has-error')
-                            .addClass(value.length > 0 ? 'has-error' : 'has-success')
-                            .find('.text-danger')
-                            .remove();
-                        element.after(value)
-                    })
-                }
-            }
-        });
-    });
-</script>
 <script>
     $(document).ready(function() {
 
@@ -246,6 +159,111 @@
             };
 
             getContentView(postData);
+        });
+
+        $('#new_item').submit(function(e) {
+            e.preventDefault();
+
+
+            $.ajax({
+                url: me.attr('action'),
+                type: 'post',
+                data: me.serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    if(response.success == true){
+                        $('#the-message').append('<div class="alert alert-success">' +
+                            '<span class="glyphicon glyphicon-ok"></span>' +
+                            ' Item Created Successfully' +
+                            '</div>');
+                        $('.form-group').removeClass('has-error')
+                            .removeClass('has-success');
+                        $('.text-danger').remove();
+
+                        // reset the form
+                        me[0].reset();
+
+                        // close the message after seconds
+                        $('.alert-success').delay(500).show(10, function() {
+                            $(this).delay(3000).hide(10, function() {
+                                $(this).remove();
+                                window.location.reload()
+                                $('#newItem').modal('hide');
+                            });
+                        })
+                    }else {
+                        $.each(response.messages, function (key, value) {
+                            var element = $('#' + key);
+                            element.closest('div.form-group')
+                                .removeClass('has-error')
+                                .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                                .find('.text-danger')
+                                .remove();
+                            element.after(value)
+                        })
+                    }
+                }
+            });
+        });
+
+        $('#upload_budget').submit(function(e) {
+            e.preventDefault();
+
+            var form = $(this);
+            var formD = $(form)[0];
+            var formData = new FormData(formD);
+
+            $.ajax({
+                url: form.attr('action'),
+                type: 'post',
+                //data: form.serialize(),
+                data : formData,
+                dataType: 'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if(response.success == true){
+                        $('#upload-response').append('<div class="alert alert-success">' +
+                            '<i class="fa fa-check" ></i>' +
+                            ' Budget Uploaded Successfully' +
+                            '</div>');
+                        $('.form-group').removeClass('has-error')
+                            .removeClass('has-success');
+                        $('.text-danger').remove();
+
+                        // reset the form
+                        form[0].reset();
+
+                        // close the message after seconds
+                        $('.alert-success').delay(500).show(10, function() {
+                            $(this).delay(3000).hide(10, function() {
+                                $(this).remove();
+                                //window.location.reload()
+                                $('#uploadBudget').modal('hide');
+                            });
+                        })
+                    }else if(response.success == false) {
+                        $('#upload-response').append('<div class="alert alert-danger">' +
+                            response.messages + '</div>'
+                         );
+                        $('.alert-danger').delay(500).show(10, function() {
+                            $(this).delay(3000).hide(10, function() {
+                                $(this).remove();
+                            });
+                        })
+                        /*$.each(response.messages, function (key, value) {
+                         var element = $('#' + key);
+                         element.closest('div.form-group')
+                         .removeClass('has-error')
+                         .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                         .find('.text-danger')
+                         .remove();
+                         element.after(value)
+                         })*/
+                    }
+                }
+            });
         });
     });
 </script>

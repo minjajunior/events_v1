@@ -32,9 +32,14 @@ class Admin extends CI_Controller {
 
         $this->form_validation->set_rules('fullname', 'Full Name', 'required');
         $this->form_validation->set_rules('email', 'E-mail Address', 'required|valid_email|is_unique[admin.admin_email]');
-        $this->form_validation->set_rules('phone', 'Phone Number', 'required|is_unique[admin.admin_phone]');
-        $this->form_validation->set_rules('password', 'Password', 'required');
-        $this->form_validation->set_rules('password2', 'Re-Enter Password', 'required|matches[password]');
+        $this->form_validation->set_message('valid_email', 'Email address you have entered is not a valid email address.');
+        $this->form_validation->set_message('is_unique', '{field} you have entered is already registered in an account with us.');
+        $this->form_validation->set_rules('phone', 'Phone Number', 'required|is_unique[admin.admin_phone]|exact_length[12]|numeric');
+        $this->form_validation->set_message('exact_length', 'The phone number must be in a 255XXXXXXXXX format.');
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
+        $this->form_validation->set_message('min_length', '{field} must be at least {param} characters long.');
+        $this->form_validation->set_rules('password2', 'Repeat Password', 'required|matches[password]');
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger">', '</div>');
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('admin/register_view');

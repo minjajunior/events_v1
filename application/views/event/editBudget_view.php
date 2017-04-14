@@ -7,6 +7,16 @@
  */
 ?>
 
+<div class="banner">
+    <h2>
+        <a href="<?php echo site_url('event/home/'.base64_encode($event_id)) ?>">Event</a>
+        <i class="fa fa-angle-right"></i>
+        <a href="javascript:void(0)" class="bread" rel="<?php echo $event_id; ?>" id="budget_view">Budget</a>
+        <i class="fa fa-angle-right"></i>
+        <span>Edit Item</span>
+    </h2>
+</div>
+
 <div class="blank">
     <div class="grid-form1">
         <h3 id="forms-horizontal">Edit Item</h3>
@@ -41,7 +51,8 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-8 col-md-offset-2">
-                    <button type="submit" class="btn btn-danger pull-right">Save</button>
+                    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteItem">Delete</a>
+                    <button type="submit" class="btn btn-success pull-right">Save</button>
                 </div>
             </div>
         <?php } ?>
@@ -49,10 +60,34 @@
     </div>
 </div>
 
+<div class="modal fade" id="deleteItem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h2 class="modal-title">Delete Item</h2>
+            </div>
+            <div class="modal-body">
+                <div class="the-response"></div>
+                <?php foreach ($item_detail as $idt) { ?>
+                    <p>Are you sure you want to delete <?php echo $idt->item_name ?>?</p>
+                <?php } ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Cancel</button>
+                <a href="javascript:void(0)" class="delete_item btn btn-danger" rel="<?php echo $item_id; ?>" id="editBudget_view">Delete</a>
+                <!--a href="<?php// echo site_url('event/delete_item/'.$item_id)?>" class="btn btn-danger">Delete</a-->
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
 <script>
     $(document).ready(function() {
 
         var getContentView = function(postData) {
+
+
             $.ajax({
                 type:"POST",
                 url: "<?php echo base_url('event/load_views')?>",
@@ -60,14 +95,16 @@
                 data:postData,
                 dataType: "html",
                 success: function(data) {
+
                     $('#load_navigation_menu_view').html(data);
+
                 },
                 error: function(data) {
 
                     alert('An error has occured trying to get the page details');
                 }
             });
-        }
+        };
 
         $('.grid-form1').on("click", ".transaction", function() {
             var view_name = $(this).attr("id");
@@ -126,6 +163,60 @@
                                 .remove();
                             element.after(value)
                         })
+                    }
+                }
+            });
+        });
+
+        $('.banner').on("click", ".bread", function() {
+            var view_name = $(this).attr("id");
+            var event_id = $(this).attr("rel");
+            var postData = {
+                'view_name': view_name,
+                'event_id': event_id,
+            };
+
+            getContentView(postData);
+        });
+
+        $('.modal-footer').on("click", ".delete_item", function () {
+            var view_name = 'budget_view';
+
+            var postValue = {
+                'view_name': view_name,
+                'event_id': <?php echo $event_id?>,
+            };
+
+            $.ajax({
+                type:"POST",
+                url: "<?php echo base_url('event/delete_item/'.$item_id)?>",
+                //data:"id="+view_name,
+                data:postValue,
+                dataType: "json",
+                success: function(response) {
+                    if(response.success == true) {
+                        $('#deleteItem').modal('hide');
+
+                        getContentView(postValue);
+
+                        /*$('#the-response').append('<div class="alert alert-success">' +
+                            '<i class="fa fa-check"></i>' +
+                            ' Item Deleted Successfully' +
+                            '</div>');
+                        $('.form-group').removeClass('has-error')
+                            .removeClass('has-success');
+                        $('.text-danger').remove();
+
+                        // reset the form
+                        me[0].reset();
+
+                        // close the message after seconds
+                        $('.alert-success').delay(500).show(10, function() {
+                            $(this).delay(3000).hide(10, function() {
+                                $(this).remove();
+                                $('#deleteItem').modal('hide');
+                            });
+                        })*/
                     }
                 }
             });

@@ -15,34 +15,32 @@ $this->load->view('shared/login_header');
             <?php echo form_open('admin/register'); ?>
             <div id="reg-response"></div>
             <div class="col-md-12">
+                <?php echo form_error('fullname')?>
                 <div class="login-mail">
                     <input type="text" name="fullname" value="<?php echo set_value('fullname'); ?>" placeholder="Full Name">
                     <i class="fa fa-user"></i>
-                    <?php echo form_error('fullname')?>
                 </div>
+                <?php echo form_error('email')?>
                 <div class="login-mail">
                     <input type="text" name="email" value="<?php echo set_value('email'); ?>" placeholder="Email Address">
                     <i class="fa fa-envelope"></i>
-                    <?php echo form_error('email')?>
                 </div>
+                <?php echo form_error('phone')?>
                 <div class="login-mail">
-                    <input type="text" name="phone" value="<?php echo set_value('phone'); ?>" placeholder="Phone Number">
+                    <input type="text" name="phone" value="<?php echo set_value('phone'); ?>" placeholder="Phone No. E.g 255XXXXXXXXX">
                     <i class="fa fa-phone"></i>
-                    <?php echo form_error('phone')?>
                 </div>
+                <?php echo form_error('password')?>
                 <div class="login-mail">
                     <input type="password" name="password" value="<?php echo set_value('password'); ?>" placeholder="Password">
                     <i class="fa fa-lock"></i>
-                    <?php echo form_error('password')?>
                 </div>
+                <?php echo form_error('password2')?>
                 <div class="login-mail">
                     <input type="password" name="password2" value="<?php echo set_value('password2'); ?>" placeholder="Repeate Password">
                     <i class="fa fa-lock"></i>
-                    <?php echo form_error('password2')?>
                 </div>
-                <!--a class="news-letter" href="#">
-                    <label class="checkbox1"><input type="checkbox" name="checkbox" ><i> </i>I agree with the terms</label>
-                </a-->
+                <div>By clicking Register, you agree to our <a href="#">Terms</a> and that you have read our <a href="#">Privacy Policy</a></div>
             </div>
             <div class="col-md-12 login-do">
                 <label class="hvr-shutter-in-horizontal login-sub">

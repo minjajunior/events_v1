@@ -6,12 +6,19 @@
  * Time: 3:39 PM
  */
 ?>
+<div class="banner">
+    <h2>
+        <a href="<?php echo site_url('event/home/'.base64_encode($event_id)) ?>">Event</a>
+        <i class="fa fa-angle-right"></i>
+        <span>Settings</span>
+    </h2>
+</div>
+
 <div class="blank">
     <div class="col-md-3 compose">
         <nav class="nav-sidebar">
             <ul class="nav tabs">
                 <li class="active"><a href="#eventDetails" data-toggle="tab"><i class="fa fa-edit"></i>Details <div class="clearfix"></div></a></li>
-                <li><a href="#memberGroups" data-toggle="tab"><i class="fa fa-users"></i>Member Groups</a></li>
                 <li class=""><a href="#eventAdmins" data-toggle="tab"><i class="fa fa-user-md"></i>Admins</a></li>
             </ul>
         </nav>
@@ -96,93 +103,9 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-9 col-sm-offset-3">
-                            <button type="button" class="btn btn-danger">Delete</button>
-                            <button type="submit" class="btn btn-success pull-right">Save</button>
-                        </div>
-                    </div>
-                    </form>
-                <?php } ?>
-            </div>
-        </div>
-        <div class="tab-pane text-style" id="memberGroups">
-            <div class="grid-form1">
-                <h3 id="forms-horizontal">Member Groups</h3>
-                <?php
-                $attributes = array('class' => 'form-horizontal', 'id' => 'edit_event');
-                echo form_open('event/edit/'.$event_id, $attributes);
-                foreach($event_details as $ed){
-                    ?>
-                    <div id="details_success"></div>
-                    <div class="form-group">
-                        <label for="eventname" class="col-sm-3 control-label">Event Name</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="eventname" value="<?php echo $ed->event_name ?>" class="form-control1" placeholder="Event Name" id="eventname">
-                        </div>
-                    </div>
-                    <script>
-                        $(document).ready(function() {
-                            $("#eventdate").datepicker({
-                                dateFormat: 'yy-mm-dd',
-                                minDate: new Date(),
-                                maxDate: '+1Y',
-                            });
-                        });
-                    </script>
-                    <div class="form-group">
-                        <label for="eventdate" class="col-sm-3 control-label">Event Date</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="eventdate" value="<?php echo $ed->event_date ?>" class="form-control1" placeholder="YYYY-MM-DD" id="eventdate">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="type" class="col-sm-3 control-label">Event Type</label>
-                        <div class="col-sm-9">
-                            <?php $ov = 1; ?>
-                            <select name="type" id="type" class="form-control1">
-                                <option value="other">Other</option>
-                                <?php foreach($event_type as $et){?>
-                                    <option value="<?php echo $et->type_name; ?>"<?php if($et->type_name == $ed->event_type){ $ov = 0; echo set_select('type', $et->type_name, true); }  ?> id="type"><?php echo $et->type_name; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                <?php if($ov == 1) { ?>
-                    <div class="form-group">
-                        <label for="othertext" class="col-sm-3 control-label"></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="othertext" value="<?php echo $ed->event_type; ?>" class="form-control1" placeholder="Event Type" id="othertext">
-                        </div>
-                    </div>
-                <?php } ?>
-                    <div class="form-group">
-                        <label for="othertext" class="col-sm-3 control-label"></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="othertext" hidden="true" value="<?php echo set_value('othertext'); ?>" class="form-control1" placeholder="Event Type" id="othertext">
-                        </div>
-                    </div>
-                    <script>
-                        document.getElementById('type').addEventListener('change', function() {
-                            if (this.value == "other") {
-                                document.getElementById('othertext').hidden = false;
-                            } else {
-                                document.getElementById('othertext').hidden = true;
-                            }
-                        });
-                    </script>
-                    <div class="form-group">
-                        <label for="location" class="col-sm-3 control-label">Event Location</label>
-                        <div class="col-sm-9">
-                            <select name="location" id="selector1" class="form-control1">
-                                <option value="">Select Region</option>
-                                <?php foreach($location as $loc){ ?>
-                                    <option value="<?php echo $loc->location_id; ?>" <?php if($loc->location_id == $ed->event_location){ echo set_select('location', $loc->location_id, true); } ?> id="location"><?php echo $loc->location_name; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-9 col-sm-offset-3">
-                            <button type="button" class="btn btn-danger">Delete</button>
+                            <?php if($admin_role == 1) { ?>
+                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteEvent">Delete</a>&nbsp;
+                            <?php } ?>
                             <button type="submit" class="btn btn-success pull-right">Save</button>
                         </div>
                     </div>
@@ -342,6 +265,26 @@
         </div>
     </div>
     <div class="clearfix"> </div>
+</div>
+
+<div class="modal fade" id="deleteEvent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h2 class="modal-title">Delete Event</h2>
+            </div>
+            <div class="modal-body">
+                <?php foreach ($event_details as $ed) { ?>
+                <p>Are you sure you want to delete <?php echo $ed->event_name ?> <?php echo $ed->event_type ?>?</p>
+                <?php } ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Cancel</button>
+                <a href="<?php echo site_url('event/delete/'.$event_id)?>" class="btn btn-danger">Delete</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div>
 
 <script>

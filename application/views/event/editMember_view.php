@@ -7,6 +7,16 @@
  */
 ?>
 
+<div class="banner">
+    <h2>
+        <a href="<?php echo site_url('event/home/'.base64_encode($event_id)) ?>">Event</a>
+        <i class="fa fa-angle-right"></i>
+        <a href="javascript:void(0)" class="bread" rel="<?php echo $event_id; ?>" id="member_view">Members</a>
+        <i class="fa fa-angle-right"></i>
+        <span>Edit Member</span>
+    </h2>
+</div>
+
 <div class="blank">
     <div class="grid-form1">
         <h3 id="forms-horizontal">Edit Member</h3>
@@ -58,7 +68,8 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-8 col-md-offset-2">
-                    <button type="submit" class="btn btn-danger pull-right">Save</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-success pull-right">Save</button>
                 </div>
             </div>
         <?php } ?>
@@ -152,6 +163,17 @@
                 },
 
             });
+        });
+
+        $('.banner').on("click", ".bread", function() {
+            var view_name = $(this).attr("id");
+            var event_id = $(this).attr("rel");
+            var postData = {
+                'view_name': view_name,
+                'event_id': event_id,
+            };
+
+            getContentView(postData);
         });
     });
 </script>

@@ -8,6 +8,24 @@
 
 ?>
 
+<div class="banner">
+    <h2>
+        <a href="<?php echo site_url('event/home/'.base64_encode($event_id)) ?>">Event</a>
+        <i class="fa fa-angle-right"></i>
+        <?php if(isset($item_id)) { ?>
+        <a href="javascript:void(0)" class="bread" rel="<?php echo $event_id; ?>" id="budget_view">Budget</a>
+        <i class="fa fa-angle-right"></i>
+        <a href="javascript:void(0)" class="bread" rel="<?php echo $item_id; ?>" id="editBudget_view">Edit Item</a>
+        <?php } else { ?>
+        <a href="javascript:void(0)" class="bread" rel="<?php echo $event_id; ?>" id="member_view">Members</a>
+        <i class="fa fa-angle-right"></i>
+        <a href="javascript:void(0)" class="bread" rel="<?php echo $member_id; ?>" id="editMember_view">Edit Member</a>
+        <?php } ?>
+        <i class="fa fa-angle-right"></i>
+        <span>Add <?php echo $type?></span>
+    </h2>
+</div>
+
 <div class="blank">
     <div class="grid-form1">
         <h3 id="forms-horizontal">Add <?php echo $type ?></h3>
@@ -141,4 +159,30 @@
             }
         });
     }
+</script>
+<script>
+    $('.banner').on("click", ".bread", function() {
+        var view_name = $(this).attr("id");
+        if(view_name == 'budget_view' || view_name == 'member_view' ){
+            var event_id = $(this).attr("rel");
+            var postData = {
+                'view_name': view_name,
+                'event_id': event_id,
+            };
+        } else if(view_name == 'editMember_view'){
+            var member_id = $(this).attr("rel");
+            var postData = {
+                'view_name': view_name,
+                'member_id': member_id,
+            };
+        } else if(view_name == 'editBudget_view'){
+            var item_id = $(this).attr("rel");
+            var postData = {
+                'view_name': view_name,
+                'item_id': item_id,
+            };
+        }
+
+        getContentView(postData);
+    });
 </script>

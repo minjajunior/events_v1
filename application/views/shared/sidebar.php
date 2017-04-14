@@ -103,5 +103,6 @@
 
             getContentView(postData);
         });
+
     });
 </script>

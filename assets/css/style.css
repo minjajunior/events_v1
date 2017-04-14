@@ -29,6 +29,7 @@ body a{
 	-moz-transition:0.5s all;
 	-o-transition:0.5s all;
 	-ms-transition:0.5s all;
+    color: #d95459;
 }
 div#wrapper {
     background-color: #fff;

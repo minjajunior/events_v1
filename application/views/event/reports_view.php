@@ -7,6 +7,13 @@
  */
 
 ?>
+<div class="banner">
+    <h2>
+        <a href="<?php echo site_url('event/home/'.base64_encode($event_id)) ?>">Event</a>
+        <i class="fa fa-angle-right"></i>
+        <span>Reports</span>
+    </h2>
+</div>
 
 <div class="content-top" >
 
