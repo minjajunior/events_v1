@@ -113,7 +113,7 @@ class  Reports_model extends CI_Model{
         $this->db->from('member');
         $this->db->where('event_id', $event_id);
         $this->db->where('group_id', $grp_id);
-        $this->db->order_by('group_name', 'asc');
+        //$this->db->order_by('group_name', 'asc');
         $query = $this->db->get();
 
         if ($query->num_rows() > 0){

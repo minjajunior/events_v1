@@ -264,6 +264,17 @@
                     }
                 }
             });
+        }
+
+        $('.table').on("click", ".edit_budget", function() {
+            var view_name = $(this).attr("id");
+            var item_id = $(this).attr("rel");
+            var postData = {
+                'view_name': view_name,
+                'item_id': item_id,
+            };
+
+            getContentView(postData);
         });
     });
 </script>
