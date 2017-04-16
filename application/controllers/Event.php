@@ -264,41 +264,44 @@ class Event extends CI_Controller
             $objPHPExcel = PHPExcel_IOFactory::load('./upload/' . $file);
             $objWorksheet = $objPHPExcel->getActiveSheet();
 
-            foreach ($objWorksheet->getRowIterator() as $row) {
-                $mn = "";
-                $mp = "0";
-                $mc = "0";
-                $pn = "";
-                $cellIterator = $row->getCellIterator();
-                $cellIterator->setIterateOnlyExistingCells(true);
-                foreach ($cellIterator as $cell) {
-                    if ($cell->getColumn() == "A") {
-                        $mn = $cell->getValue();
-                    } elseif ($cell->getColumn() == "B") {
-                        $mp = $cell->getValue();
-                    } elseif ($cell->getColumn() == "C") {
-                        $mc = $cell->getValue();
-                    } elseif ($cell->getColumn() == "D") {
-                        $pn = $cell->getValue();
+            if($objPHPExcel->getActiveSheet()->getCell('A1')->getValue() == "Member Name" && $objPHPExcel->getActiveSheet()->getCell('B1')->getValue() == "Pledge"){
+                foreach ($objWorksheet->getRowIterator() as $row) {
+                    $mn = "";
+                    $mp = "0";
+                    $mc = "0";
+                    $pn = "";
+                    $cellIterator = $row->getCellIterator();
+                    $cellIterator->setIterateOnlyExistingCells(true);
+                    foreach ($cellIterator as $cell) {
+                        if ($cell->getColumn() == "A") {
+                            $mn = $cell->getValue();
+                        } elseif ($cell->getColumn() == "B") {
+                            $mp = $cell->getValue();
+                        } elseif ($cell->getColumn() == "C") {
+                            $mc = $cell->getValue();
+                        } elseif ($cell->getColumn() == "D") {
+                            $pn = $cell->getValue();
+                        }
+                    }
+                    if ($mn != "Member Name" && !empty($mn) && is_numeric($mp) && is_numeric($mc)) {
+                        $values = array(
+                            'member_name' => $mn,
+                            'member_pledge' => $mp,
+                            'member_cash' => $mc,
+                            'member_phone' => $pn,
+                            'event_id' => $id
+                        );
+                        $this->event_model->insert_member($values);
                     }
                 }
-                if ($mn != "Member Name") {
-                    $values = array(
-                        'member_name' => $mn,
-                        'member_pledge' => $mp,
-                        'member_cash' => $mc,
-                        'member_phone' => $pn,
-                        'event_id' => $id
-                    );
-                    $this->event_model->insert_member($values);
-                }
+
+                $data = array('success' => true);
+            } else {
+                $data = array('success' => false, 'messages' => 'The file you have uploaded does not comply with our Members Template');
             }
 
-            $data = array('success' => true);
 
         } else {
-            //$error = array('error' => $this->upload->display_errors());
-            //$this->load->view('event/home_view', $error);
             $data = array('success' => false, 'messages' => array($this->upload->display_errors()));
             foreach ($_POST as $key => $value){
                 $data['messages'][$key] = form_error($key);
@@ -313,33 +316,23 @@ class Event extends CI_Controller
      */
     public function upload_budget($id) {
 
-        //print_r($_POST['budget']);
-        //print_r($_FILES);
-        //$filename = $_FILES['budget_file']['name'];
-        //$userfile = $this->input->post($_FILES);
-        //print_r($filename);
-
-
         $config['upload_path'] = './upload/';
         $config['allowed_types'] = 'xlsx|xls';
         $config['max_size'] =0;
 
         $this->load->library('upload', $config);
 
-        //print_r(is_writable($config['upload_path']));
-
-
         if ($this->upload->do_upload('budget')){
 
             $data = array('upload_data' => $this->upload->data());
             $file = $data['upload_data']['file_name'];
-            //$file = $_FILES['budget']['name'];
+
             //load the excel library
             $this->load->library('excel');
             //read file from path
             $objPHPExcel = PHPExcel_IOFactory::load('./upload/' . $file);
             $objWorksheet = $objPHPExcel->getActiveSheet();
-            //$data['success'] = true;
+
             if($objPHPExcel->getActiveSheet()->getCell('A1')->getValue() == "Item Name" && $objPHPExcel->getActiveSheet()->getCell('B1')->getValue() == "Cost"){
                 foreach ($objWorksheet->getRowIterator() as $row) {
 
@@ -365,21 +358,16 @@ class Event extends CI_Controller
                             'event_id' => $id
                         );
                         $this->event_model->insert_budget($values);
-                    } else {
-                        $data = array('success' => false);
                     }
-
                 }
 
                 $data = array('success' => true);
-                //redirect('event/home/' . $id);
-                //echo json_encode($data);
+
             } else {
                 $data = array('success' => false, 'messages' => 'The file you have uploaded does not comply with our Budget Template');
             }
         } else {
-            //$error = array('error' => $this->upload->display_errors());
-            //$this->load->view('event/home_view', $error);
+
             $data = array('success' => false, 'messages' => array($this->upload->display_errors()));
             foreach ($_POST as $key => $value){
                 $data['messages'][$key] = form_error($key);
