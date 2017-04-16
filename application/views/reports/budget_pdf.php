@@ -7,54 +7,44 @@
  */
 
 echo $pdf_h;
+
 ?>
 
+<table id="tblproduct-details" cellspacing="0" width="100%" cellpadding=6>
+    <tr>
+        <th> <h4>#</h4></th>
+        <th> <h4>Item Name</h4></th>
+        <th> <h4>Cost</h4></th>
+        <th> <h4>Paid</h4></th>
+        <th> <h4>Balance</h4></th>
+    </tr>
+    <!-- Products Heading -->
+    <?php
+    $i=1;  $sum_cost = 0; $sum_paid =0; $sum_bal=0;
+    foreach ($budget_details as $bd) { ?>
 
-<div class="content-top">
-    <div class="col-md-12">
-        <div class="blank-page">
-            <h3 class="head-top"><?php echo $report_name; ?></h3><hr>
+        <tr>
+            <td class="text-center"><?php echo $i; ?></td>
+            <td class='text-center'><?php echo $bd->item_name ?></td>
+            <td class="text-center"><?php echo $english_format_number = number_format($bd->item_cost, 0, '.', ','); ?></td>
+            <td class='text-center'><?php echo $english_format_number = number_format($bd->item_paid, 0, '.', ','); ?></td>
+            <td class='text-center'><?php if ($bd->item_cost-$bd->item_paid>0){ echo $english_format_number = number_format($bd->item_cost-$bd->item_paid, 0, '.', ','); } else echo 0; ?></td>
+        </tr>
+        <?php $i++;  $sum_cost += $bd->item_cost; $sum_paid += $bd->item_paid;  if($bd->item_cost-$bd->item_paid>0){ $sum_bal+=($bd->item_cost-$bd->item_paid); } } ?>
 
-            <?php if (isset($budget_details['error']) && $budget_details['error'] == "0") { ?>
-                No budget items found create new item or upload your budget file.
-            <?php } else { ?>
-                <div class="tables">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Item Name</th>
-                            <th>Cost</th>
-                            <th>Paid</th>
-                            <th>Balance</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                        $i=1;
-                        foreach ($budget_details as $bd) { ?>
-                            <tr>
-                                <th scope="row"><?php echo $i; ?></th>
-                                <td><?php echo $bd->item_name ?></td>
-                                <td><?php echo $english_format_number = number_format($bd->item_cost, 0, '.', ','); ?></td>
-                                <td><?php echo $english_format_number = number_format($bd->item_paid, 0, '.', ','); ?></td>
-                                <td><?php echo $english_format_number = number_format($bd->item_cost-$bd->item_paid, 0, '.', ','); ?></td>
-                            </tr>
-                            <?php $i++; } ?>
-                        </tbody>
-                    </table>
-                </div>
-            <?php } ?>
+    <tr>
+        <td class='text-center'></td>
+        <td  class='text-center'>Total Amounts</td>
+        <td  class='text-center'><?php echo $english_format_number = number_format($sum_cost, 0, '.', ','); ?></td>
+        <td  class='text-center'><?php echo $english_format_number = number_format($sum_paid, 0, '.', ','); ?></td>
+        <td  class='text-center'><?php echo $english_format_number = number_format($sum_bal, 0, '.', ','); ?></td>
+    </tr>
+    <!-- Products Details Details -->
+</table>
+<!--        </td>-->
+<!--    </tr>-->
 
-
-        </div>
-
-    </div>
-
-
-</div>
-
-</div>
+</table>
 
 </body>
 </html>
