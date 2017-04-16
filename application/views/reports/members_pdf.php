@@ -11,55 +11,44 @@
 echo $pdf_h;
 ?>
 
+<table id="tblproduct-details" cellspacing="0" width="100%" cellpadding=6>
+    <tr>
+        <th> <h4>#</h4></th>
+        <th> <h4>Member Name</h4></th>
+        <th> <h4>Mobile Phone</h4></th>
+        <th> <h4>Pledge</h4></th>
+        <th> <h4>Cash</h4></th>
+        <th> <h4>Balance</h4></th>
+    </tr>
+    <!-- Products Heading -->
+    <?php
+    $i=1;  $sum_pledge = 0; $sum_cash =0; $sum_bal=0;
+    foreach ($member_details as $md) { ?>
 
-<div class="content-top">
-    <div class="col-md-12">
-<div class="blank-page">
-    <h3 class="head-top"><?php echo $report_name; ?></h3><hr>
+        <tr>
+            <td class="text-center"><?php echo $i; ?></td>
+            <td class='text-center'><?php echo $md->member_name ?></td>
+            <td class='text-center'><?php echo $md->member_name ?></td>
+            <td class="text-center"><?php echo $english_format_number = number_format($md->member_pledge, 0, '.', ','); ?></td>
+            <td class='text-center'><?php echo $english_format_number = number_format($md->member_cash, 0, '.', ','); ?></td>
+            <td class='text-center'><?php if ($md->member_pledge-$md->member_cash>0){ echo $english_format_number = number_format($md->member_pledge-$md->member_cash, 0, '.', ','); } else echo 0; ?></td>
+        </tr>
+        <?php $i++;  $sum_pledge += $md->member_pledge; $sum_cash += $md->member_cash;  if($md->member_pledge-$md->member_cash>0){ $sum_bal+=($md->member_pledge-$md->member_cash); } } ?>
 
-    <?php if (isset($member_details['error']) && $member_details['error'] == "0") { ?>
-        No members found. Create <a href="#" data-toggle="modal" data-target="#newMember">new
-            member</a> or upload your members file.
-    <?php } else { ?>
+    <tr>
+        <td class='text-center'></td>
+        <td class='text-center'></td>
+        <td  class='text-center'>Total Amounts</td>
+        <td  class='text-center'><?php echo $english_format_number = number_format($sum_pledge, 0, '.', ','); ?></td>
+        <td  class='text-center'><?php echo $english_format_number = number_format($sum_cash, 0, '.', ','); ?></td>
+        <td  class='text-center'><?php echo $english_format_number = number_format($sum_bal, 0, '.', ','); ?></td>
+    </tr>
+    <!-- Products Details Details -->
+</table>
+<!--        </td>-->
+<!--    </tr>-->
 
-    <div class="tables">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Member Name</th>
-                <th>Pledge</th>
-                <th>Cash</th>
-                <th>Balance</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            $i=1;
-            foreach ($member_details as $md) { ?>
-            <tr>
-                <th scope="row"><?php echo $i; ?></th>
-                <td><?php echo $md->member_name ?></td>
-                <td><?php echo $english_format_number = number_format($md->member_pledge, 0, '.', ','); ?></td>
-                <td><?php echo $english_format_number = number_format($md->member_cash, 0, '.', ','); ?></td>
-                <td><?php echo $english_format_number = number_format($md->member_pledge-$md->member_cash, 0, '.', ','); ?></td>
-            </tr>
-            <?php $i++; } ?>
-
-            </tbody>
-        </table>
-    </div>
-    <?php } ?>
-
-
-</div>
-
-    </div>
-
-
-</div>
-
-</div>
+</table>
 
 </body>
 </html>

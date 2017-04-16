@@ -322,14 +322,14 @@ class Reports extends CI_Controller{
             ');
 
 
-//        $this->m_pdf->pdf->AddPage('', // L - landscape, P - portrait
-//            '', '', '', '',
-//            5, // margin_left
-//            5, // margin right
-//            60, // margin top
-//            30, // margin bottom
-//            0, // margin header
-//            0); // margin footer
+        $this->m_pdf->pdf->AddPage('', // L - landscape, P - portrait
+            '', '', '', '',
+            0, // margin_left
+            0, // margin right
+            10, // margin top
+            10, // margin bottom
+            0, // margin header
+            0); // margin footer
 
 
         //generate the PDF from the given html
@@ -353,15 +353,18 @@ class Reports extends CI_Controller{
     public function test(){
         $event_id = 1;
         $admin_id =1 ;
-        $data['budget_details'] = $this->reports_model->budget_details($event_id);
+
+        $data['member_details'] = $this->reports_model->member_details($event_id);
         $data['event_details'] = $this->event_model->event_details($event_id);
         $data['admin_details'] = $this->admin_model->admin_details($admin_id);
+        $data['report_name'] = 'Members Report';
+        //$pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
 
-        //$html = $this->load->view('reports/budget_pdf',$data,true);
-        //$html = $this->load->view('test',$data,true);
+        $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
+        $pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
+        //print('Devid');
+       // $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
 
-
-        //$data['budget_details'] = $this->reports_model->budget_details($event_id);
         $this->load->view('test',$data);
 }
 
