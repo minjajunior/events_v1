@@ -15,7 +15,7 @@ echo $pdf_h;
     <tr>
         <th> <h4>#</h4></th>
         <th> <h4>Member Name</h4></th>
-        <th> <h4>Mobile Phone</h4></th>
+        <th> <h4>Mobile Number</h4></th>
         <th> <h4>Pledge</h4></th>
         <th> <h4>Cash</h4></th>
         <th> <h4>Balance</h4></th>
@@ -27,21 +27,21 @@ echo $pdf_h;
 
         <tr>
             <td class="text-center"><?php echo $i; ?></td>
-            <td class='text-center'><?php echo $md->member_name ?></td>
-            <td class='text-center'><?php echo $md->member_name ?></td>
-            <td class="text-center"><?php echo $english_format_number = number_format($md->member_pledge, 0, '.', ','); ?></td>
-            <td class='text-center'><?php echo $english_format_number = number_format($md->member_cash, 0, '.', ','); ?></td>
-            <td class='text-center'><?php if ($md->member_pledge-$md->member_cash>0){ echo $english_format_number = number_format($md->member_pledge-$md->member_cash, 0, '.', ','); } else echo 0; ?></td>
+            <td class='text-left'><?php echo $md->member_name ?></td>
+            <td class='text-left'><?php echo $md->member_phone ?></td>
+            <td class="text-right"><?php echo $english_format_number = number_format($md->member_pledge, 0, '.', ','); ?></td>
+            <td class='text-right'><?php echo $english_format_number = number_format($md->member_cash, 0, '.', ','); ?></td>
+            <td class='text-right'><?php if ($md->member_pledge-$md->member_cash>0){ echo $english_format_number = number_format($md->member_pledge-$md->member_cash, 0, '.', ','); } else echo 0; ?></td>
         </tr>
         <?php $i++;  $sum_pledge += $md->member_pledge; $sum_cash += $md->member_cash;  if($md->member_pledge-$md->member_cash>0){ $sum_bal+=($md->member_pledge-$md->member_cash); } } ?>
 
     <tr>
         <td class='text-center'></td>
         <td class='text-center'></td>
-        <td  class='text-center'>Total Amounts</td>
-        <td  class='text-center'><?php echo $english_format_number = number_format($sum_pledge, 0, '.', ','); ?></td>
-        <td  class='text-center'><?php echo $english_format_number = number_format($sum_cash, 0, '.', ','); ?></td>
-        <td  class='text-center'><?php echo $english_format_number = number_format($sum_bal, 0, '.', ','); ?></td>
+        <td  class='text-left'>Total Amounts</td>
+        <td  class='text-right'><?php echo $english_format_number = number_format($sum_pledge, 0, '.', ','); ?></td>
+        <td  class='text-right'><?php echo $english_format_number = number_format($sum_cash, 0, '.', ','); ?></td>
+        <td  class='text-right'><?php echo $english_format_number = number_format($sum_bal, 0, '.', ','); ?></td>
     </tr>
     <!-- Products Details Details -->
 </table>

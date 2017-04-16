@@ -314,7 +314,7 @@ class Reports extends CI_Controller{
         $this->m_pdf->pdf->SetHTMLFooter('
             <table  width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold; font-style: italic;">
                 <tr>
-                    <td width="33%"><span style="font-weight: bold; font-style: italic;">www.demievents.co.tz</span></td>
+                    <td width="33%"><span style="font-weight: bold; font-style: italic;">www.demievents.co.tz***info@demi.co.tz***0752934547</span></td>
                     <td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td>
                     <td width="33%" style="text-align: right; "> {DATE Y-m-j} </td>
                 </tr>
@@ -365,7 +365,7 @@ class Reports extends CI_Controller{
         //print('Devid');
        // $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
 
-        $this->load->view('test',$data);
+        $this->load->view('reports/members_pdf',$data);
 }
 
 

@@ -16,6 +16,12 @@
     <style>
         body{
             width: 100%;
+            font-family:"Klavika Lt" ;
+        }
+        table{
+            padding-left:10px;
+            padding-right:10px;
+
         }
         h4{
             margin-top: 0;
@@ -31,11 +37,10 @@
         }
         #tblproduct-details table {
             color: #333;
-            font-family:Arial, sans-serif;
             /*width: 1045px; */
             border-collapse:collapse;
             border-spacing: 0;
-            border-color: gray;
+            /*border-color: gray;*/
         }
         #tblproduct-details th {
             border: 1px solid gray; /* No more visible border */
@@ -43,9 +48,12 @@
             border-spacing: 0;
         }
         #tblproduct-details td {
-            border-bottom: 1px solid gray; /* No more visible border */
+            border-bottom: 1px solid black; /* No more visible border */
             height: 30px;
             border-spacing: 0;
+            border-left:1px solid black;
+            border-top:1px solid black;
+            border-right:1px solid black;
         }
         #tblproduct-details th {
             background: #DFDFDF;  /* Darken header a bit */
@@ -56,6 +64,9 @@
         }
         .text-right{
             text-align: right;
+        }
+        .text-left{
+            text-align: left;
         }
         .text-center{
             text-align: center;
@@ -78,28 +89,15 @@
 <body>
 
 <table width="100%" cellspacing="1" cellpadding="6">
-    <tr>
-        <td width="30%" rowspan="5"><a href="index"> <img src="<?php echo base_url(); ?>/assets/images/demi.png"></a> </td>
-    </tr>
-    <tr>
-        <td width="15%" ><h3 class="invoiceHeading">Event Name : <?php echo $event_details[0]->event_name; ?></h3></td>
-        <td width="15%" ><h3 class="invoiceHeading">Generate by : <?php echo $admin_details[0]->admin_name; ?></h3></td>
-    </tr>
-
-</table>
-<table width="100%" cellspacing="1" cellpadding="6">
-    <tr>
-        <td ><strong>Demi Corporation Limited</strong></td>
-    </tr>
-    <tr>
-        <td>4th Floor Barclays House</td>
-    </tr>
-    <tr>
-        <td>info@demi.co.tz</td>
-    </tr>
 
     <tr>
-        <td >+255 752 934 547</td>
+        <td width="30%" >
+            <p class="invoiceHeading">Event Name : <?php echo $event_details[0]->event_name; ?></p>
+            <p class="invoiceHeading">Event Type : <?php echo $event_details[0]->event_type; ?></p>
+            <p class="invoiceHeading">Event Date : <?php echo $event_details[0]->event_date; ?></p>
+            <p class="invoiceHeading">Generate by : <?php echo $admin_details[0]->admin_name; ?></p>
+        </td>
+        <td class="text-right"><a href="index"> <img src="<?php echo base_url(); ?>/assets/images/demi.png"></a></td>
     </tr>
 
 </table>
