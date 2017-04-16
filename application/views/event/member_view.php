@@ -35,7 +35,6 @@
                 </nav>
             </div>
             <div class="col-md-9 tab-content tab-content-in">
-
                 <div class="tab-pane active text-style" id="allMembers">
                     <div class="blank-page">
                         <h4>
@@ -229,7 +228,7 @@
             echo form_open_multipart('event/upload_members/'.$event_id, $attributes);
             ?>
             <div class="modal-body">
-                <div id="the-message"></div>
+                <div id="upload-response"></div>
                 <div class="form-group">
                     <label for="members" class="col-sm-4 control-label">Browse File</label>
                     <div class="col-sm-8">
@@ -336,8 +335,8 @@
                 processData: false,
                 success: function (response) {
                     if(response.success == true){
-                        $('#the-message').append('<div class="alert alert-success">' +
-                            '<span class="glyphicon glyphicon-ok"></span>' +
+                        $('#upload-response').append('<div class="alert alert-success">' +
+                            '<i class="fa fa-check"></i>' +
                             ' Members Uploaded Successfully' +
                             '</div>');
                         $('.form-group').removeClass('has-error')
@@ -351,20 +350,18 @@
                         $('.alert-success').delay(500).show(10, function() {
                             $(this).delay(3000).hide(10, function() {
                                 $(this).remove();
-                                window.location.reload()
-                                $('#upload_budget').modal('hide');
+                                $('#uploadBudget').modal('hide');
                             });
                         })
-                    }else {
-                        $.each(response.messages, function (key, value) {
-                            var element = $('#' + key);
-                            element.closest('div.form-group')
-                                .removeClass('has-error')
-                                .addClass(value.length > 0 ? 'has-error' : 'has-success')
-                                .find('.text-danger')
-                                .remove();
-                            element.after(value)
-                        })
+                    }else if(response.success == false) {
+                        $('#upload-response').append('<div class="alert alert-danger">' +
+                            response.messages + '</div>'
+                        );
+                        $('.alert-danger').delay(500).show(10, function() {
+                            $(this).delay(3000).hide(10, function() {
+                                $(this).remove();
+                            });
+                        });
                     }
                 }
             });

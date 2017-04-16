@@ -197,26 +197,8 @@
                     if(response.success == true) {
                         $('#deleteItem').modal('hide');
 
-                        getContentView(postValue);
+                        //getContentView(postValue);
 
-                        /*$('#the-response').append('<div class="alert alert-success">' +
-                            '<i class="fa fa-check"></i>' +
-                            ' Item Deleted Successfully' +
-                            '</div>');
-                        $('.form-group').removeClass('has-error')
-                            .removeClass('has-success');
-                        $('.text-danger').remove();
-
-                        // reset the form
-                        me[0].reset();
-
-                        // close the message after seconds
-                        $('.alert-success').delay(500).show(10, function() {
-                            $(this).delay(3000).hide(10, function() {
-                                $(this).remove();
-                                $('#deleteItem').modal('hide');
-                            });
-                        })*/
                     }
                 }
             });
