@@ -38,7 +38,16 @@ $this->load->view('shared/sidebar');
                         </table>
                     </div>
                     <div class="col-md-4 profile-bottom-img text-center">
-                        <?php $td = date_create(date('Y-m-d')); $de = date_create($ed->event_date); $in = date_diff($td, $de); ?>
+                        <?php
+                            $td = date_create(date('Y-m-d'));
+                            $de = date_create($ed->event_date);
+
+                            if($de > $td) {
+                                $in = date_diff($td, $de);
+                            } else {
+                                $in = date_diff($de, $de);
+                            }
+                        ?>
                         <h1 class="text-success"><span><?php echo $in->format('%a') ?></span></h1>
                         <p>Days Remaining</p>
                     </div>

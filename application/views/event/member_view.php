@@ -40,10 +40,12 @@
                         <h4>
                             <div class="col-md-3"> All Members</div>
                             <div class="col-md-9">
+                            <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
                                 <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#newGroup" data-placement="bottom" title="Create Group"><i class="fa fa-users"></i> Create Group</a>&nbsp;
                                 <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#newMember" data-placement="bottom" title="New Member"><i class="fa fa-user-plus"></i> New Member</a>&nbsp;
                                 <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#uploadMembers" data-placement="bottom" title="Upload Members File"><i class="fa fa-upload"></i> Upload Members</a>
                                 <a href="<?php echo site_url('event/template/member')?>" class="btn btn-xs btn-success pull-right" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" >&nbsp;<i class="fa fa-download"></i> Download Template&nbsp;</a>
+                            <?php } ?>
                             </div>
                         </h4>
                         <br><br>
@@ -67,7 +69,13 @@
                                 <tbody>
                                 <?php foreach($member_details as $md){ ?>
                                     <tr>
-                                        <td><a href="javascript:void(0)" class="edit_member" rel="<?php echo $md->member_id; ?>" id="editMember_view"><?php echo $md->member_name?></a></td>
+                                        <td>
+                                            <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
+                                                <a href="javascript:void(0)" class="edit_member" rel="<?php echo $md->member_id; ?>" id="editMember_view"><?php echo $md->member_name?></a>
+                                            <?php } else {
+                                                echo $md->member_name;
+                                            } ?>
+                                        </td>
                                         <td><?php echo $md->member_phone ?></td>
                                         <td><?php echo $english_format_number = number_format($md->member_pledge, 0, '.', ',');?></td>
                                         <td><?php echo $english_format_number = number_format($md->member_cash, 0, '.', ','); ?></td>
@@ -102,7 +110,13 @@
                                     <?php foreach($member_details as $md){
                                         if($mg->group_id == $md->group_id) { ?>
                                             <tr>
-                                                <td><a href="javascript:void(0)" class="edit_member" rel="<?php echo $md->member_id; ?>" id="editMember_view"><?php echo $md->member_name?></a></td>
+                                                <td>
+                                                    <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
+                                                        <a href="javascript:void(0)" class="edit_member" rel="<?php echo $md->member_id; ?>" id="editMember_view"><?php echo $md->member_name?></a>
+                                                    <?php } else {
+                                                        echo $md->member_name;
+                                                    } ?>
+                                                </td>
                                                 <td><?php echo $md->member_phone ?></td>
                                                 <td><?php echo $english_format_number = number_format($md->member_pledge, 0, '.', ',');?></td>
                                                 <td><?php echo $english_format_number = number_format($md->member_cash, 0, '.', ','); ?></td>

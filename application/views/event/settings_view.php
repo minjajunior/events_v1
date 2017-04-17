@@ -29,9 +29,11 @@
             <div class="grid-form1">
                 <h3 id="forms-horizontal">Event Details</h3>
                 <?php
+
                 $attributes = array('class' => 'form-horizontal', 'id' => 'edit_event');
                 echo form_open('event/edit/'.$event_id, $attributes);
                 foreach($event_details as $ed){
+                    if( date_create($ed->event_date) > date_create(date('Y-m-d'))){
                     ?>
                     <div id="details_success"></div>
                     <div class="form-group">
@@ -101,16 +103,43 @@
                             </select>
                         </div>
                     </div>
+                <?php } else { ?>
                     <div class="form-group">
-                        <div class="col-sm-9 col-sm-offset-3">
-                            <?php if($admin_role == 1) { ?>
-                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteEvent">Delete</a>&nbsp;
-                            <?php } ?>
-                            <button type="submit" class="btn btn-success pull-right">Save</button>
+                        <label class="col-sm-3 control-label">Event Name</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static"><?php echo $ed->event_name ?></p>
                         </div>
                     </div>
-                    </form>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Event Date</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static"><?php echo $ed->event_date ?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Event Type</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static"><?php echo $ed->event_type ?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Event Location</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static"><?php echo $ed->location_name ?></p>
+                        </div>
+                    </div>
+                <?php }  ?>
+                <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                        <?php if($admin_role == 1) { ?>
+                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteEvent">Delete</a>&nbsp;
+                        <?php } if(date_create($ed->event_date) > date_create(date('Y-m-d'))) { ?>
+                        <button type="submit" class="btn btn-success pull-right">Save</button>
+                        <?php } ?>
+                    </div>
+                </div>
                 <?php } ?>
+                </form>
             </div>
         </div>
         <div class="tab-pane text-style" id="eventAdmins">
@@ -119,7 +148,7 @@
                     Event Admins
                 </div>
                 <div class="col-md-8">
-                    <?php if ($admin_role ==  1){
+                    <?php if (($admin_role ==  1) && (date_create($ed->event_date) > date_create(date('Y-m-d')))){
                     $attributes = array('id' => 'add_admin');
                     echo form_open('admin/add_admin/'.$event_id, $attributes);
                     ?>

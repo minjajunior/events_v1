@@ -90,6 +90,7 @@ class Event extends CI_Controller
                 $data['advance_sum'] = $this->event_model->advance_sum($id);
                 $data['event_admin'] = $this->admin_model->get_admin($id);
                 $data['admin_role'] = $this->admin_model->get_role($id);
+                $data['event_date'] = $this->event_model->event_date($id);
                 $data['sms_list'] = $this->member_model->sms_list($id);
                 $data['event_id'] = $id;
                 $view_name = $_POST['view_name'];

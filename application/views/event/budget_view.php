@@ -19,9 +19,11 @@
     <?php if(isset($this->session->admin_id)){ ?>
         <div class="blank-page">
             <h4>Budget
+            <?php if(date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
                 <a href="#" class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#newItem" data-placement="bottom" title="Add Budget Item">&nbsp;<i class="fa fa-plus-square"></i> New Item&nbsp;</a>
                 <a href="#" class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#uploadBudget" data-placement="bottom" title="Upload Budget File">&nbsp;<i class="fa fa-upload"></i> Upload Budget&nbsp;</a>
                 <a href="<?php echo site_url('event/template/budget')?>" class="btn btn-sm btn-success pull-right" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" >&nbsp;<i class="fa fa-download"></i> Download Template&nbsp;</a>
+            <?php } ?>
             </h4>
             <hr>
             <?php if (isset($budget_details['error']) && $budget_details['error'] == "0") {?>
@@ -35,20 +37,30 @@
                             <th>Cost (Tsh.)</th>
                             <th>Paid (Tsh.)</th>
                             <th>Balance (Tsh.)</th>
+                            <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
                             <th>Action</th>
+                            <?php }?>
                         </tr>
                         </thead>
                         <tbody>
                         <?php foreach($budget_details as $bd){ ?>
                             <tr>
-                                <td><a href="javascript:void(0)" class="edit_budget" rel="<?php echo $bd->item_id; ?>" id="editBudget_view"><?php echo $bd->item_name?></a></td>
+                                <td>
+                                    <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
+                                        <a href="javascript:void(0)" class="edit_budget" rel="<?php echo $bd->item_id; ?>" id="editBudget_view"><?php echo $bd->item_name?></a>
+                                    <?php } else {
+                                        echo $bd->item_name;
+                                    } ?>
+                                </td>
                                 <td><?php echo $english_format_number = number_format($bd->item_cost, 0, '.', ',');?></td>
                                 <td><?php echo $english_format_number = number_format($bd->item_paid, 0, '.', ','); ?></td>
                                 <td><?php echo $english_format_number = number_format($bd->item_cost-$bd->item_paid, 0, '.', ','); ?></td>
+                                <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
                                 <td>
                                     <a href="javascript:void(0)" class="edit_budget" rel="<?php echo $bd->item_id; ?>" id="editBudget_view"><i class="fa fa-edit"></i> </a>
                                     <a href="javascript:void(0)" class="edit_budget" rel="<?php echo $bd->item_id; ?>" id="editBudget_view"><i class="fa fa-trash"></i> </a>
                                 </td>
+                                <?php } ?>
                             </tr>
                         <?php } ?>
                         </tbody>

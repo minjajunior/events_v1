@@ -348,4 +348,13 @@ class Event_model extends CI_Model {
         $row = $query->row_array();
         return $row['event_id'];
     }
+
+    public function event_date($id){
+        $this->db->select('event_date');
+        $this->db->from('event');
+        $this->db->where('event_id', $id);
+        $query = $this->db->get();
+        $row = $query->row_array();
+        return $row['event_date'];
+    }
 }
