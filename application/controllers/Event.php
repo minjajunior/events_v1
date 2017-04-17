@@ -663,7 +663,7 @@ class Event extends CI_Controller
     }
 
     public function delete_item($id){
-        //$this->event_model->delete_item($id);
+        $this->event_model->delete_item($id);
         $data = array('success' => true);
         echo json_encode($data);
     }

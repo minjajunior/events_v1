@@ -76,7 +76,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Cancel</button>
                 <a href="javascript:void(0)" class="delete_item btn btn-danger" rel="<?php echo $item_id; ?>" id="editBudget_view">Delete</a>
-                <!--a href="<?php// echo site_url('event/delete_item/'.$item_id)?>" class="btn btn-danger">Delete</a-->
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -197,8 +196,11 @@
                     if(response.success == true) {
                         $('#deleteItem').modal('hide');
 
-                        //getContentView(postValue);
-
+                        $('#the-message').delay(100).show(10, function() {
+                            $(this).delay(300).hide(10, function() {
+                                getContentView(postValue);
+                            });
+                        });
                     }
                 }
             });

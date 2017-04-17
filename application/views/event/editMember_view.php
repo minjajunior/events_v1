@@ -68,7 +68,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-8 col-md-offset-2">
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteMember">Delete</a>
                     <button type="submit" class="btn btn-success pull-right">Save</button>
                 </div>
             </div>
@@ -77,9 +77,26 @@
     </div>
 </div>
 
-<script>
-
-</script>
+<div class="modal fade" id="deleteMember" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h2 class="modal-title">Delete Item</h2>
+            </div>
+            <div class="modal-body">
+                <div class="the-response"></div>
+                <?php foreach ($member_detail as $md) { ?>
+                    <p>Are you sure you want to delete <?php echo $md->member_name ?>?</p>
+                <?php } ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Cancel</button>
+                <a href="javascript:void(0)" class="delete_member btn btn-danger" rel="<?php echo $member_id; ?>" id="editMember_view">Delete</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 <script>
     $(document).ready(function() {
@@ -174,6 +191,35 @@
             };
 
             getContentView(postData);
+        });
+
+        $('.modal-footer').on("click", ".delete_member", function () {
+            var view_name = 'member_view';
+
+            var postValue = {
+                'view_name': view_name,
+                'event_id': <?php echo $event_id?>,
+            };
+
+            $.ajax({
+                type:"POST",
+                url: "<?php echo base_url('member/delete_member/'.$member_id)?>",
+                //data:"id="+view_name,
+                data:postValue,
+                dataType: "json",
+                success: function(response) {
+                    if(response.success == true) {
+                        $('#deleteMember').modal('hide');
+
+                        $('#the-message').delay(100).show(10, function() {
+                            $(this).delay(300).hide(10, function() {
+
+                                getContentView(postValue);
+                            });
+                        });
+                    }
+                }
+            });
         });
     });
 </script>

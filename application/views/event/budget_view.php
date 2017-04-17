@@ -37,9 +37,6 @@
                             <th>Cost (Tsh.)</th>
                             <th>Paid (Tsh.)</th>
                             <th>Balance (Tsh.)</th>
-                            <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
-                            <th>Action</th>
-                            <?php }?>
                         </tr>
                         </thead>
                         <tbody>
@@ -55,12 +52,6 @@
                                 <td><?php echo $english_format_number = number_format($bd->item_cost, 0, '.', ',');?></td>
                                 <td><?php echo $english_format_number = number_format($bd->item_paid, 0, '.', ','); ?></td>
                                 <td><?php echo $english_format_number = number_format($bd->item_cost-$bd->item_paid, 0, '.', ','); ?></td>
-                                <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
-                                <td>
-                                    <a href="javascript:void(0)" class="edit_budget" rel="<?php echo $bd->item_id; ?>" id="editBudget_view"><i class="fa fa-edit"></i> </a>
-                                    <a href="javascript:void(0)" class="edit_budget" rel="<?php echo $bd->item_id; ?>" id="editBudget_view"><i class="fa fa-trash"></i> </a>
-                                </td>
-                                <?php } ?>
                             </tr>
                         <?php } ?>
                         </tbody>
@@ -218,7 +209,7 @@
             });
         });
 
-        $('#upload_budget').submit(function(e) {
+        /*$('#upload_budget').submit(function(e) {
             e.preventDefault();
 
             var form = $(this);
@@ -255,7 +246,7 @@
                                 $('#uploadBudget').modal('hide');
                             });
                         })
-                    }else if(response.success == false) {
+                    } else if(response.success == false) {
                         $('#upload-response').append('<div class="alert alert-danger">' +
                             response.messages + '</div>'
                          );
@@ -264,29 +255,10 @@
                                 $(this).remove();
                             });
                         });
-                        /*$.each(response.messages, function (key, value) {
-                         var element = $('#' + key);
-                         element.closest('div.form-group')
-                         .removeClass('has-error')
-                         .addClass(value.length > 0 ? 'has-error' : 'has-success')
-                         .find('.text-danger')
-                         .remove();
-                         element.after(value)
-                         })*/
                     }
                 }
             });
-        }
+        }*/
 
-        $('.table').on("click", ".edit_budget", function() {
-            var view_name = $(this).attr("id");
-            var item_id = $(this).attr("rel");
-            var postData = {
-                'view_name': view_name,
-                'item_id': item_id,
-            };
-
-            getContentView(postData);
-        });
     });
 </script>

@@ -77,4 +77,12 @@ class Member_model extends CI_Model {
     public function insert_group($values){
         $this->db->insert('member_group', $values);
     }
+
+    /*
+     * This function is deleting the item
+     */
+    public function delete_member($id){
+        $this->db->where('member_id', $id);
+        $this->db->delete('member');
+    }
 }

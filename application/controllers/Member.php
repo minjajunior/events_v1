@@ -130,5 +130,11 @@ class Member extends CI_Controller {
             redirect('admin');
         }
     }
+
+    public function delete_member($id){
+        $this->member_model->delete_member($id);
+        $data = array('success' => true);
+        echo json_encode($data);
+    }
 }
 ?>

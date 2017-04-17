@@ -277,7 +277,8 @@
                     alert('An error has occured trying to get the page details');
                 }
             });
-        }
+        };
+
         $('.table').on("click", ".edit_member", function() {
             var view_name = $(this).attr("id");
             var member_id = $(this).attr("rel");
@@ -364,7 +365,7 @@
                         $('.alert-success').delay(500).show(10, function() {
                             $(this).delay(3000).hide(10, function() {
                                 $(this).remove();
-                                $('#uploadBudget').modal('hide');
+                                $('#uploadMembers').modal('hide');
                             });
                         })
                     }else if(response.success == false) {
