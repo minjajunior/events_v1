@@ -209,7 +209,7 @@
             });
         });
 
-        /*$('#upload_budget').submit(function(e) {
+        $('#upload_budget').submit(function(e) {
             e.preventDefault();
 
             var form = $(this);
@@ -258,7 +258,7 @@
                     }
                 }
             });
-        }*/
+        });
 
     });
 </script>
