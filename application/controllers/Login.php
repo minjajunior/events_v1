@@ -19,9 +19,9 @@ class Login extends CI_Controller {
             if ($this->form_validation->run() == FALSE) {
                 $this->load->view('login/login_view');
             } else {
-                if(!empty($this->login_model->member_login($this->input->post('mailphone')))) {
+                if(!is_null($this->login_model->member_login($this->input->post('mailphone')))) {
                     $curl = curl_init();
-                    if (!empty($this->input->post('pin'))){
+                    if (!is_null($this->input->post('pin'))){
                         $data = array('verified' => true, 'msisdn'=>'255712431242');
                         echo json_encode($data);
                         //json_decode(json_encode($data['msisdn']));
@@ -79,10 +79,10 @@ class Login extends CI_Controller {
                             echo $response;
                         }*/
                     }
-                }elseif(!empty($this->login_model->admin_login($this->input->post('mailphone')))) {
-                    if(!empty($this->input->post('password'))) {
+                }elseif(!is_null($this->login_model->admin_login($this->input->post('mailphone')))) {
+                    if(!is_null($this->input->post('password'))) {
                         $value = $this->login_model->admin_login($this->input->post('mailphone'));
-                        if(!empty($value)){
+                        if(!is_null($value)){
                             if($value['admin_password'] == md5($this->input->post('password'))){
                                 $this->session->set_userdata($value);
                                 $data = array('verified' => true, 'user' => 'admin');
@@ -225,7 +225,7 @@ class Login extends CI_Controller {
                 'admin_password' => md5($this->input->post('password')),
                 );
 
-            if(!empty($this->admin_model->update_admin($this->input->post('di'),$values))){
+            if(!is_null($this->admin_model->update_admin($this->input->post('di'),$values))){
                 $data['pass_change'] = "Pass changed";
                 $this->load->view('login/login_view', $data);
             }else{
@@ -234,8 +234,6 @@ class Login extends CI_Controller {
             }
 
         }
-
-
     }
 
     /*
@@ -243,7 +241,7 @@ class Login extends CI_Controller {
     */
     public function logout() {
         $this->session->sess_destroy();
-        redirect('login');
+        redirect(base_url());
     }
 
 }

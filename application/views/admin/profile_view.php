@@ -14,14 +14,13 @@ $this->load->view('shared/sidebar');
 
         <div class="banner">
             <h2>
-                <a href="<?php echo base_url('admin/home')?>">Admin</a>
+                <a href="<?php echo base_url('admin')?>">Admin</a>
                 <i class="fa fa-angle-right"></i>
                 <span>Profile</span>
             </h2>
         </div>
 
         <div class=" profile">
-
             <div class="profile-bottom">
                 <h3><i class="fa fa-user"></i>Profile</h3>
                 <div class="profile-bottom-top">

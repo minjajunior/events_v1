@@ -21,7 +21,7 @@ class Admin extends CI_Controller {
         if (!empty($this->session->admin_id)){
             $this->load->view('admin/home_view', $data);
         } else {
-            redirect('login');
+            redirect(base_url());
         }
     }
 
@@ -41,39 +41,40 @@ class Admin extends CI_Controller {
         $this->form_validation->set_rules('password2', 'Repeat Password', 'required|matches[password]');
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger">', '</div>');
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('admin/register_view');
-        } else {
+        if (empty($this->session->admin_id)){
+            if ($this->form_validation->run() == FALSE) {
+                $this->load->view('admin/register_view');
+            } else {
 
-            //generate a token
-            $token = md5(microtime (TRUE)*100000);
-            //hash token to be stored on db
+                //generate a token
+                $token = md5(microtime (TRUE)*100000);
+                //hash token to be stored on db
 
-            $token_to_db = hash('sha256',$token);
+                $token_to_db = hash('sha256',$token);
 
-            $values = array(
-                'admin_name' => $this->input->post('fullname'),
-                'admin_email' => $this->input->post('email'),
-                'admin_phone' => $this->input->post('phone'),
-                'admin_password' => md5($this->input->post('password')),
-                'hashed_token'=>$token_to_db,
-                'reg_status'=>0
-            );
+                $values = array(
+                    'admin_name' => $this->input->post('fullname'),
+                    'admin_email' => $this->input->post('email'),
+                    'admin_phone' => $this->input->post('phone'),
+                    'admin_password' => md5($this->input->post('password')),
+                    'hashed_token'=>$token_to_db,
+                    'reg_status'=>0
+                );
 
-            $admin_id = $this->admin_model->register($values);
+                $admin_id = $this->admin_model->register($values);
 
-            if(isset($admin_id) && is_numeric($admin_id)){
+                if(isset($admin_id) && is_numeric($admin_id)){
 
-                $token_to_email = base64_encode($token);
-                $admin_id = base64_encode($admin_id);
-                $site_url = site_url();
-                $email_url = $site_url . 'admin/admin_confirm/' . $admin_id . '/' . $token_to_email;
+                    $token_to_email = base64_encode($token);
+                    $admin_id = base64_encode($admin_id);
+                    $site_url = site_url();
+                    $email_url = $site_url . 'admin/admin_confirm/' . $admin_id . '/' . $token_to_email;
 
-                $from = "demicorp@localhost";
-                //$to = $email;
-                $to = "demi@localhost";
-                $subject = "Demi Events - Account Confirmation";
-                $message = " 
+                    $from = "demicorp@localhost";
+                    //$to = $email;
+                    $to = "demi@localhost";
+                    $subject = "Demi Events - Account Confirmation";
+                    $message = " 
                         <html>
                         <head>
                         <title>Demi Events - Account Confirmation</title>
@@ -86,33 +87,36 @@ class Admin extends CI_Controller {
                                 <p>Sincerely,</p>
                                 <p>Dermi Corp Admin.</p>
                         </body></html>";
-                //sending email
+                    //sending email
 
-                $this->email->from($from, 'Demi Corp');
-                $this->email->to($to);
+                    $this->email->from($from, 'Demi Corp');
+                    $this->email->to($to);
 
-                $this->email->subject($subject);
-                $this->email->message($message);
+                    $this->email->subject($subject);
+                    $this->email->message($message);
 
 
-                if($this->email->send()){
+                    if($this->email->send()){
 
-                    $data['email_status']= '<div class="alert alert-danger">Registration successfully, Email Sent</div>';
+                        $data['email_status']= '<div class="alert alert-danger">Registration successfully, Email Sent</div>';
+                        $this->load->view('admin/register_view', $data);
+                        //on success sending email
+
+                    }else {
+                        show_error($this->email->print_debugger());
+                        //on failure sending email
+
+                    }//end inner else
+
+                }else{
+                    $data['reg_status']= '<div class="alert alert-danger">Something went wrong! Please complete your registration again</div>';
                     $this->load->view('admin/register_view', $data);
-                    //on success sending email
+                }
 
-                }else {
-                    show_error($this->email->print_debugger());
-                    //on failure sending email
-
-                }//end inner else
-
-            }else{
-                $data['reg_status']= '<div class="alert alert-danger">Something went wrong! Please complete your registration again</div>';
-                $this->load->view('admin/register_view', $data);
+                redirect(base_url());
             }
-
-            redirect('login');
+        } else {
+            redirect('admin');
         }
     }
 
@@ -151,7 +155,6 @@ class Admin extends CI_Controller {
             $this->load->view('login/login_view',$data);
 
         }
-
     }
 
     /*
@@ -166,7 +169,7 @@ class Admin extends CI_Controller {
         if (!empty($this->session->admin_id)){
             $this->load->view('admin/profile_view', $data);
         } else {
-            redirect('admin');
+            redirect(base_url());
         }
     }
 
@@ -179,7 +182,7 @@ class Admin extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             echo 0;
-        } elseif(!empty($this->input->post('action'))) {
+        } elseif(!is_null($this->input->post('action'))) {
             $value = $this->login_model->admin_login($this->input->post('email'));
             if($this->input->post('action') == "add"){
                 if($value['admin_email'] == $this->input->post('email')){
@@ -335,4 +338,68 @@ class Admin extends CI_Controller {
 
     }
 
+    public function settings(){
+        $data['admin_details'] = $this->admin_model->admin_details($this->session->admin_id);
+
+        if (!empty($this->session->admin_id)){
+            $this->load->view('admin/settings_view', $data);
+        } else {
+            redirect(base_url());
+        }
+    }
+
+    public function edit_details(){
+        $this->form_validation->set_rules('fullname', 'Full Name', 'required');
+        if ($this->input->post('ae') != $this->input->post('email')) {
+            $this->form_validation->set_rules('email', 'E-mail Address', 'required|valid_email|is_unique[admin.admin_email]');
+        }
+        $this->form_validation->set_message('valid_email', 'Email address you have entered is not a valid email address.');
+        $this->form_validation->set_message('is_unique', '{field} you have entered is already registered in an account with us.');
+        if ($this->input->post('ap') != $this->input->post('phone')) {
+            $this->form_validation->set_rules('phone', 'Phone Number', 'required|is_unique[admin.admin_phone]|exact_length[12]|numeric');
+        }
+        $this->form_validation->set_message('exact_length', 'The phone number must be in a 255XXXXXXXXX format.');
+        $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
+
+        if ($this->form_validation->run() == FALSE) {
+            foreach ($_POST as $key => $value) {
+                $data['messages'][$key] = form_error($key);
+            }
+        } else {
+            $data['success'] = true;
+
+            $values = array(
+                'admin_name' => $this->input->post('fullname'),
+                'admin_email' => $this->input->post('email'),
+                'admin_phone' => $this->input->post('phone')
+            );
+
+            $this->admin_model->update_admin($this->session->admin_id, $values);
+        }
+        echo json_encode($data);
+    }
+
+    public function change_password(){
+
+        $this->form_validation->set_rules('oldpassword', 'Old Password', 'required|matches[op]');
+        $this->form_validation->set_rules('newpassword', 'New Password', 'required|min_length[8]');
+        $this->form_validation->set_message('min_length', '{field} must be at least {param} characters long.');
+        $this->form_validation->set_rules('repassword', 'Retype Password', 'required|matches[password]');
+        $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
+
+        if ($this->form_validation->run() == FALSE) {
+            foreach ($_POST as $key => $value) {
+                $data['messages'][$key] = form_error($key);
+            }
+        } else {
+            $values = array(
+                'admin_password' => md5($this->input->post('password'))
+            );
+
+            $this->admin_model->update_admin($this->session->admin_id, $values);
+
+            $data['success'] = true;
+        }
+        echo json_encode($data);
+    }
 }
