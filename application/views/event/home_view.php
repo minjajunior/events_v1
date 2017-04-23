@@ -69,7 +69,7 @@
                     <p>
                         <?php
                         if(isset($pledge_sum)){
-                            echo $english_format_number = number_format($pledge_sum, 0, '.', ',')." Tsh.";
+                            echo $english_format_number = number_format($pledge_sum, 0, '.', ',')." TZS";
                         }else {
                             echo "0 Tsh.";
                         } ?>
@@ -90,7 +90,7 @@
                     <p>
                         <?php
                         if(isset($cash_sum)){
-                            echo $english_format_number = number_format($cash_sum, 0, '.', ',')." Tsh.";
+                            echo $english_format_number = number_format($cash_sum, 0, '.', ',')." TZS";
                         }else {
                             echo "0 Tsh.";
                         } ?>
@@ -112,7 +112,7 @@
                         <?php
                         if(isset($cash_sum) || isset($advance_sum)){
                             $ba = $cash_sum - $advance_sum;
-                            echo $english_format_number = number_format($ba, 0, '.', ',')." Tsh.";
+                            echo $english_format_number = number_format($ba, 0, '.', ',')." TZS";
                         }else {
                             echo "0 Tsh.";
                         } ?>
@@ -133,7 +133,7 @@
                     <p>
                         <?php
                         if(isset($budget_sum)){
-                            echo $english_format_number = number_format($budget_sum, 0, '.', ',')." Tsh.";
+                            echo $english_format_number = number_format($budget_sum, 0, '.', ',')." TZS";
                         }else {
                             echo "0 Tsh.";
                         } ?>
@@ -318,7 +318,7 @@
                     <p>
                         <?php
                         if(isset($cash_sum)){
-                            echo $english_format_number = number_format($cash_sum, 0, '.', ',')." Tsh.";
+                            echo $english_format_number = number_format($cash_sum, 0, '.', ',')." TZS";
                         }else {
                             echo "0 Tsh.";
                         } ?>
@@ -341,7 +341,7 @@
                         <?php
                         if(isset($cash_sum) || isset($advance_sum)){
                             $ba = $cash_sum - $advance_sum;
-                            echo $english_format_number = number_format($ba, 0, '.', ',')." Tsh.";
+                            echo $english_format_number = number_format($ba, 0, '.', ',')." TZS";
                         }else {
                             echo "0 Tsh.";
                         } ?>
@@ -362,7 +362,7 @@
                     <p>
                         <?php
                         if(isset($pledge_sum)){
-                            echo $english_format_number = number_format($pledge_sum, 0, '.', ',')." Tsh.";
+                            echo $english_format_number = number_format($pledge_sum, 0, '.', ',')." TZS";
                         }else {
                             echo "0 Tsh.";
                         } ?>
@@ -383,7 +383,7 @@
                     <p>
                         <?php
                         if(isset($budget_sum)){
-                            echo $english_format_number = number_format($budget_sum, 0, '.', ',')." Tsh.";
+                            echo $english_format_number = number_format($budget_sum, 0, '.', ',')." TZS";
                         }else {
                             echo "0 Tsh.";
                         } ?>
@@ -414,12 +414,12 @@
                                 <tr>
                                     <td>Your Pledge</td>
                                     <td> :</td>
-                                    <td><?php echo $md->member_pledge ?></td>
+                                    <td><?php echo $english_format_number = number_format($md->member_pledge, 0, '.', ',')." TZS"; ?></td>
                                 </tr>
                                 <tr>
                                     <td>Cash Paid</td>
                                     <td>:</td>
-                                    <td><?php echo $md->member_cash; ?></td>
+                                    <td><?php echo $english_format_number = number_format($md->member_cash, 0, '.', ',')." TZS"; ?></td>
                                 </tr>
                             </table>
                         </div>

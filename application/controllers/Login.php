@@ -22,7 +22,7 @@ class Login extends CI_Controller {
                 if(!is_null($this->login_model->member_login($this->input->post('mailphone')))) {
                     $curl = curl_init();
                     if (!is_null($this->input->post('pin'))){
-                        $data = array('verified' => true, 'msisdn'=>'255712431242');
+                        $data = array('verified' => true, 'msisdn'=>$this->input->post('mailphone') );
                         echo json_encode($data);
                         //json_decode(json_encode($data['msisdn']));
                         $value = array('member_phone' => json_decode(json_encode($data['msisdn'])));
@@ -52,7 +52,7 @@ class Login extends CI_Controller {
                             echo $response;
                         }*/
                     } else {
-                        $data = array('smsStatus' => 'MESSAGE_SENT', 'pinId'=>'12345', 'to' =>'255712431242');
+                        $data = array('smsStatus' => 'MESSAGE_SENT', 'pinId'=>'12345', 'to' =>$this->input->post('mailphone'));
                         echo json_encode($data);
                         /*$pn = $this->input->post('phoneno');
                         curl_setopt_array($curl, array(

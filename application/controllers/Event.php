@@ -98,13 +98,15 @@ class Event extends CI_Controller
                 $this->load->view('event/' . $view_name, $data);
             }
         } elseif (!empty($this->session->member_phone)) {
+
             $id = $_POST['event_id'];
             $view_name = $_POST['view_name'];
-            $data['member_detail'] = $this->event_model->member_data($id, $this->session->member_phone);
+            $data['member_detail'] = $this->member_model->member_detail($id, $this->session->member_phone);
             $data['pledge_sum'] = $this->event_model->pledge_sum($id);
             $data['cash_sum'] = $this->event_model->cash_sum($id);
             $data['budget_sum'] = $this->event_model->budget_sum($id);
             $data['advance_sum'] = $this->event_model->advance_sum($id);
+            $data['event_id'] = $id;
             $this->load->view('event/'.$view_name, $data);
         }
     }

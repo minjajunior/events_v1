@@ -34,9 +34,9 @@
                         <thead>
                         <tr>
                             <th>Item Name</th>
-                            <th>Cost (Tsh.)</th>
-                            <th>Paid (Tsh.)</th>
-                            <th>Balance (Tsh.)</th>
+                            <th>Cost (TZS)</th>
+                            <th>Paid (TZS)</th>
+                            <th>Balance (TZS)</th>
                         </tr>
                         </thead>
                         <tbody>

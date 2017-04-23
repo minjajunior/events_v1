@@ -61,9 +61,9 @@
                                 <tr>
                                     <th>Member Name</th>
                                     <th>Phone Number</th>
-                                    <th>Pledge (Tsh.)</th>
-                                    <th>Cash (Tsh.)</th>
-                                    <th>Balance (Tsh.)</th>
+                                    <th>Pledge (TZS)</th>
+                                    <th>Cash (TZS)</th>
+                                    <th>Balance (TZS)</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -98,13 +98,13 @@
                             <div class="tables">
                                 <table class="table table-hover" id="members-list">
                                     <thead>
-                                    <tr>
-                                        <th>Member Name</th>
-                                        <th>Phone Number</th>
-                                        <th>Pledge (Tsh.)</th>
-                                        <th>Cash (Tsh.)</th>
-                                        <th>Balance (Tsh.)</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Member Name</th>
+                                            <th>Phone Number</th>
+                                            <th>Pledge (TZS)</th>
+                                            <th>Cash (TZS)</th>
+                                            <th>Balance (TZS)</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                     <?php foreach($member_details as $md){

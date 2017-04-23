@@ -154,28 +154,6 @@ class Event_model extends CI_Model {
     }
 
     /*
-     * This function returns member details of the selected member
-     */
-    public function member_data($id, $pn){
-        $this->db->select('*');
-        $this->db->from('member');
-        $this->db->join('event', 'event.event_id = member.event_id');
-        $this->db->where('member.event_id', $id);
-        $this->db->where('member.member_phone', $pn);
-        $query = $this->db->get();
-
-        if ($query->num_rows() > 0){
-            foreach ($query->result() as $row) {
-                $response[] = $row;
-            }
-            return $response;
-        }else{
-            $response['error'] = '0';
-            return $response;
-        }
-    }
-
-    /*
      * This function returns the budget item details of the selected event
      */
     public function budget_details($id){

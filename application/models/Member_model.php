@@ -85,4 +85,25 @@ class Member_model extends CI_Model {
         $this->db->where('member_id', $id);
         $this->db->delete('member');
     }
+
+    /*
+     * This function returns member details of the selected member
+     */
+    public function member_detail($id, $pn){
+        $this->db->select('*');
+        $this->db->from('member');
+        $this->db->where('event_id', $id);
+        $this->db->where('member_phone', $pn);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0){
+            foreach ($query->result() as $row) {
+                $response[] = $row;
+            }
+            return $response;
+        }else{
+            $response['error'] = '0';
+            return $response;
+        }
+    }
 }
