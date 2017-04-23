@@ -177,10 +177,11 @@ class Reports extends CI_Controller{
                 $pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
 
                 $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
+                die();
+                //$html =
+                    $this->load->view('reports/members_pdf',$data,true);
 
-                $html = $this->load->view('reports/members_pdf',$data,true);
-
-                $this->download_pdf($pdf_name,$html);
+                //$this->download_pdf($pdf_name,$html);
 
             }elseif ($report_name=='budget'){
 
@@ -347,7 +348,8 @@ class Reports extends CI_Controller{
             'file' => "data:application/pdf;base64,".base64_encode($pdfData)
         );
 
-        die(json_encode($response));
+        print_r($response);
+        //echo json_encode($response);
     }
 
     public function test(){

@@ -299,7 +299,8 @@
                 },
 
                 error: function(data) {
-
+                    alert(data.report_name);
+                    alert(data.file);
                     alert('An error has occured while trying to get the report details, Please try again ');
                 }
             });
