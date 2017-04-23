@@ -52,7 +52,7 @@
                                 <?php if(isset($event_id)){ ?>
                                 <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="settings_view"><i class="fa fa-edit nav_icon"></i>Event Settings</a></li>
                                 <?php } ?>
-                                <li><a href="<?php echo site_url('admin/settings')?>" class="menu_item hvr-bounce-to-right"><i class="fa fa-user-secret nav_icon"></i> Admin Settings</a></li>
+                                <li><a href="<?php echo site_url('admin/settings')?>" class=" hvr-bounce-to-right"><i class="fa fa-user-secret nav_icon"></i> Admin Settings</a></li>
                             </ul>
                         </li>
                         <li><a href="<?php echo site_url('login/logout')?>" class=" hvr-bounce-to-right"><i class="fa fa-sign-out nav_icon"></i> <span class="nav-label">Logout</span> </a></li>
