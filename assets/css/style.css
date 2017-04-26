@@ -15,7 +15,11 @@ html, body {
     /*background:#6E6E6E;*/
     overflow-x: hidden;
     background-color: #6E6E6E;
-
+    background-image: linear-gradient(top, #91C7A9,  #1C1F24);
+    background-image: -o-linear-gradient(top, #91C7A9,  #1C1F24);
+    background-image: -moz-linear-gradient(top, #91C7A9,  #1C1F24);
+    background-image: -webkit-linear-gradient(top, #91C7A9,  #1C1F24);
+    background-image: -ms-linear-gradient(top, #91C7A9,  #1C1F24);
 }
 @font-face{
 	font-family:'Montserrat-Regular';
