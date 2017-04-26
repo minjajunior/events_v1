@@ -29,7 +29,7 @@ body a{
 	-moz-transition:0.5s all;
 	-o-transition:0.5s all;
 	-ms-transition:0.5s all;
-    color: #d95459;
+    color: #10dcb2;
 }
 div#wrapper {
     background-color: #fff;
@@ -221,7 +221,7 @@ h1 a.navbar-brand {
 	font-size: 30px;
 	font-weight: 500;
     padding: 20px 0px;
-    background: #d95459;
+    background: #10dcb2;
     text-align: center;
 	width:248px;
 	height: 60px;
@@ -229,7 +229,7 @@ h1 a.navbar-brand {
 }
 .navbar-default .navbar-brand:hover {
     color: #fff;
-    background-color: #d95459;
+    background-color: #10dcb2;
 }
 .navbar-right {
   margin-right: 10px !important;
@@ -511,7 +511,7 @@ i.fa.fa-globe {
 }
 .dropdown-menu>li>a.view:focus, .dropdown-menu>li>a.view:hover{
 	background: none;
-	color: #d95459;
+	color: #10dcb2;
 }
  .dropdown-menu {
  border: 1px solid #ebeff6;
@@ -544,7 +544,7 @@ i.fa.fa-globe {
 	font-size:0.9em;
 }
 .banner  h2 a { 
-    color:#D95459;
+    color:#10dcb2;
 	text-decoration:none;
 	font-family: 'Muli-Regular';
 	padding:0.3em ;
@@ -850,7 +850,7 @@ i.fa.fa-globe {
 	float: right;
 }
 .text-sub input[type="submit"]{
-	background-color: #D95459;
+	background-color: #10dcb2;
     font-size: 1em;
     color: #fff;
     border: none;
@@ -1489,7 +1489,7 @@ label.control-label {
 	font-size: 2.5em;
 }
 .login h1 a{
-	color:#d95459;
+	color:#10dcb2;
 	text-decoration: none;
 }
 
@@ -1504,7 +1504,7 @@ label.control-label {
   backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
-  background: #d95459;
+  background: #10dcb2;
   -webkit-transition-property: color;
   transition-property: color;
   -webkit-transition-duration: 0.3s;
@@ -1542,7 +1542,7 @@ label.control-label {
 	background: #1abc9c;
 }
 .login-sub:before {
-	background: #d95459; 
+	background: #10dcb2;
 }
 /*--profile--*/
 .profile{
@@ -1596,7 +1596,7 @@ label.control-label {
 	padding: 0.3em 1em;
 }
 .profile-text td a{
-	color:#D95459;
+	color:#10dcb2;
 }
 .profile-bottom-top img {
     border-radius: 100px;
@@ -1628,7 +1628,7 @@ label.control-label {
 	-o-border-radius: 4px;
 	-moz-border-radius: 4px;
 	-ms-border-radius: 4px;
-    background: #D95459;
+    background: #10dcb2;
     display: block;
     text-align: center;
 }
@@ -1807,7 +1807,7 @@ td span.mar{
 .compose h2{
 	font-size: 1.2em;
     color: #fff;
-    background: #D95459;
+    background: #10dcb2;
     text-align: center;
     padding: 10px;
 	border-radius: 4px;
@@ -1881,9 +1881,9 @@ td span.mar{
 }
 .input-group-btn button.btn.btn-danger{
     line-height: 24px;
-    background-color: #D95459;
+    background-color: #10dcb2;
     border: 1px solid transparent;
-    border-color: #D95459;
+    border-color: #10dcb2;
     border-top-right-radius: 4px;
     -webkit-border-top-right-radius: 4px;
     -o-border-top-right-radius: 4px;
@@ -1900,7 +1900,7 @@ td span.mar{
 .nav-sidebar ul li a span{
 	color: #fff;
     font-size: 0.8em;
-    background: #D95459;
+    background: #10dcb2;
     border-radius: 10px;
     width: 25px;
     height: 18px;
@@ -2059,7 +2059,7 @@ tr.table-row {
     margin: 3px 0;
 }
 #os-Other-lbl {
-    border-left: #D95459 solid 1em;
+    border-left: #10dcb2 solid 1em;
     padding-left: .5em;
     font-size: 1em;
     color: #777F8C;
@@ -2095,7 +2095,7 @@ tr.table-row {
     color: #fff;
     display: block;
     text-decoration: none;
-    background: #d95459;
+    background: #10dcb2;
     margin: 0 auto;
     width: 10%;
 }
@@ -2425,7 +2425,7 @@ form.navbar-form.navbar-right {
     right: 93%;
 }
 .navbar-header {
-    background-color: #D95459;
+    background-color: #10dcb2;
 }
 h1 a.navbar-brand {
     width: 152px;
