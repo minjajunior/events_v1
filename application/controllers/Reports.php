@@ -177,11 +177,10 @@ class Reports extends CI_Controller{
                 $pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
 
                 $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
-                die();
-                //$html =
-                    $this->load->view('reports/members_pdf',$data,true);
 
-                //$this->download_pdf($pdf_name,$html);
+                $html = $this->load->view('reports/members_pdf',$data,true);
+
+                $this->download_pdf($pdf_name,$html);
 
             }elseif ($report_name=='budget'){
 
@@ -310,6 +309,7 @@ class Reports extends CI_Controller{
         //load the PDF library
         $this->load->library('m_pdf');
 
+
         //$this->m_pdf->pdf->SetHTMLHeader('<img class="pull-right" src="' . base_url() . 'assets/images/demi.png">');
         //$this->m_pdf->pdf->SetHTMLHeader($pdf_h);
         $this->m_pdf->pdf->SetHTMLFooter('
@@ -348,11 +348,16 @@ class Reports extends CI_Controller{
             'file' => "data:application/pdf;base64,".base64_encode($pdfData)
         );
 
-        print_r($response);
-        //echo json_encode($response);
+       echo json_encode($response);
     }
 
     public function test(){
+
+        phpinfo();
+
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+
         $event_id = 1;
         $admin_id =1 ;
 
@@ -360,14 +365,58 @@ class Reports extends CI_Controller{
         $data['event_details'] = $this->event_model->event_details($event_id);
         $data['admin_details'] = $this->admin_model->admin_details($admin_id);
         $data['report_name'] = 'Members Report';
-        //$pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
+        $pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
 
         $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
-        $pdf_name = $data['event_details'][0]->event_name."-".$data['report_name'];
-        //print('Devid');
-       // $data['pdf_h'] = $this->load->view('shared/pdf_h', $data, TRUE);
 
-        $this->load->view('reports/members_pdf',$data);
+        $html_view = $this->load->view('reports/members_pdf',$data,true);
+
+        $file_name = "Members".".pdf";
+        $file_name = $file_name.".pdf";
+
+        header("Content-Type: application/pdf");//mime type
+        header("Content-Disposition: attachment;filename=".$file_name); //tell browser what's the file name
+        header('Cache-Control: max-age=0');//no cache
+
+        //load the PDF library
+        $this->load->library('m_pdf');
+
+
+        //$this->m_pdf->pdf->SetHTMLHeader('<img class="pull-right" src="' . base_url() . 'assets/images/demi.png">');
+        //$this->m_pdf->pdf->SetHTMLHeader($pdf_h);
+        $this->m_pdf->pdf->SetHTMLFooter('
+            <table  width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #000000; font-weight: bold; font-style: italic;">
+                <tr>
+                    <td width="33%"><span style="font-weight: bold; font-style: italic;">www.demievents.co.tz***info@demi.co.tz***0752934547</span></td>
+                    <td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td>
+                    <td width="33%" style="text-align: right; "> {DATE Y-m-j} </td>
+                </tr>
+            </table>
+            ');
+
+
+        $this->m_pdf->pdf->AddPage('', // L - landscape, P - portrait
+            '', '', '', '',
+            0, // margin_left
+            0, // margin right
+            10, // margin top
+            10, // margin bottom
+            0, // margin header
+            0); // margin footer
+
+
+
+        //generate the PDF from the given html
+        $this->m_pdf->pdf->WriteHTML($html_view);
+
+
+        //force user to download the PDF file without writing it to server's HD
+        //ob_start();
+        $this->m_pdf->pdf->Output($file_name, "I"); //download it.
+        //$pdfData = ob_get_contents();
+        //ob_end_clean();
+
+
 }
 
 
