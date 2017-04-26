@@ -78,9 +78,9 @@ $this->load->view('shared/sidebar');
                             ?>
                             <div id="password_success"></div>
                             <div class="form-group">
-                                <label for="oldpassword" class="col-sm-3 control-label">Old Password</label>
+                                <label for="currpassword" class="col-sm-3 control-label">Current Password</label>
                                 <div class="col-sm-9">
-                                    <input type="password" name="oldpassword" value="<?php echo set_value('oldpassword')?>" class="form-control1" placeholder="Old Password" id="oldpassword">
+                                    <input type="password" name="currpassword" value="<?php echo set_value('currpassword')?>" class="form-control1" placeholder="Current Password" id="currpassword">
                                 </div>
                             </div>
                             <div class="form-group">

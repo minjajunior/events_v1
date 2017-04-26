@@ -381,13 +381,14 @@ class Admin extends CI_Controller {
 
     public function change_password(){
 
-        $this->form_validation->set_rules('oldpassword', 'Old Password', 'required|matches[op]');
+        $this->form_validation->set_rules('currpassword', 'Current Password', 'required|matches[op]');
         $this->form_validation->set_rules('newpassword', 'New Password', 'required|min_length[8]');
         $this->form_validation->set_message('min_length', '{field} must be at least {param} characters long.');
         $this->form_validation->set_rules('repassword', 'Retype Password', 'required|matches[password]');
         $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
         if ($this->form_validation->run() == FALSE) {
+
             foreach ($_POST as $key => $value) {
                 $data['messages'][$key] = form_error($key);
             }
@@ -396,7 +397,7 @@ class Admin extends CI_Controller {
                 'admin_password' => md5($this->input->post('password'))
             );
 
-            $this->admin_model->update_admin($this->session->admin_id, $values);
+            //$this->admin_model->update_admin($this->session->admin_id, $values);
 
             $data['success'] = true;
         }
