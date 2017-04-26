@@ -48,7 +48,7 @@
                         <?php } ?>
                         <li>
                             <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> <span class="nav-label">Settings</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
+                            <ul class="nav-settings nav-second-level">
                                 <?php if(isset($event_id)){ ?>
                                 <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="settings_view"><i class="fa fa-edit nav_icon"></i>Event Settings</a></li>
                                 <?php } ?>
