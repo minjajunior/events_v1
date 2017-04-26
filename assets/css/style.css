@@ -2131,7 +2131,7 @@ tr.table-row {
 	color:#000;
 }
 /*--responsive--*/
-@media(max-width:1366px){
+@media(max-width:1920px){
 .middle-content {
     padding: 2.75em 2.15em;
 }
