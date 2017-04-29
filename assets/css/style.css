@@ -239,7 +239,7 @@ h1 a.navbar-brand {
 }
 
 .navbar-default .navbar-brand {
-    color: #2D2D2D;
+    color: #fff;
     background-color: #0070ba;
 }
 
@@ -1418,7 +1418,7 @@ label.control-label {
     outline: none;
     font-size: 1em;
     padding: 0.5em 1em;
-    color: #2D2D2D;
+    color: #fff;
     width: 100%;
     -webkit-appearance: none;
     cursor: pointer;
@@ -1427,7 +1427,7 @@ label.control-label {
 .login-do a{
     font-size: 0.9em;
     padding: 0.5em 1em;
-    color: #2D2D2D;
+    color: #fff;
     display: block;
     text-align: center;
     text-decoration: none;    
