@@ -33,7 +33,7 @@ $this->load->view('shared/login_header');
         </div>
 
         <div class=" col-md-3 col-md-offset-1">
-
+<?php echo $view ?>
     </div>
 
 <?php

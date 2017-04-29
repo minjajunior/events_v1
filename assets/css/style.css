@@ -12,7 +12,7 @@ p {margin: 0;}
 html, body {
     font-family: 'Montserrat-Regular';
     font-size: 100%;
-    background:#e1e6ef;
+    background: #C6D4E1;
     overflow-x: hidden;
     /*background: #fff;*/
     /*background: linear-gradient(#91C7A9,  #1C1F24);
@@ -1517,7 +1517,7 @@ label.control-label {
 }
 
 .jumbotron {
-    background-color: #e1e6ef;
+    background-color: #C6D4E1;
     color: inherit;
     margin-bottom: 30px;
     /*padding: 30px 15px;*/
