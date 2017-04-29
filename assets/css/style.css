@@ -35,7 +35,7 @@ body a{
 	-moz-transition:0.5s all;
 	-o-transition:0.5s all;
 	-ms-transition:0.5s all;
-    color: #10dcb2;
+    color: #0070ba;
 }
 div#wrapper {
     background-color: #fff;
@@ -227,7 +227,7 @@ h1 a.navbar-brand {
 	font-size: 30px;
 	font-weight: 500;
     padding: 20px 0px;
-    background: #10dcb2;
+    background: #0070ba;
     text-align: center;
 	width:248px;
 	height: 60px;
@@ -235,16 +235,16 @@ h1 a.navbar-brand {
 }
 .navbar-default .navbar-brand:hover {
     color: #fff;
-    background-color: #10dcb2;
+    background-color: #0070ba;
 }
 
 .navbar-default .navbar-brand {
     color: #2D2D2D;
-    background-color: #10dcb2;
+    background-color: #0070ba;
 }
 
 .navbar-default {
-    background-color: #10dcb2;
+    background-color: #0070ba;
     border-color: #e7e7e7;
 }
 .navbar-right {
@@ -527,7 +527,7 @@ i.fa.fa-globe {
 }
 .dropdown-menu>li>a.view:focus, .dropdown-menu>li>a.view:hover{
 	background: none;
-	color: #10dcb2;
+	color: #0070ba;
 }
  .dropdown-menu {
  border: 1px solid #ebeff6;
@@ -560,7 +560,7 @@ i.fa.fa-globe {
 	font-size:0.9em;
 }
 .banner  h2 a { 
-    color:#10dcb2;
+    color:#0070ba;
 	text-decoration:none;
 	font-family: 'Muli-Regular';
 	padding:0.3em ;
@@ -866,7 +866,7 @@ i.fa.fa-globe {
 	float: right;
 }
 .text-sub input[type="submit"]{
-	background-color: #10dcb2;
+	background-color: #0070ba;
     font-size: 1em;
     color: #fff;
     border: none;
@@ -1384,20 +1384,20 @@ label.control-label {
 .login-bottom{
 	width: 100%;
 	margin: 3em auto;
-    background-color: #2D2D2D;
+    background-color: #fff;
     padding: 2em 1em;
-     border: 1px solid #10dcb2;
+     border: 1px solid #0070ba;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 .login-bottom h2{
 	font-size: 1.4em;
-	color:#10dcb2;
+	color:#0070ba;
 	 padding: 0em 0.9em 1em;
 }
 .login-mail{
-	border: 1px solid #10dcb2;
+	border: 1px solid #0070ba;
 	margin-bottom: 2em;
 	padding: 0.5em 1em;
 }
@@ -1408,8 +1408,8 @@ label.control-label {
 	border: none;
 	outline:none;
 	font-size: 0.9em;
-    color: #10dcb2;
-    background: #2D2D2D;
+    color: #0070ba;
+    background: #ebeff6;
     width: 89%;
     font-family: 'Muli-Regular';
 }
@@ -1503,11 +1503,11 @@ label.control-label {
 }
 .login h1{
 	text-align: left;
-    color: #10dcb2;
+    color: #0070ba;
 	font-size: 2.5em;
 }
 .login h1 a{
-	color:#10dcb2;
+	color:#0070ba;
 	text-decoration: none;
 }
 
@@ -1529,7 +1529,7 @@ label.control-label {
   backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
-  background: #10dcb2;
+  background: #0070ba;
   -webkit-transition-property: color;
   transition-property: color;
   -webkit-transition-duration: 0.3s;
@@ -1564,10 +1564,10 @@ label.control-label {
   transform: scaleX(0);
 }
 .login-sub{
-	background: #1abc9c;
+	background: #009cde;
 }
 .login-sub:before {
-	background: #10dcb2;
+	background: #0070ba;
 }
 /*--profile--*/
 .profile{
@@ -1621,7 +1621,7 @@ label.control-label {
 	padding: 0.3em 1em;
 }
 .profile-text td a{
-	color:#10dcb2;
+	color:#0070ba;
 }
 .profile-bottom-top img {
     border-radius: 100px;
@@ -1653,7 +1653,7 @@ label.control-label {
 	-o-border-radius: 4px;
 	-moz-border-radius: 4px;
 	-ms-border-radius: 4px;
-    background: #10dcb2;
+    background: #0070ba;
     display: block;
     text-align: center;
 }
@@ -1832,7 +1832,7 @@ td span.mar{
 .compose h2{
 	font-size: 1.2em;
     color: #fff;
-    background: #10dcb2;
+    background: #0070ba;
     text-align: center;
     padding: 10px;
 	border-radius: 4px;
@@ -1906,9 +1906,9 @@ td span.mar{
 }
 .input-group-btn button.btn.btn-danger{
     line-height: 24px;
-    background-color: #10dcb2;
+    background-color: #0070ba;
     border: 1px solid transparent;
-    border-color: #10dcb2;
+    border-color: #0070ba;
     border-top-right-radius: 4px;
     -webkit-border-top-right-radius: 4px;
     -o-border-top-right-radius: 4px;
@@ -1925,7 +1925,7 @@ td span.mar{
 .nav-sidebar ul li a span{
 	color: #fff;
     font-size: 0.8em;
-    background: #10dcb2;
+    background: #0070ba;
     border-radius: 10px;
     width: 25px;
     height: 18px;
@@ -2084,7 +2084,7 @@ tr.table-row {
     margin: 3px 0;
 }
 #os-Other-lbl {
-    border-left: #10dcb2 solid 1em;
+    border-left: #0070ba solid 1em;
     padding-left: .5em;
     font-size: 1em;
     color: #777F8C;
@@ -2120,7 +2120,7 @@ tr.table-row {
     color: #fff;
     display: block;
     text-decoration: none;
-    background: #10dcb2;
+    background: #0070ba;
     margin: 0 auto;
     width: 10%;
 }
@@ -2450,7 +2450,7 @@ form.navbar-form.navbar-right {
     right: 93%;
 }
 .navbar-header {
-    background-color: #10dcb2;
+    background-color: #0070ba;
 }
 h1 a.navbar-brand {
     width: 152px;
