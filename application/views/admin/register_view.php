@@ -8,8 +8,31 @@
 
 $this->load->view('shared/login_header');
 ?>
-    <div class="login">
-        <h1><a href="<?php echo base_url() ?>">Events</a></h1>
+
+<div class="row login">
+    <div class=" col-md-6 col-md-offset-1">
+
+        <div class="jumbotron">
+            <h1>Welcome Demi Events!</h1>
+            <p class="lead"> Is a platform that simplify local event planning and management. It's an ideal solution for organizers when planning events such as Wedding, Send off , Kitchen party etc</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3><i class="fa fa-codepen"></i> Event Management</h3>
+                <p>Easily track and manage budget details and attendee details such as pledges, cash etc <br /><br /></p>
+            </div>
+            <div class="col-md-12">
+                <h3><i class="fa fa-file-o"> </i> Powerful Reports</h3>
+                <p>Easy to use reporting tools that deliver real time data on the event budget and attendee details <br /><br /></p>
+            </div>
+            <div class="col-md-12">
+                <h3><i class="fa fa-envelope-o"></i> Message Notifications</h3>
+                <p>Demi Events allows you to send message notifications to all event members with a single click <br /><br /></p>
+            </div>
+        </div>
+    </div>
+    <div class=" col-md-3 col-md-offset-1">
         <div class="login-bottom">
             <h2>Admin Register</h2>
             <?php echo form_open('admin/register'); ?>
@@ -47,12 +70,14 @@ $this->load->view('shared/login_header');
                     <input type="submit" value="Register">
                 </label>
                 <p>Already registered?</p>
-                <a href="<?php echo base_url()?>" class="hvr-shutter-in-horizontal">Login</a>
+                <a href="<?php echo base_url()?>" class="hvr-shutter-in-horizontal login-sub">Login</a>
             </div>
             </form>
             <div class="clearfix"> </div>
         </div>
     </div>
+</div>
+
 
 <?php
 if(isset($reg_status)){ ?>

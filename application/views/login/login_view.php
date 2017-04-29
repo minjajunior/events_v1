@@ -30,9 +30,6 @@ $this->load->view('shared/login_header');
                 <p>Demi Events allows you to send message notifications to all event members with a single click <br /><br /></p>
             </div>
         </div>
-
-
-
     </div>
     <div class=" col-md-3 col-md-offset-1">
         <div class="login-bottom">
@@ -117,7 +114,7 @@ if(isset($reg_status)){ ?>
                             $('.login-mail').append('<input type="hidden" name="mailphone" value="'+ response.email +'" id="email" />');
                             $('#next').replaceWith('<input type="submit" name="submit" value="login" id="submit" />');
                             $('#reg-link').replaceWith('<div id="pass-link"><p>Forgot Password ?</p>' +
-                                '<a href="javascript:void(0)" class="pass-f-link hvr-shutter-in-horizontal" value="'+ response.email +'"><b>Reset Password</b></a>' +
+                                '<a href="javascript:void(0)" class="pass-f-link hvr-shutter-in-horizontal login-sub" value="'+ response.email +'"><b>Reset Password</b></a>' +
                                 '</div>');
                         } else if(response.loginStatus == 'password'){
                             $('#login-response').append('<div class="alert alert-danger">Sorry! Your have entered the wrong password</div>');
@@ -139,7 +136,7 @@ if(isset($reg_status)){ ?>
                             $('.login-mail').append('<input type="hidden" name="mailphone" value="'+ response.to +'" id="phone" />');
                             $('#next').replaceWith('<input type="submit" name="submit" value="login" id="submit" />');
                             $('#reg-link').replaceWith('<div id="pin-link"><p>Did not receive a code ?</p>' +
-                                '<a href="#" class="hvr-shutter-in-horizontal"><b>Resend Pin Code</b></a>' +
+                                '<a href="#" class="hvr-shutter-in-horizontal login-sub"><b>Resend Pin Code</b></a>' +
                                 '</div>');
                         } else if(response.smsStatus == "MESSAGE_NOT_SENT"){
                             $('#login-response').append('<div class="alert alert-danger">Pin Code Not delivered. Please check the number and try again </div>');

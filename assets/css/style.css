@@ -480,7 +480,7 @@ i.fa.fa-globe {
     line-height: 1.5em;
 }
 .user-new-left i.fa-heart{
-	background-color: #1ABC9C;
+	background-color: #0070ba;
 }
 .user-new-left i.fa-times{
 	background-color: #8a8acb;
@@ -727,7 +727,7 @@ i.fa.fa-globe {
     margin-left: 0.5em;
 }
 .weather-top-left p{
-	color: #1ABC9C;
+	color: #0070ba;
     padding: 0.3em 0.5em 0;
     display: inline-block;
     line-height: 13px;
@@ -1330,7 +1330,7 @@ input#disabledTextInput,select#disabledSelect {
     padding: 1em;
 }
 .validation-form h2 {
-    color: #1abc9c;
+    color: #0070ba;
     font-size: 1.8em;
     border-bottom: 1px solid rgb(241, 233, 233);
     padding-bottom: 0.3em;
@@ -1409,7 +1409,7 @@ label.control-label {
 	outline:none;
 	font-size: 0.9em;
     color: #0070ba;
-    background: #ebeff6;
+    background: #fff;
     width: 89%;
     font-family: 'Muli-Regular';
 }
@@ -1511,6 +1511,11 @@ label.control-label {
 	text-decoration: none;
 }
 
+.login h3{
+    text-align: left;
+    color: #0070ba;
+}
+
 .jumbotron {
     background-color: #e1e6ef;
     color: inherit;
@@ -1544,7 +1549,7 @@ label.control-label {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #1abc9c;
+  background: #0070ba;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
   -webkit-transform-origin: 50%;
@@ -1664,7 +1669,7 @@ label.control-label {
     background: #3BB2D0;
 }
 .profile-fo a:hover{
-    background: #1ABC9C;
+    background: #0070ba;
 }
 .profile-fo a i{
 	margin-right:2%;
@@ -1679,7 +1684,7 @@ label.control-label {
 	-o-border-radius: 4px;
 	-moz-border-radius: 4px;
 	-ms-border-radius: 4px;
-	 background:#1abc9c;
+	 background:#0070ba;
 	 color:#fff;
 	 float: right;
 }
@@ -1826,7 +1831,7 @@ td span.work{
 	background: #7F8C8D;
 }
 td span.mar{
-	background: #1ABC9C;
+	background: #0070ba;
 }
 
 .compose h2{
@@ -1958,7 +1963,7 @@ td span.mar{
    font-size:1.1em;
    color:#fff;
    padding:0.5em 1em;
-   background:#1ABC9C;
+   background:#0070ba;
    display: block;
     border-top-left-radius: 4px;
    -webkit-border-top-left-radius: 4px;
@@ -1979,7 +1984,7 @@ td span.mar{
 	padding:1em;
 }
 .tabs  li a:hover{
-	background:#1ABC9C !important;
+	background:#0070ba !important;
 	color:#fff;
 }
 .tabs  li:first-child a{
@@ -2075,7 +2080,7 @@ tr.table-row {
     padding: 10px;
 }
 #os-Win-lbl {
-    border-left: #1ABC9C solid 1em;
+    border-left: #0070ba solid 1em;
     padding-left: .5em;
     font-size: 1em;
     color: #777F8C;    
@@ -2425,8 +2430,8 @@ ul.new {
   margin-bottom:5px;
 }
 .navbar-default .navbar-toggle {
-	border-color: #1ABC9C;
-    background-color: #1ABC9C !important;
+	border-color: #0070ba;
+    background-color: #0070ba !important;
     margin-right: 16px;
     margin-top: 13px;
 }
