@@ -253,12 +253,9 @@ h1 a.navbar-brand {
 .navbar-right li{
 	display:inline-block;
 }
-i.nav_icon {
-  color: #fff;
-  margin-right:6px;
-}
+
 .sidebar ul li a{
-  color: #999;
+  color:#0070ba ;
   font-size:14px;
 }
 
@@ -297,7 +294,7 @@ ul.nav.navbar-nav.navbar-right {
   left: 0;
   right: 80%;
   bottom: 0;
-  background:#7f8c8d;
+  background:#0070ba;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
   -webkit-transform-origin: 0 50%;
@@ -320,7 +317,7 @@ ul.nav.navbar-nav.navbar-right {
 }
 /*----*/
 .nav > li > a {
-  color: #999;
+  color: #0070ba;
   font-weight:500;
   padding: 0px 20px 0px 0px;
   font-size: 0.85em;
@@ -336,10 +333,11 @@ ul.nav.navbar-nav.navbar-right {
     margin-right: 14px;
 }
 i.nav_icon {
-    color: #999;
+    color: #0070ba;
     padding: 15px;
     width: 44px;
     height: 44px;
+    margin-right:6px;
 }
 span.fa.arrow {
     margin-top: 17px;
@@ -361,8 +359,9 @@ a.dropdown-toggle.dropdown-at {
 }
 
 .content-main {
-    background-color: #F3F3F4;
-	    padding-top: 1em;
+    background-color: #C6D4E1;
+    border-left: 1px solid #009cde;
+    padding-top: 1em;
 }
 .navbar-right-left{
 	float: right;
