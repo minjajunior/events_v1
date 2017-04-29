@@ -12,11 +12,11 @@ $this->load->view('shared/login_header');
     <div class=" col-md-6 col-md-offset-1">
 
         <div class="jumbotron">
-            <h1>Welcome Demi Events!</h1>
+            <h1>Demi Events!</h1>
             <p class="lead"> Is a platform that simplify local event planning and management. It's an ideal solution for organizers when planning events such as Wedding, Send off , Kitchen party etc</p>
         </div>
 
-        <div class="row">
+        <div class="row land-list">
             <div class="col-md-12">
                 <h3><i class="fa fa-codepen"></i> Event Management</h3>
                 <p>Easily track and manage budget details and attendee details such as pledges, cash etc <br /><br /></p>

@@ -1522,6 +1522,9 @@ label.control-label {
     margin-bottom: 30px;
     /*padding: 30px 15px;*/
 }
+.land-list{
+    padding: 2em 1em;
+}
 
 /* Shutter In Horizontal */
 .hvr-shutter-in-horizontal {
