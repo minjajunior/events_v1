@@ -12,9 +12,9 @@ p {margin: 0;}
 html, body {
     font-family: 'Montserrat-Regular';
     font-size: 100%;
-    /*background:#6E6E6E;*/
+    background:#e1e6ef;
     overflow-x: hidden;
-    background-color: #6E6E6E;
+    /*background: #fff;*/
     /*background: linear-gradient(#91C7A9,  #1C1F24);
     background: -o-linear-gradient(#91C7A9,  #1C1F24);
     background: -moz-linear-gradient(#91C7A9,  #1C1F24);
@@ -49,17 +49,17 @@ div#wrapper {
 .nav>li>a:focus, .nav>li>a:hover,.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
   background:none !important;
 }
-.navbar .navbar-nav li a i {
-  border: 1px solid #fff;
-  padding: 8px 0;
-  width: 32px;
-  text-align: center;
-  -webkit-border-radius: 50em;
-  -moz-border-radius: 50em;
-  border-radius: 50em;
-  color: #fff;
-  height: 32px;
-}
+/*.navbar .navbar-nav li a i {*/
+  /*!*border: 1px solid #fff;*!*/
+  /*padding: 8px 0;*/
+  /*width: 32px;*/
+  /*text-align: center;*/
+  /*-webkit-border-radius: 50em;*/
+  /*-moz-border-radius: 50em;*/
+  /*!*border-radius: 50em;*!*/
+  /*color: #fff;*/
+  /*height: 32px;*/
+/*}*/
 .navbar .navbar-nav li .dropdown-menu {
   margin-top: 3px;
   border: none;
@@ -236,6 +236,16 @@ h1 a.navbar-brand {
 .navbar-default .navbar-brand:hover {
     color: #fff;
     background-color: #10dcb2;
+}
+
+.navbar-default .navbar-brand {
+    color: #2D2D2D;
+    background-color: #10dcb2;
+}
+
+.navbar-default {
+    background-color: #10dcb2;
+    border-color: #e7e7e7;
 }
 .navbar-right {
   margin-right: 10px !important;
@@ -1372,7 +1382,7 @@ label.control-label {
 	padding: 8em 0 0;
 }
 .login-bottom{
-	width: 25%;
+	width: 100%;
 	margin: 3em auto;
     background-color: #2D2D2D;
     padding: 2em 1em;
@@ -1492,12 +1502,20 @@ label.control-label {
 	color:#00BFF0;
 }
 .login h1{
-	text-align: center;
+	text-align: left;
+    color: #10dcb2;
 	font-size: 2.5em;
 }
 .login h1 a{
 	color:#10dcb2;
 	text-decoration: none;
+}
+
+.jumbotron {
+    background-color: #e1e6ef;
+    color: inherit;
+    margin-bottom: 30px;
+    /*padding: 30px 15px;*/
 }
 
 /* Shutter In Horizontal */
