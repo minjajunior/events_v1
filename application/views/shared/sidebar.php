@@ -16,11 +16,11 @@
         </button>
         <h1> <a class="navbar-brand" href="#">Events</a></h1>
     </div>
-    <div class="border-bottom">
+    <div class=" border-bottom">
         <!-- Brand and toggle get grouped for better mobile display -->
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="drop-men">
+        <div class="drop-men" >
             <ul class=" nav_1">
                 <?php if(!empty($this->session->admin_id)) {?>
                 <li class="dropdown">

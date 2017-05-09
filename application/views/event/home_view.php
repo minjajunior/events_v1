@@ -10,7 +10,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#demo-pie-1').pieChart({
-            barColor: '#3bb2d0',
+            barColor: '#0070ba',
             trackColor: '#eee',
             lineCap: 'round',
             lineWidth: 8,
@@ -20,7 +20,7 @@
         });
 
         $('#demo-pie-2').pieChart({
-            barColor: '#fbb03b',
+            barColor: '#0070ba',
             trackColor: '#eee',
             lineCap: 'round',
             lineWidth: 8,
@@ -30,7 +30,7 @@
         });
 
         $('#demo-pie-3').pieChart({
-            barColor: '#ed6498',
+            barColor: '#0070ba',
             trackColor: '#eee',
             lineCap: 'round',
             lineWidth: 8,
@@ -40,7 +40,7 @@
         });
 
         $('#demo-pie-4').pieChart({
-            barColor: '#d9534f',
+            barColor: '#0070ba',
             trackColor: '#eee',
             lineCap: 'round',
             lineWidth: 8,
@@ -152,7 +152,9 @@
         <div class="col-md-8">
             <div class="blank-page">
                 <h4>Text Message Notifications
+                    <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
                     <a href="#" class="pull-right" data-toggle="modal" data-target="#newSms" data-placement="bottom" title="New Sms">&nbsp;<i class="fa fa-plus-square"></i>&nbsp;</a>
+                    <?php } ?>
                 </h4>
                 <table class="table">
                 <tbody>

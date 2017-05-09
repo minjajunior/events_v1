@@ -5,7 +5,7 @@ License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 */
 h4, h5, h6,
-h1, h2, h3 {margin: 0;}
+h1, h2, h3 {margin: 0; color: #0070ba}
 ul, ol {margin: 0;padding: 0;}
 p {margin: 0;}
 
@@ -876,6 +876,9 @@ i.fa.fa-globe {
 .text-sub input[type="submit"]:hover {
     background-color: #FBB03B;
 }
+.text-success {
+    color: #0070ba;
+}
 .post-bottom-1 {
     float: left;
     width: 48.5%;
@@ -1208,7 +1211,7 @@ i.fa.fa-twitter {
 	margin-bottom: 0em;
 }
 .grid-form1 h3{
-    color: #000;
+    color: #0070ba;
     font-size:2em;
     margin-bottom: 1em;
 }
@@ -1693,6 +1696,27 @@ label.control-label {
 .profile-bottom-bottom {
     padding: 2em 0;
 }
+/*Buttons*/
+
+.btn-success {
+    background: #009cde;
+    border-color: #0070ba;
+}
+
+.btn-success:hover {
+    background: #0070ba;
+    border-color: #0070ba;
+}
+
+.btn-danger {
+    background: #0070ba;
+    border-color: #009cde;
+}
+
+.btn-danger:hover {
+    background: #009cde;
+    border-color: #009cde;
+}
 /*--calendar--*/
 .calendar{
 	padding:1em;
@@ -2153,7 +2177,7 @@ tr.table-row {
 	color:#555;
 }
 .copy p a, .copy-right p a{
-	color:#000;
+	color:#0070ba;
 }
 /*--responsive--*/
 @media(max-width:1366px){

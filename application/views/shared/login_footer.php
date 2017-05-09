@@ -6,6 +6,9 @@
  * Time: 9:12 AM
  */
 ?>
+<div class="text-center">
+    <h1><a href="#" target="_blank" ><i class="fa fa-twitter-square"></i></a> <a href="#" target="_blank"><i class="fa fa-instagram"></i></a></h1>
+</div>
 <div class="copy-right">
     <p><a href="#" target="_blank">Help</a> - <a href="#" target="_blank">Blog</a> - <a href="#" target="_blank">Terms</a> - <a href="#" target="_blank">Privacy policy</a> &copy; <?php echo mdate('%Y')?> Events | Powered by <a href="#" target="_blank">DEMI Corporation</a> </p><br/>
 </div>

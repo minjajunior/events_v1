@@ -187,6 +187,3 @@ $this->load->view('shared/sidebar');
         </script>
 
     <?php $this->load->view('shared/footer') ?>
-
-
-
