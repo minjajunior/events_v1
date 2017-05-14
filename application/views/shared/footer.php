@@ -7,7 +7,7 @@
  */
 ?>
 <div class="copy">
-    <p> &copy; <?php echo mdate('%Y')?> Events. All Rights Reserved | Powered by <a href="#" target="_blank">DEMI Corporation</a> </p>
+    <p> &copy; <?php echo mdate('%Y')?> Events. All Rights Reserved | Powered by <a href="http://demi.co.tz" target="_blank">DEMI Corporation</a> </p>
 </div>
 </div>
 <div class="clearfix"> </div>

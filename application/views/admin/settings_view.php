@@ -78,12 +78,6 @@ $this->load->view('shared/sidebar');
                             ?>
                             <div id="password_success"></div>
                             <div class="form-group">
-                                <label for="currpassword" class="col-sm-3 control-label">Current Password</label>
-                                <div class="col-sm-9">
-                                    <input type="password" name="currpassword" value="<?php echo set_value('currpassword')?>" class="form-control1" placeholder="Current Password" id="currpassword">
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label for="newpassword" class="col-sm-3 control-label">New Password</label>
                                 <div class="col-sm-9">
                                     <input type="password" name="newpassword" value="<?php echo set_value('newpassword') ?>" class="form-control1" placeholder="New Password" id="newpassword">
@@ -95,7 +89,6 @@ $this->load->view('shared/sidebar');
                                     <input type="password" name="repassword" value="<?php echo set_value('repassword') ?>" class="form-control1" placeholder="Retype Password" id="repassword">
                                 </div>
                             </div>
-                            <input type="hidden" name="op" value="<?php echo $ad->admin_password ?>"/>
                             <div class="form-group">
                                 <div class="col-sm-9 col-sm-offset-3">
                                     <button type="submit" class="btn btn-success pull-right">Save</button>

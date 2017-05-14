@@ -76,13 +76,14 @@
                             <input type="text" name="othertext" value="<?php echo $ed->event_type; ?>" class="form-control1" placeholder="Event Type" id="othertext">
                         </div>
                     </div>
-                <?php } ?>
+                <?php } else { ?>
                     <div class="form-group">
                         <label for="othertext" class="col-sm-3 control-label"></label>
                         <div class="col-sm-9">
                             <input type="text" name="othertext" hidden="true" value="<?php echo set_value('othertext'); ?>" class="form-control1" placeholder="Event Type" id="othertext">
                         </div>
                     </div>
+                <?php } ?>
                     <script>
                         document.getElementById('type').addEventListener('change', function() {
                             if (this.value == "other") {
@@ -206,12 +207,15 @@
                                     $('.text-danger').remove();
                                 }else if (response == 1){
                                     $('#rea').remove();
-                                    $('.input-group').append('<span class="input-group-btn" id="rea"><button type="submit"  value="invite" name="submit" class="btn btn-danger">Invite</button></span>');
+                                    $('#action').remove();
+                                    $('.input-group').append('<input type="hidden" name="action" value="invite" id="action">');
+                                    $('.input-group').append('<span class="input-group-btn" id="rea"><button type="submit" name="submit" class="btn btn-danger">Invite</button></span>');
                                     $('.text-danger').remove();
                                 } else if (response == 2){
                                     $('#rea').remove();
-                                    $('.input-group').removeClass('has-error')
-                                        .addClass('has-success').append('<span class="input-group-btn" id="rea"><button type="submit"  value="add" name="submit" class="btn btn-danger">Add</button></span>');
+                                    $('#action').remove();
+                                    $('.input-group').append('<input type="hidden" name="action" value="add" id="action">');
+                                    $('.input-group').append('<span class="input-group-btn" id="rea"><button type="submit"  value="add" name="submit" class="btn btn-danger">Add</button></span>');
                                     $('.text-danger').remove();
                                 } else if (response == 5){
                                     $('#rea').remove();
@@ -226,7 +230,7 @@
                     $('#add_admin').submit(function (e) {
                         e.preventDefault();
 
-                        var action = $("#rea").val();
+                        var action = $("#action").val();
                         var mail = $("#mail").val();
                         var postData = {
                             'email': mail,

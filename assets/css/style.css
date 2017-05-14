@@ -1711,7 +1711,7 @@ label.control-label {
     border-color: #0070ba;
 }
 
-.btn-success:hover {
+.btn-success:hover, .btn-success:focus {
     background: #0070ba;
     border-color: #0070ba;
 }
@@ -1721,7 +1721,7 @@ label.control-label {
     border-color: #009cde;
 }
 
-.btn-danger:hover {
+.btn-danger:hover, .btn-danger:focus {
     background: #009cde;
     border-color: #009cde;
 }

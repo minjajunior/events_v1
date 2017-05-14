@@ -124,7 +124,7 @@ if(isset($reg_status)){ ?>
                                 });
                             });
                         }else if(response.loginStatus == 'reg_status'){
-                            $('#login-response').append('<div class="alert alert-danger">Sorry! You have not completed registration</div>');
+                            $('#login-response').append('<div class="alert alert-danger">Sorry! Log on your email and completed registration</div>');
                             $('.alert-danger').delay(500).show(10, function() {
                                 $(this).delay(3000).hide(10, function() {
                                     $(this).remove();
@@ -188,9 +188,6 @@ if(isset($reg_status)){ ?>
                             });
 
                         }
-
-
-
                     }
             });
 
