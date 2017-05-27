@@ -466,7 +466,7 @@ class Event extends CI_Controller
                         ),
                     ));
 
-                    $response = curl_exec($curl);
+                    $result = curl_exec($curl);
                     $err = curl_error($curl);
 
                     curl_close($curl);
@@ -474,7 +474,7 @@ class Event extends CI_Controller
                     if ($err) {
                         echo "cURL Error #:" . $err;
                     } else {
-                        echo $response;
+                        echo $result;
                     }
                 }
             }
