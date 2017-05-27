@@ -63,7 +63,7 @@ $this->load->view('shared/login_header');
                     <input type="password" name="password2" value="<?php echo set_value('password2'); ?>" placeholder="Repeate Password">
                     <i class="fa fa-lock"></i>
                 </div>
-                <div>By clicking Register, you agree to our <a href="#">Terms</a> and that you have read our <a href="#">Privacy Policy</a></div>
+                <div>By clicking Register, you agree to our <a href="<?php echo site_url('login/terms')?>" target="_blank">Terms</a> and that you have read our <a href="<?php echo site_url('login/policy')?>" target="_blank">Privacy Policy</a></div>
             </div>
             <div class="col-md-12 login-do">
                 <label class="hvr-shutter-in-horizontal login-sub">

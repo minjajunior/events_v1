@@ -22,12 +22,11 @@ class Login extends CI_Controller {
                 if(!is_null($this->login_model->member_login($this->input->post('mailphone')))) {
                     $curl = curl_init();
                     if (!is_null($this->input->post('pin'))){
-                        $data = array('verified' => true, 'msisdn'=>$this->input->post('mailphone') );
-                        echo json_encode($data);
-                        //json_decode(json_encode($data['msisdn']));
+                        $data = array('msisdn'=>$this->input->post('mailphone') );
+                        json_decode(json_encode($data['msisdn']));
                         $value = array('member_phone' => json_decode(json_encode($data['msisdn'])));
                         $this->session->set_userdata($value);
-                        /*$pin = $this->input->post('pin');
+                        $pin = $this->input->post('pin');
                         curl_setopt_array($curl, array(
                             CURLOPT_URL => "http://api.infobip.com/2fa/1/pin/".$this->input->post('pinId')."/verify",
                             CURLOPT_RETURNTRANSFER => true,
@@ -50,11 +49,10 @@ class Login extends CI_Controller {
                             echo "cURL Error #:" . $err;
                         } else {
                             echo $response;
-                        }*/
+                        }
                     } else {
-                        $data = array('smsStatus' => 'MESSAGE_SENT', 'pinId'=>'12345', 'to' =>$this->input->post('mailphone'));
-                        echo json_encode($data);
-                        /*$pn = $this->input->post('phoneno');
+
+                        $pn = $this->input->post('mailphone');
                         curl_setopt_array($curl, array(
                             CURLOPT_URL => "http://api.infobip.com/2fa/1/pin?ncNeeded=true",
                             CURLOPT_RETURNTRANSFER => true,
@@ -63,7 +61,7 @@ class Login extends CI_Controller {
                             CURLOPT_TIMEOUT => 30,
                             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                             CURLOPT_CUSTOMREQUEST => "POST",
-                            CURLOPT_POSTFIELDS => "{ \"applicationId\":\"396812BC7ACFA9799689F61DDC936027\", \"messageId\":\"BD22377338ACC68AB805362D11A65A3C\", \"from\":\"InfoSMS\", \"to\":\"$pn\" }",
+                            CURLOPT_POSTFIELDS => "{ \"applicationId\":\"396812BC7ACFA9799689F61DDC936027\", \"messageId\":\"CEFC1BF7C29F4DAB2E21C250777925D0\", \"from\":\"Demi Corp\", \"to\":\"$pn\" }",
                             CURLOPT_HTTPHEADER => array(
                                 "accept: application/json",
                                 "authorization: App f5af8ed1007bb7678b6bed837c6cbced-6c9059a6-69bd-43cd-9469-e619c0880406",
@@ -77,23 +75,24 @@ class Login extends CI_Controller {
                             echo "cURL Error #:" . $err;
                         } else {
                             echo $response;
-                        }*/
+                        }
                     }
                 }elseif(!is_null($this->login_model->admin_login($this->input->post('mailphone')))) {
+                    $value = $this->login_model->admin_login($this->input->post('mailphone'));
                     if(!is_null($this->input->post('password'))) {
-                        $value = $this->login_model->admin_login($this->input->post('mailphone'));
-                        if(!is_null($value)){
-                            if($value['admin_password'] == md5($this->input->post('password'))){
-                                $this->session->set_userdata($value);
-                                $data = array('verified' => true, 'user' => 'admin');
-                                echo json_encode($data);
-                            }else{
-                                $data = array('loginStatus' => 'password');
-                                echo json_encode($data);
-                            }
+                        if($value['admin_password'] == md5($this->input->post('password'))){
+                            $this->session->set_userdata($value);
+                            $data = array('verified' => true, 'user' => 'admin');
+                            echo json_encode($data);
+                        }else{
+                            $data = array('loginStatus' => 'password');
+                            echo json_encode($data);
                         }
-                    }else {
+                    }elseif($value['reg_status'] == 1) {
                         $data = array('loginStatus' => 'admin', 'email' => $this->input->post('mailphone'));
+                        echo json_encode($data);
+                    } else{
+                        $data = array('loginStatus' => 'reg_status');
                         echo json_encode($data);
                     }
                 } else {
@@ -103,8 +102,6 @@ class Login extends CI_Controller {
             }
         }
     }
-
-
 
     public function password(){
 
@@ -138,26 +135,30 @@ class Login extends CI_Controller {
                         $site_url = site_url();
                         $email_url = $site_url .'login/forgot_password/'.$admin_id. '/'.$token_to_email;
 
-                        $from = "demicorp@localhost";
-                        //$to = $email;
-                        $to = "demi@localhost";
-                        $subject = "Change password";
+                        $from = "noreply@demi.co.tz";
+                        $to = $email;
+                        $subject = "Reset password";
                         $message = "
                         <html>
                         <head>
-                        <title>Dermi Corp | Change password</title>
+                        <title>Demi Corporation | Reset password</title>
                         </head>
                         <body>
                                 <h4>Hello $name</h4>    
-                                <p>Please visit the following link to change your password</p>
+                                <p>Please visit the following link to reset your password</p>
                                 <a href='$email_url'>
                                     Click here to change your password</a>
                                 <p>This verification code will expire in 1hour.</p>
                                 <p>Sincerely,</p>
-                                <p>Dermi Corp Admin.</p>
+                                <p>Admin</p>
+                                <p><b>Demi Corporation.</b><br/>
+                                <b>Tel :</b> +255 712 431242<br/>
+                                <b>Tel :</b> +255 752 934547<br/>
+                                <b>Email :</b> info@demi.co.tz<br/>
+                                <b>Website :</b> www.demi.co.tz</p>
                         </body></html>";
                     //sending email
-                        $this->email->from($from, 'Demi Corp');
+                        $this->email->from($from, 'Demi Corporation');
                         $this->email->to($to);
 
                         $this->email->subject($subject);
@@ -242,6 +243,14 @@ class Login extends CI_Controller {
     public function logout() {
         $this->session->sess_destroy();
         redirect(base_url());
+    }
+
+    public function terms(){
+        $this->load->view('login/terms_view');
+    }
+
+    public function policy(){
+        $this->load->view('login/policy_view');
     }
 
 }

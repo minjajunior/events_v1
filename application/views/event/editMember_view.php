@@ -37,6 +37,7 @@
                     <input type="text" name="memberphone" value="<?php echo $md->member_phone ?>" class="form-control1" id="memberphone" placeholder="Phone Number">
                 </div>
             </div>
+            <?php if(!isset($member_group['error'])){ ?>
             <div class="form-group">
                 <label for="group" class="col-sm-2 control-label">Group</label>
                 <div class="col-sm-8">
@@ -48,6 +49,7 @@
                     </select>
                 </div>
             </div>
+            <?php } ?>
             <div class="form-group">
                 <label for="disabledinput" class="col-sm-2 control-label">Member Pledge</label>
                 <div class="col-sm-8">

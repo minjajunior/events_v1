@@ -318,6 +318,18 @@ class Event_model extends CI_Model {
         return $row['event_id'];
     }
 
+    /*
+     * This function returns event name of the selected id
+     */
+    public function event_name($id){
+        $this->db->select('event_name');
+        $this->db->from('event');
+        $this->db->where('event_id', $id);
+        $query = $this->db->get();
+        $row = $query->row_array();
+        return $row['event_name'];
+    }
+
     public function event_iid($id){
         $this->db->select('event_id');
         $this->db->from('budget');

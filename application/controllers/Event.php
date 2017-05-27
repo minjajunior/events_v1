@@ -172,9 +172,6 @@ class Event extends CI_Controller
             $data = array('success' => false, 'messages' => array());
 
             $this->form_validation->set_rules('eventname', 'Event Name', 'required');
-            if ($this->input->post('ec') != $this->input->post('eventcode')) {
-                $this->form_validation->set_rules('eventcode', 'Event Code', 'required|is_unique[event.event_code]');
-            }
             $this->form_validation->set_rules('eventdate', 'Event Date', 'required');
             $this->form_validation->set_rules('type', 'Event Type', 'required');
             $this->form_validation->set_rules('location', 'Event Location', 'required');
@@ -197,7 +194,6 @@ class Event extends CI_Controller
                 }
                 $values = array(
                     'event_name' => $this->input->post('eventname'),
-                    'event_code' => $this->input->post('eventcode'),
                     'event_date' => $this->input->post('eventdate'),
                     'event_type' => $tv,
                     'event_location' => $this->input->post('location')
@@ -267,34 +263,68 @@ class Event extends CI_Controller
             $objPHPExcel = PHPExcel_IOFactory::load('./upload/' . $file);
             $objWorksheet = $objPHPExcel->getActiveSheet();
 
-            if($objPHPExcel->getActiveSheet()->getCell('A1')->getValue() == "Member Name" && $objPHPExcel->getActiveSheet()->getCell('B1')->getValue() == "Pledge"){
+            if($objPHPExcel->getActiveSheet()->getCell('A1')->getValue() == "Member Name" && $objPHPExcel->getActiveSheet()->getCell('C1')->getValue() == "Pledge"){
                 foreach ($objWorksheet->getRowIterator() as $row) {
                     $mn = "";
+                    $pn = "";
                     $mp = "0";
                     $mc = "0";
-                    $pn = "";
                     $cellIterator = $row->getCellIterator();
                     $cellIterator->setIterateOnlyExistingCells(true);
                     foreach ($cellIterator as $cell) {
                         if ($cell->getColumn() == "A") {
                             $mn = $cell->getValue();
                         } elseif ($cell->getColumn() == "B") {
-                            $mp = $cell->getValue();
-                        } elseif ($cell->getColumn() == "C") {
-                            $mc = $cell->getValue();
-                        } elseif ($cell->getColumn() == "D") {
                             $pn = $cell->getValue();
+                        } elseif ($cell->getColumn() == "C") {
+                            $mp = $cell->getValue();
+                        } elseif ($cell->getColumn() == "D") {
+                            $mc = $cell->getValue();
                         }
                     }
-                    if ($mn != "Member Name" && !empty($mn) && is_numeric($mp) && is_numeric($mc)) {
+                    if ($mn != "Member Name" && !empty($mn)) {
                         $values = array(
                             'member_name' => $mn,
+                            'member_phone' => $pn,
                             'member_pledge' => $mp,
                             'member_cash' => $mc,
-                            'member_phone' => $pn,
                             'event_id' => $id
                         );
                         $this->event_model->insert_member($values);
+
+                        if(!empty($pn)){
+                            $eventname = $this->event_model->event_name($id);
+                            $text = "Ndugu ".$mn." umejumuishwa kwenye tafrija ya ".$eventname.". Sasa unaweza kutoa ahadi ya mchango wako kwa kupitia mtandao wetu wa http://demievents.co.tz";
+
+                            $curl = curl_init();
+
+                            curl_setopt_array($curl, array(
+                                CURLOPT_URL => "http://api.infobip.com/sms/1/text/single",
+                                CURLOPT_RETURNTRANSFER => true,
+                                CURLOPT_ENCODING => "",
+                                CURLOPT_MAXREDIRS => 10,
+                                CURLOPT_TIMEOUT => 30,
+                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                CURLOPT_CUSTOMREQUEST => "POST",
+                                CURLOPT_POSTFIELDS => "{ \"from\":\"Demi Corp\", \"to\":\"".$pn."\", \"text\":\"".$text."\" }",
+                                CURLOPT_HTTPHEADER => array(
+                                    "accept: application/json",
+                                    "authorization: Basic RGVtaUFkbWluOkBDb3JwbzE3Jg==",
+                                    "content-type: application/json"
+                                ),
+                            ));
+
+                            $result = curl_exec($curl);
+                            $err = curl_error($curl);
+
+                            curl_close($curl);
+
+                            if ($err) {
+                                echo "cURL Error #:" . $err;
+                            } else {
+                                echo $result;
+                            }
+                        }
                     }
                 }
 
@@ -393,7 +423,8 @@ class Event extends CI_Controller
             $this->form_validation->set_rules('membername', 'Member Name', 'required');
             $this->form_validation->set_rules('memberpledge', 'Member Pledge', 'numeric');
             $this->form_validation->set_rules('membercash', 'Member Cash', 'numeric');
-            $this->form_validation->set_rules('memberphone', 'Phone Number', 'numeric');
+            $this->form_validation->set_rules('memberphone', 'Phone Number', 'exact_length[12]|numeric');
+            $this->form_validation->set_message('exact_length', 'The phone number must be in a 255XXXXXXXXX format.');
             $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {
@@ -412,8 +443,40 @@ class Event extends CI_Controller
                 );
 
                 $this->event_model->insert_member($values);
+                if(!empty($this->input->post('memberphone'))){
+                    $number = $this->input->post('memberphone');
+                    $eventname = $this->event_model->event_name($id);
+                    $text = "Ndugu ".$this->input->post('membername')." umejumuishwa kwenye tafrija ya ".$eventname.". Sasa unaweza kutoa ahadi ya mchango wako kwa kupitia mtandao wetu wa http://demievents.co.tz";
 
-                //redirect('event/home/'.$id);
+                    $curl = curl_init();
+
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => "http://api.infobip.com/sms/1/text/single",
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => "",
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 30,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => "POST",
+                        CURLOPT_POSTFIELDS => "{ \"from\":\"Demi Corp\", \"to\":\"".$number."\", \"text\":\"".$text."\" }",
+                        CURLOPT_HTTPHEADER => array(
+                            "accept: application/json",
+                            "authorization: Basic RGVtaUFkbWluOkBDb3JwbzE3Jg==",
+                            "content-type: application/json"
+                        ),
+                    ));
+
+                    $response = curl_exec($curl);
+                    $err = curl_error($curl);
+
+                    curl_close($curl);
+
+                    if ($err) {
+                        echo "cURL Error #:" . $err;
+                    } else {
+                        echo $response;
+                    }
+                }
             }
             echo json_encode($data);
         } else {
@@ -438,7 +501,6 @@ class Event extends CI_Controller
             $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {
-                //$this->load->view('event/newItem_view', $data);
                 foreach ($_POST as $key => $value) {
                     $data['messages'][$key] = form_error($key);
                 }
@@ -452,8 +514,6 @@ class Event extends CI_Controller
                 );
 
                 $this->event_model->insert_budget($values);
-
-                //redirect('event/home/'.$id);
             }
             echo json_encode($data);
         } else {
@@ -475,7 +535,8 @@ class Event extends CI_Controller
             $data = array('success' => false, 'messages' => array());
 
             $this->form_validation->set_rules('membername', 'Member Name', 'required');
-            $this->form_validation->set_rules('memberphone', 'Phone Number', 'numeric');
+            $this->form_validation->set_rules('memberphone', 'Phone Number', 'exact_length[12]|numeric');
+            $this->form_validation->set_message('exact_length', 'The phone number must be in a 255XXXXXXXXX format.');
             $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {

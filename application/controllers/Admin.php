@@ -30,6 +30,7 @@ class Admin extends CI_Controller {
      */
     public function register() {
 
+        $this->form_validation->set_message('required', 'This field required');
         $this->form_validation->set_rules('fullname', 'Full Name', 'required');
         $this->form_validation->set_rules('email', 'E-mail Address', 'required|valid_email|is_unique[admin.admin_email]');
         $this->form_validation->set_message('valid_email', 'Email address you have entered is not a valid email address.');
@@ -70,26 +71,29 @@ class Admin extends CI_Controller {
                     $site_url = site_url();
                     $email_url = $site_url . 'admin/admin_confirm/' . $admin_id . '/' . $token_to_email;
 
-                    $from = "demicorp@localhost";
-                    //$to = $email;
-                    $to = "demi@localhost";
-                    $subject = "Demi Events - Account Confirmation";
+                    $from = "noreply@demi.co.tz";
+                    $to = $this->input->post('email');
+                    $subject = "Account Confirmation";
                     $message = " 
                         <html>
                         <head>
-                        <title>Demi Events - Account Confirmation</title>
+                        <title>Account Confirmation</title>
                         </head>
                         <body>
-                                <h4>Hello Sir/Madam,</h4>    
+                                <h4>Hello ".$this->input->post('fullname').",</h4>    
                                 <p>You just signed up for Demi Events. Please follow this link to confirm that this is your e-mail address.</p>
                                 <a href='$email_url'>
                                     Click here to confirm your registration</a>                                
                                 <p>Sincerely,</p>
-                                <p>Dermi Corp Admin.</p>
+                                <p>Admin,</p>
+                                <p><b>Demi Corporation.</b><br/>
+                                <b>Tel :</b> +255 712 431242<br/>
+                                <b>Tel :</b> +255 752 934547<br/>
+                                <b>Email :</b> info@demi.co.tz<br/>
+                                <b>Website :</b> www.demi.co.tz</p>
                         </body></html>";
-                    //sending email
 
-                    $this->email->from($from, 'Demi Corp');
+                    $this->email->from($from, 'Demi Corporation');
                     $this->email->to($to);
 
                     $this->email->subject($subject);
@@ -120,7 +124,6 @@ class Admin extends CI_Controller {
         }
     }
 
-
     public function admin_confirm($admin_id,$token){
 
         $admin_id_decoded = base64_decode($admin_id);
@@ -129,9 +132,7 @@ class Admin extends CI_Controller {
         //hash token to be matched with db
         $token_to_email = hash('sha256', $token_decoded);
 
-
         $result = $this->admin_model->admin_info($admin_id_decoded);
-
 
         //$token_expire = $result[0]['token_expire'];
         $token_to_db = $result[0]['hashed_token'];
@@ -139,15 +140,12 @@ class Admin extends CI_Controller {
 
         if(($token_to_db == $token_to_email)&&($reg_status==0)){
 
-
-                $values = array(
-                    'reg_status'=>1);
+                $values = array('reg_status'=>1);
 
                 $this->admin_model->update_admin($admin_id_decoded,$values);
 
                 $data['reg_status']= '<div class="alert alert-danger">Your registration completed successfully! You can now login </div>';
                 $this->load->view('login/login_view',$data);
-
 
         }else if(($token_to_db == $token_to_email)&&($reg_status==1)){
 
@@ -223,27 +221,29 @@ class Admin extends CI_Controller {
                     $site_url = site_url();
                     $email_url = $site_url. 'admin/admin_invite/'.$admin_id.'/'.$token_to_email;
 
-                    $from = "demicorp@localhost";
-                    //$to = $email;
-                    $to = "demi@localhost";
-                    $subject = "Demi Events - Admin Invitation";
+                    $from = "noreply@demi.co.tz";
+                    $to = $this->input->post('email');
+                    $subject = "Admin Invitation";
                     $message = " 
                         <html>
                         <head>
-                        <title>Dermi Corp | Admin Invitation</title>
+                        <title>Admin Invitation</title>
                         </head>
                         <body>
                                 <h4>Hello Sir/Madam,</h4>    
                                 <p>Please visit the following link to accept and complete your invitation</p>
-                                <a href='$email_url'>
-                                    Click here to accept and complete your invitation</a>
-                                
+                                <a href='$email_url'>Click here to accept and complete your invitation</a>
                                 <p>Sincerely,</p>
-                                <p>Dermi Corp Admin.</p>
+                                <p>Admin.</p>
+                                <p><b>Demi Corporation.</b><br/>
+                                <b>Tel :</b> +255 712 431242<br/>
+                                <b>Tel :</b> +255 752 934547<br/>
+                                <b>Email :</b> info@demi.co.tz<br/>
+                                <b>Website :</b> www.demi.co.tz</p>
                         </body></html>";
                     //sending email
 
-                    $this->email->from($from, 'Demi Corp');
+                    $this->email->from($from, 'Demi Corporation');
                     $this->email->to($to);
 
                     $this->email->subject($subject);
@@ -282,7 +282,6 @@ class Admin extends CI_Controller {
             }
         }
     }
-
 
     public function admin_invite($admin_id,$token){
 
@@ -350,10 +349,10 @@ class Admin extends CI_Controller {
 
     public function edit_details(){
         $this->form_validation->set_rules('fullname', 'Full Name', 'required');
-        if ($this->input->post('ae') != $this->input->post('email')) {
+        /*if ($this->input->post('ae') != $this->input->post('email')) {
             $this->form_validation->set_rules('email', 'E-mail Address', 'required|valid_email|is_unique[admin.admin_email]');
         }
-        $this->form_validation->set_message('valid_email', 'Email address you have entered is not a valid email address.');
+        $this->form_validation->set_message('valid_email', 'Email address you have entered is not a valid email address.');*/
         $this->form_validation->set_message('is_unique', '{field} you have entered is already registered in an account with us.');
         if ($this->input->post('ap') != $this->input->post('phone')) {
             $this->form_validation->set_rules('phone', 'Phone Number', 'required|is_unique[admin.admin_phone]|exact_length[12]|numeric');
@@ -370,21 +369,20 @@ class Admin extends CI_Controller {
 
             $values = array(
                 'admin_name' => $this->input->post('fullname'),
-                'admin_email' => $this->input->post('email'),
                 'admin_phone' => $this->input->post('phone')
             );
 
             $this->admin_model->update_admin($this->session->admin_id, $values);
+            $this->session->set_userdata('admin_name', $this->input->post('fullname'));
         }
         echo json_encode($data);
     }
 
     public function change_password(){
 
-        $this->form_validation->set_rules('currpassword', 'Current Password', 'required|matches[op]');
         $this->form_validation->set_rules('newpassword', 'New Password', 'required|min_length[8]');
         $this->form_validation->set_message('min_length', '{field} must be at least {param} characters long.');
-        $this->form_validation->set_rules('repassword', 'Retype Password', 'required|matches[password]');
+        $this->form_validation->set_rules('repassword', 'Retype Password', 'required|matches[newpassword]');
         $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
         if ($this->form_validation->run() == FALSE) {
@@ -394,10 +392,37 @@ class Admin extends CI_Controller {
             }
         } else {
             $values = array(
-                'admin_password' => md5($this->input->post('password'))
+                'admin_password' => md5($this->input->post('newpassword'))
             );
 
-            //$this->admin_model->update_admin($this->session->admin_id, $values);
+            $this->admin_model->update_admin($this->session->admin_id, $values);
+
+            $from = "noreply@demi.co.tz";
+            $to = $this->session->admin_email;
+            $subject = "Password Changed";
+            $message = " 
+                        <html>
+                        <head>
+                        <title>Password Changed</title>
+                        </head>
+                        <body>
+                                <h4>Hello ".$this->session->admin_name.",</h4>    
+                                <p>Your password has changed successfully</p>                              
+                                <p>Sincerely,</p>
+                                <p>Admin,</p>
+                                <p><b>Demi Corporation.</b><br/>
+                                <b>Tel :</b> +255 712 431242<br/>
+                                <b>Tel :</b> +255 752 934547<br/>
+                                <b>Email :</b> info@demi.co.tz<br/>
+                                <b>Website :</b> www.demi.co.tz</p>
+                        </body></html>";
+
+            $this->email->from($from, 'Demi Corporation');
+            $this->email->to($to);
+
+            $this->email->subject($subject);
+            $this->email->message($message);
+            $this->email->send();
 
             $data['success'] = true;
         }

@@ -153,7 +153,7 @@
             <div class="blank-page">
                 <h4>Text Message Notifications
                     <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
-                    <a href="#" class="pull-right" data-toggle="modal" data-target="#newSms" data-placement="bottom" title="New Sms">&nbsp;<i class="fa fa-plus-square"></i>&nbsp;</a>
+                    <a href="#" class="btn btn-success pull-right" data-toggle="modal" data-target="#newSms" data-placement="bottom" title="New Sms">&nbsp;<i class="fa fa-envelope"></i>&nbsp; Send SMS</a>
                     <?php } ?>
                 </h4>
                 <table class="table">
@@ -279,12 +279,13 @@
                                 $(this).delay(3000).hide(10, function() {
                                     $(this).remove();
                                     $('#newSms').modal('hide');
+                                    window.location.reload();
                                 });
                             })
                         }else if(response.Status == false){
                             $('#the-message').append('<div class="alert alert-danger">' +
                                 '<h4><i class="fa fa-error"></i> Sms not Sent</h4>' +
-                                'Make sure member phone numbers start with 255XXXXXXXXX' +
+                                'No Numbers selected. Please insert numbers with 255XXXXXXXXX format.' +
                                 '</div>');
                             $('.form-group').removeClass('has-error')
                                 .removeClass('has-success');

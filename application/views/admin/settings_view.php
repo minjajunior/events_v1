@@ -48,7 +48,7 @@ $this->load->view('shared/sidebar');
                             <div class="form-group">
                                 <label for="email" class="col-sm-3 control-label">Email</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="email" value="<?php echo $ad->admin_email ?>" class="form-control1" placeholder="Email" id="email">
+                                    <input disabled="" type="text" class="form-control1" id="disabledinput" placeholder="<?php echo $ad->admin_email ?>">
                                 </div>
                             </div>
                             <div class="form-group">

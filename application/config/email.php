@@ -7,9 +7,9 @@
  */
 
 $config['protocol']    = 'smtp';
-$config['smtp_host']    = 'localhost';
+$config['smtp_host']    = 'mail.demi.co.tz';
 $config['smtp_port']    = '25';
-$config['smtp_timeout'] = '7';
+$config['smtp_timeout'] = '5';
 //$config['smtp_user']    = 'demicorp@localhost';
 //$config['smtp_pass']    = 'Demi1234';
 $config['charset']    = 'utf-8';

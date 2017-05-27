@@ -61,9 +61,7 @@ class Member extends CI_Controller {
             $data = array('Status' => false);
             echo json_encode($data);
         } else {
-            //$data = array('bulkId' => '97965896598489');
-            //echo json_encode($data);
-            /*$text = $this->input->post('sms');
+            $text = $this->input->post('sms');
 
             $curl = curl_init();
 
@@ -75,7 +73,7 @@ class Member extends CI_Controller {
                 CURLOPT_TIMEOUT => 30,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => "{ \"from\":\"InfoSMS\", \"to\":[\"".implode('", "',$numbers)."\"], \"text\":\"".$text."\" }",
+                CURLOPT_POSTFIELDS => "{ \"from\":\"Demi Corp\", \"to\":[\"".implode('", "',$numbers)."\"], \"text\":\"".$text."\" }",
                 CURLOPT_HTTPHEADER => array(
                     "accept: application/json",
                     "authorization: Basic RGVtaUFkbWluOkBDb3JwbzE3Jg==",
@@ -99,7 +97,7 @@ class Member extends CI_Controller {
                     'sent_by' => $this->session->admin_id
                 );
                 $this->member_model->sent_sms($values);
-            }*/
+            }
         }
     }
 
@@ -116,19 +114,27 @@ class Member extends CI_Controller {
                     $data['messages'][$key] = form_error($key);
                 }
             } else {
-                $data['success'] = true;
-                $values = array(
-                    'group_name' => $this->input->post('groupname'),
-                    'event_id' => $id
-                );
-
-                $this->member_model->insert_group($values);
-
+                if(is_null($this->member_model->check_group($id, $this->input->post('groupname')))){
+                    $data['success'] = true;
+                    $values = array(
+                        'group_name' => $this->input->post('groupname'),
+                        'event_id' => $id
+                    );
+                    $this->member_model->insert_group($values);
+                } else {
+                    $data['messages']['groupname'] = "Group name already exist";
+                }
             }
             echo json_encode($data);
         } else {
             redirect('admin');
         }
+    }
+
+    public function delete_group($id){
+        $this->member_model->delete_group($id);
+        $data = array('success' => true);
+        echo json_encode($data);
     }
 
     public function delete_member($id){

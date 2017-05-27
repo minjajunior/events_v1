@@ -164,9 +164,11 @@
             getContentView(postData);
         });
 
+
+
         $('#new_item').submit(function(e) {
             e.preventDefault();
-
+            var me = $(this);
 
             $.ajax({
                 url: me.attr('action'),
@@ -176,7 +178,7 @@
                 success: function (response) {
                     if(response.success == true){
                         $('#the-message').append('<div class="alert alert-success">' +
-                            '<span class="glyphicon glyphicon-ok"></span>' +
+                            '<i class="fa fa-check"></i>' +
                             ' Item Created Successfully' +
                             '</div>');
                         $('.form-group').removeClass('has-error')
@@ -190,8 +192,12 @@
                         $('.alert-success').delay(500).show(10, function() {
                             $(this).delay(3000).hide(10, function() {
                                 $(this).remove();
-                                window.location.reload()
                                 $('#newItem').modal('hide');
+                                var postData = {
+                                    'view_name' : 'budget_view',
+                                    'event_id' : '<?php echo $event_id ?>'
+                                };
+                                getContentView(postData);
                             });
                         })
                     }else {
@@ -203,7 +209,7 @@
                                 .find('.text-danger')
                                 .remove();
                             element.after(value)
-                        })
+                        });
                     }
                 }
             });
@@ -242,8 +248,12 @@
                         $('.alert-success').delay(500).show(10, function() {
                             $(this).delay(3000).hide(10, function() {
                                 $(this).remove();
-                                //window.location.reload()
                                 $('#uploadBudget').modal('hide');
+                                var postData = {
+                                    'view_name' : 'budget_view',
+                                    'event_id' : '<?php echo $event_id ?>'
+                                };
+                                getContentView(postData);
                             });
                         })
                     } else if(response.success == false) {
@@ -259,6 +269,5 @@
                 }
             });
         });
-
     });
 </script>

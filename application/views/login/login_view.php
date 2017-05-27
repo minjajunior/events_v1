@@ -146,11 +146,14 @@ if(isset($reg_status)){ ?>
                                 });
                             });
                         } else if (response.verified == true){
-                            if(response.user == 'admin'){
-                                window.location = "<?php echo site_url('admin') ?>";
-                            } else {
-                                window.location = "<?php echo site_url('member')?>";
-                            }
+                            window.location.reload();
+                        } else if (response.verified == false){
+                            $('#login-response').append('<div class="alert alert-danger">' + response.pinError + '</div>');
+                            $('.alert-danger').delay(500).show(10, function() {
+                                $(this).delay(3000).hide(10, function() {
+                                    $(this).remove();
+                                });
+                            });
                         }
                     }
                 });
@@ -158,7 +161,6 @@ if(isset($reg_status)){ ?>
 
             $('.pass-do').on("click", ".pass-f-link", function() {
 
-            //alert('Hello');
             var email = $(this).attr("value");
 
             var postData = {

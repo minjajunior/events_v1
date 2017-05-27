@@ -20,6 +20,18 @@
     <?php if(isset($this->session->admin_id)) {
         if (isset($member_details['error']) && $member_details['error'] == "0") { ?>
             <div class="blank-page">
+                <h4>
+                    <div class="col-md-3"> All Members</div>
+                    <div class="col-md-9">
+                        <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
+                            <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#newGroup" data-placement="bottom" title="Create Group"><i class="fa fa-users"></i> Create Group</a>&nbsp;
+                            <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#newMember" data-placement="bottom" title="New Member"><i class="fa fa-user-plus"></i> New Member</a>&nbsp;
+                            <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#uploadMembers" data-placement="bottom" title="Upload Members File"><i class="fa fa-upload"></i> Upload Members</a>
+                            <a href="<?php echo site_url('event/template/member')?>" class="btn btn-xs btn-success pull-right" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" >&nbsp;<i class="fa fa-download"></i> Download Template&nbsp;</a>
+                        <?php } ?>
+                    </div>
+                </h4>
+                <hr>
                 No members found. Create <a href="#" data-toggle="modal" data-target="#newMember">new member</a> or upload your members file.
             </div>
         <?php } else { ?>
@@ -83,7 +95,6 @@
                                             $balance = $md->member_pledge - $md->member_cash;
                                         } else { $balance = 0; } ?>
                                         <td><?php echo $english_format_number = number_format($balance, 0, '.', ','); ?></td>
-
                                     </tr>
                                 <?php } ?>
                                 </tbody>
@@ -91,10 +102,14 @@
                         </div>
                     </div>
                 </div>
-                <?php foreach ($member_group as $mg) { ?>
+                <?php if(!isset($member_group['error'])){
+                    foreach ($member_group as $mg) { ?>
                     <div class="tab-pane text-style" id="<?php echo $mg->group_id;?>">
                         <div class="blank-page">
-                            <h4><?php echo $mg->group_name ?></h4>
+                            <h4>
+                                <div class="col-md-6"><?php echo $mg->group_name ?></div>
+                                <div class="col-md-6"><a href="#" class="btn btn-success pull-right" data-toggle="modal" data-target="#delete<?php echo $mg->group_id;?>" >Delete Group</a></div>
+                            </h4>
                             <div class="tables">
                                 <table class="table table-hover" id="members-list">
                                     <thead>
@@ -131,7 +146,25 @@
                             </div>
                         </div>
                     </div>
-                <?php } ?>
+                    <div class="modal fade" id="delete<?php echo $mg->group_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h2 class="modal-title">Delete Group</h2>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="the-response"></div>
+                                    <p>Are you sure you want to delete <?php echo $mg->group_name ?> group ?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Cancel</button>
+                                    <a href="javascript:void(0)" class="delete_group btn btn-danger" rel="<?php echo $mg->group_id; ?>" id="member_view">Delete</a>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div>
+                <?php } } ?>
             </div>
         <?php } ?>
         <div class="clearfix"> </div>
@@ -229,7 +262,6 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-
 <div class="modal fade" id="uploadMembers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -312,8 +344,12 @@
                         $('.alert-success').delay(500).show(10, function() {
                             $(this).delay(3000).hide(10, function() {
                                 $(this).remove();
-                                window.location.reload()
                                 $('#newMember').modal('hide');
+                                var postData = {
+                                    'view_name' : 'member_view',
+                                    'event_id' : '<?php echo $event_id ?>'
+                                };
+                                getContentView(postData);
                             });
                         })
                     }else {
@@ -366,6 +402,11 @@
                             $(this).delay(3000).hide(10, function() {
                                 $(this).remove();
                                 $('#uploadMembers').modal('hide');
+                                var postData = {
+                                    'view_name' : 'member_view',
+                                    'event_id' : '<?php echo $event_id ?>'
+                                };
+                                getContentView(postData);
                             });
                         })
                     }else if(response.success == false) {
@@ -395,7 +436,7 @@
                     if(response.success == true){
                         $('#the-response').append('<div class="alert alert-success">' +
                             '<i class="fa fa-check"></i>' +
-                            ' Member Created Successfully' +
+                            ' Group Created Successfully' +
                             '</div>');
                         $('.form-group').removeClass('has-error')
                             .removeClass('has-success');
@@ -406,8 +447,12 @@
                         $('.alert-success').delay(500).show(10, function() {
                             $(this).delay(3000).hide(10, function() {
                                 $(this).remove();
-                                window.location.reload()
-                                $('#newMember').modal('hide');
+                                $('#newGroup').modal('hide');
+                                var postData = {
+                                    'view_name' : 'member_view',
+                                    'event_id' : '<?php echo $event_id ?>'
+                                };
+                                getContentView(postData);
                             });
                         })
                     }else {
@@ -425,6 +470,29 @@
             });
         });
 
+        $('.modal-footer').on("click", ".delete_group", function () {
+            var view_name = 'member_view';
+            var group_id = $(this).attr("rel");
+
+            var postValue = {
+                'view_name': view_name,
+                'event_id': <?php echo $event_id?>,
+            };
+
+            $.ajax({
+                type:"POST",
+                url: "<?php echo base_url('member/delete_group/')?>"+ group_id,
+                //data:"id="+view_name,
+                data:postValue,
+                dataType: "json",
+                success: function(response) {
+                    if(response.success == true) {
+                        $('#delete'+group_id).modal('hide');
+                        getContentView(postValue);
+                    }
+                }
+            });
+        });
     });
 </script>
 <script>

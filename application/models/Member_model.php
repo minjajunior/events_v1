@@ -106,4 +106,26 @@ class Member_model extends CI_Model {
             return $response;
         }
     }
+
+    public function check_group($event_id, $group_name){
+        $this->db->select('*');
+        $this->db->from('member_group');
+        $this->db->where('event_id', $event_id);
+        $this->db->where('group_name', $group_name);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        } else {
+            return null;
+        }
+    }
+
+    /*
+     * This function is deleting the group
+     */
+    public function delete_group($id){
+        $this->db->where('group_id', $id);
+        $this->db->delete('member_group');
+    }
 }
