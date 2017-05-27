@@ -253,5 +253,9 @@ class Login extends CI_Controller {
         $this->load->view('login/policy_view');
     }
 
+    public function help(){
+        $this->load->view('login/help_view');
+    }
+
 }
 ?>
