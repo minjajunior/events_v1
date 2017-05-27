@@ -14,13 +14,17 @@ $this->load->view('shared/login_header');
             <h2>
                 <a href="<?php echo site_url()?>">Home</a>
                 <i class="fa fa-angle-right"></i>
-                <span>Terms</span>
+                <span>Terms and Conditions</span>
             </h2>
         </div>
         <!--//banner-->
         <!--faq-->
         <div class="asked">
+            <h4>Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the www.demievents.co.tz website (the "Service") operated by Demi Corporation Limited.
 
+                Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service.
+
+                By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service. This Terms & Conditions agreement is licensed by TermsFeed to Demi Events</h4>
             <div class="questions">
                 <h5>1.What is Lorem Ipsum?</h5>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>

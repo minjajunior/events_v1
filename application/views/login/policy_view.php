@@ -22,18 +22,16 @@ $this->load->view('shared/login_header');
     <div class="asked">
 
         <div class="questions">
-            <h5>1.What personal information do we collect from the people that visit our blog, website or app?</h5>
-            <p>When ordering or registering on our site, as appropriate, you may be asked to enter your name, email address, mailing address, phone number or other details to help you with your experience.</p>
+            <h5>1.What personal information do we collect from the people that visit our website or app?</h5>
+            <p>When registering on our site, as appropriate, you may be asked to enter your name, email address, mailing address, phone number or other details to help you with your experience.</p>
         </div>
         <div class="questions">
             <h5>2.When do we collect information?</h5>
-            <p>We collect information from you when you register on our site, place an order, fill out a form or enter information on our site.
-
-                Provide us with feedback on our products or services </p>
+            <p>We collect information from you when you register on our site, fill out a form or enter information on our site. Provide us with feedback on our products or services </p>
         </div>
         <div class="questions">
             <h5>3.How do we use your information?</h5>
-            <p>We may use the information we collect from you when you register, make a purchase, sign up for our newsletter, respond to a survey or marketing communication, surf the website, or use certain other site features in the following ways:
+            <p>We may use the information we collect from you when you register, sign up for our newsletter, respond to a survey or marketing communication, surf the website, or use certain other site features in the following ways:
 
                 • To personalize your experience and to allow us to deliver the type of content and product offerings in which you are most interested.
                 • To improve our website in order to better serve you.
