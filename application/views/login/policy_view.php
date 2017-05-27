@@ -22,32 +22,63 @@ $this->load->view('shared/login_header');
     <div class="asked">
 
         <div class="questions">
-            <h5>1.What is Lorem Ipsum?</h5>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <h5>1.What personal information do we collect from the people that visit our website or app?</h5>
+            <p>When registering on our site, as appropriate, you may be asked to enter your name, email address, mailing address, phone number or other details to help you with your experience.</p>
         </div>
         <div class="questions">
-            <h5>2.What is Lorem Ipsum dummy text ever since the 1500s?</h5>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <h5>2.When do we collect information?</h5>
+            <p>We collect information from you when you register on our site, fill out a form or enter information on our site. Provide us with feedback on our products or services </p>
         </div>
         <div class="questions">
-            <h5>3.What is Duis laoreet, erat quis gravida porttitor odio felis ornare dui?</h5>
-            <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam semper elit risus, nec suscipit tellus tincidunt quis. Fusce non auctor enim. Suspendisse sit amet erat mollis, suscipit nisl sed, condimentum turpis. Curabitur faucibus, nisl ut aliquam porta, massa tortor tristique dolor, eget porttitor velit ligula vel eros. Sed egestas aliquet tellus. Nulla ac luctus urna. Pellentesque feugiat eros quis nibh consectetur, eget dapibus magna egestas. Phasellus non efficitur metus.</p>
+            <h5>3.How do we use your information?</h5>
+            <p>We may use the information we collect from you when you register, sign up for our newsletter, respond to a survey or marketing communication, surf the website, or use certain other site features in the following ways:
+
+                • To personalize your experience and to allow us to deliver the type of content and product offerings in which you are most interested.
+                • To improve our website in order to better serve you.
+                • To allow us to better service you in responding to your customer service requests.
+                • To administer a contest, promotion, survey or other site feature.
+                • To quickly process your transactions.
+            </p>
         </div>
         <div class="questions">
-            <h5>4.What is Quisque sollicitudin diam vel mauris volutpat viverra Proin ac imperdiet libero?</h5>
-            <p>Proin dignissim mi sit amet tincidunt varius. Quisque molestie fermentum dignissim. Sed in urna eget tortor congue tempus. Vestibulum gravida, erat in eleifend ultricies, felis lorem dictum nulla, ut tincidunt neque libero et nibh. Nullam at eros eu ligula auctor interdum a eget lorem. Praesent molestie eros vitae felis efficitur, at finibus sem molestie. Ut sit amet nisi at nunc pulvinar dapibus. Sed non neque et tortor finibus mattis. Mauris sit amet consectetur eros. Sed et ex posuere, vulputate dolor vel, pulvinar felis. </p>
+            <h5>4.How do we protect your information?</h5>
+            <p>We do not use vulnerability scanning and/or scanning to PCI standards.
+                We only provide articles and information. We never ask for credit card numbers.
+                We do not use Malware Scanning.
+
+                Your personal information is contained behind secured networks and is only accessible by a limited number of persons who have special access rights to such systems, and are required to keep the information confidential. In addition, all sensitive/credit information you supply is encrypted via Secure Socket Layer (SSL) technology.
+
+                We implement a variety of security measures when a user enters, submits, or accesses their information to maintain the safety of your personal information.
+
+                All transactions are processed through a gateway provider and are not stored or processed on our servers.</p>
         </div>
         <div class="questions">
-            <h5>5.What is Nam semper elit risus, nec suscipit tellus tincidunt quis?</h5>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <h5>5.Do we use 'cookies'?</h5>
+            <p>
+                Yes. Cookies are small files that a site or its service provider transfers to your computer's hard drive through your Web browser (if you allow) that enables the site's or service provider's systems to recognize your browser and capture and remember certain information. For instance, we use cookies to help us remember and process the items in your shopping cart. They are also used to help us understand your preferences based on previous or current site activity, which enables us to provide you with improved services. We also use cookies to help us compile aggregate data about site traffic and site interaction so that we can offer better site experiences and tools in the future.
+
+                We use cookies to:
+                • Understand and save user's preferences for future visits.
+                • Compile aggregate data about site traffic and site interactions in order to offer better site experiences and tools in the future. We may also use trusted third-party services that track this information on our behalf.
+
+                You can choose to have your computer warn you each time a cookie is being sent, or you can choose to turn off all cookies. You do this through your browser settings. Since browser is a little different, look at your browser's Help Menu to learn the correct way to modify your cookies.
+            </p>
         </div>
         <div class="questions">
-            <h5>6.What is Quisque molestie fermentum dignissim?</h5>
-            <p>Sed eget nunc ex. Donec erat est, dapibus ac massa in, laoreet sagittis eros. Aliquam eget arcu feugiat leo elementum tristique. Praesent facilisis aliquam lorem sed pharetra. Donec scelerisque ipsum vel tincidunt gravida. Aliquam erat volutpat. Etiam mattis rhoncus massa, quis semper purus ornare id. Quisque sit amet mattis ipsum, in porttitor massa. Nullam tincidunt mi vel enim volutpat, a elementum libero imperdiet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean tincidunt eros eu nisl consequat facilisis. Maecenas ac accumsan elit, sit amet gravida nulla.</p>
+            <h5>6.If users disable cookies in their browser:</h5>
+            <p>If you turn cookies off, Some of the features that make your site experience more efficient may not function properly.Some of the features that make your site experience more efficient and may not function properly.
+            </p>
         </div>
         <div class="questions">
-            <h5>7.What is Vestibulum ante ipsum primis in faucibus orci luctus et?</h5>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <h5>7.Third-party disclosure</h5>
+            <p>
+                We do not sell, trade, or otherwise transfer to outside parties your Personally Identifiable Information.
+            </p>
+        </div>
+
+        <div class="questions">
+            <h5>8.Third-party links</h5>
+            <p>We do not include or offer third-party products or services on our website.</p>
         </div>
 
     </div>
