@@ -322,7 +322,7 @@ class Event extends CI_Controller
                             if ($err) {
                                 echo "cURL Error #:" . $err;
                             } else {
-                                echo $result;
+                                //echo $result;
                             }
                         }
                     }
