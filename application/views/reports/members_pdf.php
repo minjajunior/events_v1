@@ -11,6 +11,8 @@
 echo $pdf_h;
 ?>
 
+
+<?php if(!isset($member_group['error'])){ ?>
 <table id="tblproduct-details" cellspacing="0" width="100%" cellpadding=6>
     <tr>
         <th> <h4>#</h4></th>
@@ -49,6 +51,11 @@ echo $pdf_h;
 <!--    </tr>-->
 
 </table>
+
+<?php } else { ?>
+    <h2 class="text-center">No members found</h2>
+
+<?php } ?>
 
 </body>
 </html>

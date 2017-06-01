@@ -19,8 +19,8 @@
             font-family:"Klavika Lt" ;
         }
         table{
-            padding-left:10px;
-            padding-right:10px;
+            padding-left:15px;
+            padding-right:15px;
 
         }
         h4{
@@ -91,8 +91,11 @@
 <table width="100%" cellspacing="1" cellpadding="6">
 
     <tr>
+        <td width="100%" class="text-center" ><h2 ><?php echo $event_details[0]->event_name.' - '.$report_name; ?> </h2></td>
+    </tr>
+    <tr>
         <td width="30%" >
-            <p class="invoiceHeading">Event Name : <?php echo $event_details[0]->event_name; ?></p>
+<!--            <h2 class=" text-center">--><?php //echo $event_details[0]->event_name.'-'.$report_name; ?><!-- </h2>-->
             <p class="invoiceHeading">Event Type : <?php echo $event_details[0]->event_type; ?></p>
             <p class="invoiceHeading">Event Date : <?php echo $event_details[0]->event_date; ?></p>
             <p class="invoiceHeading">Generate by : <?php echo $admin_details[0]->admin_name; ?></p>
@@ -107,12 +110,13 @@
     <tr>
         <td colspan='4'><hr></td>
     </tr>
-    <tr>
-        <td colspan='4'>&nbsp;</td>
-    </tr>
-    <tr>
-        <td><h2><?php echo $report_name; ?></h2></td>
-    </tr></table>
+<!--    <tr>-->
+<!--        <td colspan='4'>&nbsp;</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td><h2>--><?php //echo $report_name; ?><!--</h2></td>-->
+<!--    </tr>-->
+</table>
 
 <!--    <tr>-->
 <!--        <td colspan="4">-->

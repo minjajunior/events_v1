@@ -23,7 +23,7 @@ class  Reports_model extends CI_Model{
             }
             return $response;
         }else{
-            $response['error'] = '0';
+            $response['error'] = 'Unable to create the report! No members found';
             return $response;
         }
     }
@@ -45,7 +45,7 @@ class  Reports_model extends CI_Model{
             }
             return $response;
         }else{
-            $response['error'] = '0';
+            $response['error'] = 'Unable to create the report! No budget item found';
             return $response;
         }
     }
@@ -64,7 +64,7 @@ class  Reports_model extends CI_Model{
             }
             return $response;
         } else {
-            $response['error'] = '0';
+            $response['error'] = 'Unable to create the report! No member with unpaid pledges found';
             return $response;
         }
     }
@@ -82,7 +82,7 @@ class  Reports_model extends CI_Model{
             }
             return $response;
         } else {
-            $response['error'] = '0';
+            $response['error'] = 'Unable to create the report! No member with full paid pledges found';
             return $response;
         }
 
@@ -127,12 +127,19 @@ class  Reports_model extends CI_Model{
         }
     }
 
-    public function get_members_amounts($paid_am,$pledge_am,$event_id){
+    public function get_members_amounts($amount_type,$amount,$event_id){
+
         $this->db->select('*');
         $this->db->from('member');
         $this->db->where('event_id', $event_id);
-        $this->db->where('member_pledge=', $pledge_am);
-        $this->db->where('member_cash<', $paid_am);
+
+        if($amount_type=='pledge_amounts'){
+            $this->db->where('member_pledge=', $amount);
+            $type = 'pledge';
+        }elseif ($amount_type=='paid_amounts'){
+            $this->db->where('member_cash=', $amount);
+            $type= 'paid';
+        }
         $this->db->order_by('member_name', 'asc');
         $query = $this->db->get();
 
@@ -142,7 +149,7 @@ class  Reports_model extends CI_Model{
             }
             return $response;
         }else{
-            $response['error'] = 'Category type Not Found';
+            $response['error'] = 'Unable to create the report! Members with '. $amount .' TZS '.$type. ' amounts not found';
             return $response;
         }
     }
