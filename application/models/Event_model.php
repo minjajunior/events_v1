@@ -227,6 +227,11 @@ class Event_model extends CI_Model {
         $this->db->update('member', $values);
     }
 
+    public function update_member_group($values, $id){
+        $this->db->where('group_id', $id);
+        $this->db->update('member', $values);
+    }
+
     /*
      * This function insert budget item(s) details into database
      */

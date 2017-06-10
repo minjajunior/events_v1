@@ -10,8 +10,7 @@ class Event extends CI_Controller
     /*
      * This function load Event login page and process validation of the user
      */
-    public function index()
-    {
+    public function index() {
         $this->form_validation->set_rules('eventcode', 'Event Code', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
 
@@ -45,7 +44,7 @@ class Event extends CI_Controller
             $this->load->view('event/default_view', $data);
 
         }else{
-            redirect('login');
+            redirect(base_url());
         }
     }
 
@@ -383,7 +382,7 @@ class Event extends CI_Controller
                             $ip = $cell->getValue();
                         }
                     }
-                    if ($in != "Item Name" && !empty($in) && is_numeric($ic) && is_numeric($ip)) {
+                    if ($in != "Item Name" && !empty($in)) {
                         $values = array(
                             'item_name' => $in,
                             'item_cost' => $ic,
@@ -414,11 +413,7 @@ class Event extends CI_Controller
      */
     public function new_member($id) {
 
-        $data['event_id'] = $id;
-
         if (!empty($this->session->admin_id)) {
-
-            $data = array('success' => false, 'messages' => array());
 
             $this->form_validation->set_rules('membername', 'Member Name', 'required');
             $this->form_validation->set_rules('memberpledge', 'Member Pledge', 'numeric');
@@ -428,9 +423,11 @@ class Event extends CI_Controller
             $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {
+                $data = array('success' => false, 'messages' => array());
                 foreach ($_POST as $key => $value) {
                     $data['messages'][$key] = form_error($key);
                 }
+                echo json_encode($data);
             } else {
                 $data['success'] = true;
                 $values = array(
@@ -443,6 +440,8 @@ class Event extends CI_Controller
                 );
 
                 $this->event_model->insert_member($values);
+                echo json_encode($data);
+
                 if(!empty($this->input->post('memberphone'))){
                     $number = $this->input->post('memberphone');
                     $eventname = $this->event_model->event_name($id);
@@ -474,11 +473,10 @@ class Event extends CI_Controller
                     if ($err) {
                         echo "cURL Error #:" . $err;
                     } else {
-                        echo $result;
+                        //echo $result;
                     }
                 }
             }
-            echo json_encode($data);
         } else {
             redirect('admin');
         }
