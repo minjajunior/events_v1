@@ -23,8 +23,7 @@ class Member_model extends CI_Model {
             }
             return $response;
         } else {
-            $response[] = null;
-            return $response;
+            return null;
         }
     }
 
@@ -44,8 +43,7 @@ class Member_model extends CI_Model {
             }
             return $response;
         } else {
-            $response[] = null;
-            return $response;
+            return null;
         }
 
     }

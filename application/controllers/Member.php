@@ -57,7 +57,7 @@ class Member extends CI_Controller {
             $numbers = $this->member_model->get_group_numbers($id, $this->input->post('to'));
         }
 
-        if ($numbers == null) {
+        if (empty($numbers)) {
             $data = array('Status' => false);
             echo json_encode($data);
         } else {
@@ -106,7 +106,7 @@ class Member extends CI_Controller {
 
             $data = array('success' => false, 'messages' => array());
 
-            $this->form_validation->set_rules('groupname', 'Group Name', 'required');
+            $this->form_validation->set_rules('groupname', 'Group Name', 'trim|required');
             $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
             if ($this->form_validation->run() == FALSE) {
@@ -132,6 +132,12 @@ class Member extends CI_Controller {
     }
 
     public function delete_group($id){
+        $values = array(
+            'group_id' => null
+        );
+
+        $this->event_model->update_member_group($values, $id);
+
         $this->member_model->delete_group($id);
         $data = array('success' => true);
         echo json_encode($data);

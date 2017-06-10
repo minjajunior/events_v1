@@ -44,8 +44,10 @@
                     <label for="amount" class="col-sm-2 control-label"><?php echo $type?></label>
                     <div class="col-sm-8">
                         <input  type="text" name="amount" value="" class="form-control1" id="amount" placeholder="Amount">
+                        <p>Note: For subtraction include - sign before amount e.g -10000</p>
                     </div>
                 </div>
+
                 <input type="hidden" name="memberpledge" value="<?php echo $md->member_pledge ?>" />
                 <input type="hidden" name="membercash" value="<?php echo $md->member_cash ?>" />
                 <div class="form-group">
@@ -72,6 +74,7 @@
                     <label for="amount" class="col-sm-2 control-label"><?php echo $type?></label>
                     <div class="col-sm-8">
                         <input  type="text" name="amount" value="" class="form-control1" id="amount" placeholder="Amount">
+                        <p>Note: For subtraction include - sign before amount e.g -10000</p>
                     </div>
                 </div>
                 <input type="hidden" name="itemcost" value="<?php echo $idt->item_cost ?>" />

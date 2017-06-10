@@ -301,11 +301,15 @@ class Admin extends CI_Controller {
 
         if(($token_to_db == $token_to_email)&&($reg_status==0)){
 
+            $this->form_validation->set_message('required', 'This field required');
             $this->form_validation->set_rules('fullname', 'Full Name', 'required');
-            $this->form_validation->set_message('fullname', 'Error Message');
-            $this->form_validation->set_rules('phone', 'Phone Number', 'required|is_unique[admin.admin_phone]');
-            $this->form_validation->set_rules('password', 'Password', 'required');
+            $this->form_validation->set_message('is_unique', '{field} you have entered is already registered in an account with us.');
+            $this->form_validation->set_rules('phone', 'Phone Number', 'required|is_unique[admin.admin_phone]|exact_length[12]|numeric');
+            $this->form_validation->set_message('exact_length', 'The phone number must be in a 255XXXXXXXXX format.');
+            $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
+            $this->form_validation->set_message('min_length', '{field} must be at least {param} characters long.');
             $this->form_validation->set_rules('password2', 'Re-Enter Password', 'required|matches[password]');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger">', '</div>');
 
             if ($this->form_validation->run() == FALSE) {
 

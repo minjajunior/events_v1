@@ -136,7 +136,7 @@ if(isset($reg_status)){ ?>
                             $('.login-mail').append('<input type="hidden" name="mailphone" value="'+ response.to +'" id="phone" />');
                             $('#next').replaceWith('<input type="submit" name="submit" value="login" id="submit" />');
                             $('#reg-link').replaceWith('<div id="pin-link"><p>Did not receive a code ?</p>' +
-                                '<a href="#" class="hvr-shutter-in-horizontal login-sub"><b>Resend Pin Code</b></a>' +
+                                '<a href="javascript:void(0)" class="pin-r-link hvr-shutter-in-horizontal login-sub" value="'+ response.pinId +'"><b>Resend Pin Code</b></a>' +
                                 '</div>');
                         } else if(response.smsStatus == "MESSAGE_NOT_SENT"){
                             $('#login-response').append('<div class="alert alert-danger">Pin Code Not delivered. Please check the number and try again </div>');
@@ -161,28 +161,64 @@ if(isset($reg_status)){ ?>
 
             $('.pass-do').on("click", ".pass-f-link", function() {
 
-            var email = $(this).attr("value");
+                var email = $(this).attr("value");
 
-            var postData = {
-                'email': email,
-            };
+                var postData = {
+                    'email': email,
+                };
 
-            $.ajax({
+                $.ajax({
+                        type:"POST",
+                        url: "<?php echo base_url('login/password')?>",
+                        data:postData,
+                        dataType: 'json',
+                        success: function(response){
+
+                            if (response.success == true) {
+                                $('#login-response').append('<div class="alert alert-success"> Check your mailbox, Password link has been sent to your email</div>');
+                                $('.alert-danger').delay(500).show(10, function () {
+                                    $(this).delay(3000).hide(10, function () {
+                                        $(this).remove();
+                                    });
+                                });
+                            }else if(response.success == false){
+                                $('#login-response').append('<div class="alert alert-danger">Please! Try again to reset your password</div>');
+                                $('.alert-danger').delay(500).show(10, function () {
+                                    $(this).delay(3000).hide(10, function () {
+                                        $(this).remove();
+                                    });
+                                });
+
+                            }
+                        }
+                });
+
+            });
+
+            $('.pass-do').on("click", ".pin-r-link", function() {
+
+                var pinId = $(this).attr("value");
+
+                var postData = {
+                    'pinId': pinId,
+                };
+
+                $.ajax({
                     type:"POST",
-                    url: "<?php echo base_url('login/password')?>",
+                    url: "<?php echo base_url('login/resend_pin')?>",
                     data:postData,
                     dataType: 'json',
                     success: function(response){
 
-                        if (response.success == true) {
-                            $('#login-response').append('<div class="alert alert-success"> Check your mailbox, Password link has been sent to your email</div>');
+                        if (response.result == true) {
+                            $('#login-response').append('<div class="alert alert-success"> Pin Code Sent Successfully</div>');
                             $('.alert-danger').delay(500).show(10, function () {
                                 $(this).delay(3000).hide(10, function () {
                                     $(this).remove();
                                 });
                             });
-                        }else if(response.success == false){
-                            $('#login-response').append('<div class="alert alert-danger">Please! Try again to reset your password</div>');
+                        }else if(response.result == false){
+                            $('#login-response').append('<div class="alert alert-danger">Pin Code Not Sent</div>');
                             $('.alert-danger').delay(500).show(10, function () {
                                 $(this).delay(3000).hide(10, function () {
                                     $(this).remove();
@@ -191,9 +227,9 @@ if(isset($reg_status)){ ?>
 
                         }
                     }
-            });
+                });
 
-        });
+            });
 
         });
     </script>

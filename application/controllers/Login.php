@@ -237,6 +237,43 @@ class Login extends CI_Controller {
         }
     }
 
+    public function resend_pin(){
+
+        $pinId = $_POST['pinId'];
+
+        if (!is_null($pinId)){
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "http://api.infobip.com/2fa/1/pin/".$pinId."/resend",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => "{}",
+                CURLOPT_HTTPHEADER => array(
+                    "accept: application/json",
+                    "authorization: App f5af8ed1007bb7678b6bed837c6cbced-6c9059a6-69bd-43cd-9469-e619c0880406",
+                    "content-type: application/json"
+                ),
+            ));
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+            curl_close($curl);
+            if ($err) {
+                echo "cURL Error #:" . $err;
+            } else {
+                if(json_decode($response['smsStatus']) == "MESSAGE_SENT"){
+                    $data = array('result' => true);
+                    echo json_encode($data);
+                }
+            }
+        } else {
+            redirect(base_url());
+        }
+    }
+
     /*
     * This function process logout process
     */
