@@ -28,9 +28,9 @@ $this->load->view('shared/sidebar');
                         <thead>
                         <tr>
                             <th>Event Name</th>
-                            <th>Event Type</th>
-                            <th>Event Date</th>
-                            <th>Event Location</th>
+                            <th class="hidden-xs hidden-sm">Event Type</th>
+                            <th class="hidden-xs">Event Date</th>
+                            <th class="hidden-xs hidden-sm">Event Location</th>
                             <th>Event Fee</th>
                         </tr>
                         </thead>
@@ -38,9 +38,9 @@ $this->load->view('shared/sidebar');
                         <?php foreach($event as $eve){ ?>
                             <tr>
                                 <td><a href="<?php echo site_url('event/home/'.base64_encode($eve->event_id)) ?>"><?php echo $eve->event_name ?></a></td>
-                                <td><?php echo $eve->event_type?></td>
-                                <td><?php echo date_format(date_create($eve->event_date), 'D, jS M Y') ?></td>
-                                <td><?php echo $eve->location_name?></td>
+                                <td class="hidden-xs hidden-sm"><?php echo $eve->event_type?></td>
+                                <td class="hidden-xs"><?php echo date_format(date_create($eve->event_date), 'D, jS M Y') ?></td>
+                                <td class="hidden-xs hidden-sm"><?php echo $eve->location_name?></td>
                                 <?php if ($eve->event_paid == 0){ ?>
                                     <td>Not Paid</td>
                                 <?php } else { ?>
@@ -84,7 +84,7 @@ $this->load->view('shared/sidebar');
                                 });
                             });
                         </script>
-                        <div class="form-group">
+                        <div class=" form-group">
                             <label for="eventdate" class="col-sm-4 control-label">Event Date</label>
                             <div class="col-sm-8">
                                 <input type="text" name="eventdate" value="<?php echo set_value('eventdate'); ?>" class="form-control1" placeholder="YYYY-MM-DD" id="eventdate">

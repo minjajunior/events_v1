@@ -18,11 +18,13 @@
 <div class="blank">
     <?php if(isset($this->session->admin_id)){ ?>
         <div class="blank-page">
-            <h4>Budget
+            <h4><div class="col-xs-12 col-sm-3">Budget</div>
             <?php if(date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
-                <a href="#" class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#newItem" data-placement="bottom" title="Add Budget Item">&nbsp;<i class="fa fa-plus-square"></i> New Item&nbsp;</a>
-                <a href="#" class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#uploadBudget" data-placement="bottom" title="Upload Budget File">&nbsp;<i class="fa fa-upload"></i> Upload Budget&nbsp;</a>
-                <a href="<?php echo site_url('event/template/budget')?>" class="btn btn-sm btn-success pull-right" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" >&nbsp;<i class="fa fa-download"></i> Download Template&nbsp;</a>
+                <div class="col-sm-9">
+                    <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#newItem" data-placement="bottom" title="Add Budget Item">&nbsp;<i class="fa fa-plus-square"></i> New Item&nbsp;</a>
+                    <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#uploadBudget" data-placement="bottom" title="Upload Budget File">&nbsp;<i class="fa fa-upload"></i> Upload Budget&nbsp;</a>
+                    <a href="<?php echo site_url('event/template/budget')?>" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" >&nbsp;<i class="fa fa-download"></i> Download Template&nbsp;</a>
+                </div>
             <?php } ?>
             </h4>
             <hr>

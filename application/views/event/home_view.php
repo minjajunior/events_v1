@@ -149,11 +149,14 @@
                 <div class="clearfix"> </div>
             </div>
         </div>
-        <div class="col-md-8">
-            <div class="blank-page">
-                <h4>Text Message Notifications
+        <div class="col-md-8 content-top-2">
+            <div class="box">
+                <div class="blank-page">
+                    <h4><div class="col-sm-8 col-xs-12">Text Message Notifications</div>
+
                     <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
-                    <a href="#" class="btn btn-success pull-right" data-toggle="modal" data-target="#newSms" data-placement="bottom" title="New Sms">&nbsp;<i class="fa fa-envelope"></i>&nbsp; Send SMS</a>
+
+                        <div class="col-sm-4 col-xs-12"><a href="#" class="btn btn-success" data-toggle="modal" data-target="#newSms" data-placement="bottom" title="New Sms">&nbsp;<i class="fa fa-envelope"></i>&nbsp; Send SMS</a></div>
                     <?php } ?>
                 </h4>
                 <table class="table">
@@ -206,6 +209,7 @@
                 <?php } ?>
                 </tbody>
             </table>
+                </div>
             </div>
         </div>
 
