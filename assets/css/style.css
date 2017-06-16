@@ -1132,6 +1132,9 @@ i.fa.fa-twitter {
 	padding: 1em;
     min-height: 650px;
 }
+.box {
+    padding: 1em;
+}
 .blank-page{
 	padding: 1em;
     background: #fff;

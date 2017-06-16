@@ -9,14 +9,16 @@
 $this->load->view('shared/login_header');
 ?>
 <div class="row login">
-    <div class=" col-md-6 col-md-offset-1">
+    <div class="col-sm-10 col-md-6 col-sm-offset-1">
 
         <div class="jumbotron">
-            <h1>Demi Events!</h1>
-            <p class="lead"> Is a platform that simplify local event planning and management. It's an ideal solution for organizers when planning events such as Wedding, Send off , Kitchen party etc</p>
+            <div class="col-md-12">
+                <h1>Demi Events!</h1>
+                <p > Is a platform that simplify local event planning and management. It's an ideal solution for organizers when planning events such as Wedding, Send off , Kitchen party etc</p>
+            </div>
         </div>
 
-        <div class="row land-list">
+        <div class="land-list">
             <div class="col-md-12">
                 <h3><i class="fa fa-codepen"></i> Event Management</h3>
                 <p>Easily track and manage budget details and attendee details such as pledges, cash etc <br /><br /></p>
@@ -31,7 +33,7 @@ $this->load->view('shared/login_header');
             </div>
         </div>
     </div>
-    <div class=" col-md-3 col-md-offset-1">
+    <div class="col-sm-10 col-sm-offset-1 col-md-3 ">
         <div class="login-bottom">
             <h2>Login</h2>
             <?php $attributes = array('id' => 'login_form');
@@ -39,7 +41,7 @@ $this->load->view('shared/login_header');
             <div id="login-response"></div>
             <div class="col-md-12 login-do">
                 <div class="login-mail">
-                    <input type="text" name="mailphone" id="mailphone" value="<?php echo set_value('mailphone'); ?>" placeholder="Eg: 2557XXXXXXXX or Email">
+                    <input type="text" name="mailphone" id="mailphone" value="<?php echo set_value('mailphone'); ?>" placeholder="Eg: 2557XXXXXXXX or Email" required="">
                 </div>
             </div>
             <div class="col-md-12 login-do pass-do">
