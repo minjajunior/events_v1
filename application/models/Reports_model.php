@@ -122,7 +122,7 @@ class  Reports_model extends CI_Model{
             }
             return $response;
         }else{
-            $response['error'] = 'Category type Not Found';
+            $response['error'] = 'Unable to create the report! No Members found on this group';
             return $response;
         }
     }
