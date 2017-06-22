@@ -67,6 +67,9 @@
                                 <span class="input-group-btn"><button class="btn btn-danger" type="button"><i class="fa fa-search"></i></button></span>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <a href="#" class="btn btn-xs btn-danger pull-right" data-toggle="modal" data-target="#newGroup"> <i class="fa fa-trash"></i> Delete All</a>
+                        </div>
                         <div class="tables">
                             <table class="table table-hover" id="members-list">
                                 <thead>
