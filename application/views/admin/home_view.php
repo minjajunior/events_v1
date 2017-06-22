@@ -68,64 +68,66 @@ $this->load->view('shared/sidebar');
                     echo form_open('event/create', $attributes);
                     ?>
                     <div class="modal-body">
-                        <div id="the-message"></div>
-                        <div class="form-group">
-                            <label for="eventname" class="col-sm-4 control-label">Event Name</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="eventname" value="<?php echo set_value('eventname'); ?>" class="form-control1" placeholder="Event Name" id="eventname">
+                        <div class="box">
+                            <div id="the-message"></div>
+                            <div class="form-group">
+                                <label for="eventname" class="col-sm-4 control-label">Event Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="eventname" value="<?php echo set_value('eventname'); ?>" class="form-control1" placeholder="Event Name" id="eventname">
+                                </div>
                             </div>
-                        </div>
-                        <script>
-                            $(document).ready(function() {
-                                $("#eventdate").datepicker({
-                                    dateFormat: 'yy-mm-dd',
-                                    minDate: new Date(),
-                                    maxDate: '+1Y',
+                            <script>
+                                $(document).ready(function() {
+                                    $("#eventdate").datepicker({
+                                        dateFormat: 'yy-mm-dd',
+                                        minDate: new Date(),
+                                        maxDate: '+1Y',
+                                    });
                                 });
-                            });
-                        </script>
-                        <div class=" form-group">
-                            <label for="eventdate" class="col-sm-4 control-label">Event Date</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="eventdate" value="<?php echo set_value('eventdate'); ?>" class="form-control1" placeholder="YYYY-MM-DD" id="eventdate">
+                            </script>
+                            <div class=" form-group">
+                                <label for="eventdate" class="col-sm-4 control-label">Event Date</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="eventdate" value="<?php echo set_value('eventdate'); ?>" class="form-control1" placeholder="YYYY-MM-DD" id="eventdate">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="type" class="col-sm-4 control-label">Event Type</label>
-                            <div class="col-sm-8">
-                                <select name="type" id="type" class="form-control1">
-                                    <option value="">Select One</option>
-                                    <?php foreach($event_type as $et){ ?>
-                                        <option value="<?php echo set_value(print $et->type_name); ?>" id="type"><?php echo set_value(print $et->type_name); ?></option>
-                                    <?php } ?>
-                                    <option value="other">Other</option>
-                                </select>
+                            <div class="form-group">
+                                <label for="type" class="col-sm-4 control-label">Event Type</label>
+                                <div class="col-sm-8">
+                                    <select name="type" id="type" class="form-control1">
+                                        <option value="">Select One</option>
+                                        <?php foreach($event_type as $et){ ?>
+                                            <option value="<?php echo set_value(print $et->type_name); ?>" id="type"><?php echo set_value(print $et->type_name); ?></option>
+                                        <?php } ?>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="othertext" class="col-sm-4 control-label"></label>
-                            <div class="col-sm-8">
-                                <input type="text" name="othertext" hidden="true" value="<?php echo set_value('othertext'); ?>" class="form-control1" placeholder="Event Type" id="othertext">
+                            <div class="form-group">
+                                <label for="othertext" class="col-sm-4 control-label"></label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="othertext" hidden="true" value="<?php echo set_value('othertext'); ?>" class="form-control1" placeholder="Event Type" id="othertext">
+                                </div>
                             </div>
-                        </div>
-                        <script>
-                            document.getElementById('type').addEventListener('change', function() {
-                                if (this.value == "other") {
-                                    document.getElementById('othertext').hidden = false;
-                                } else {
-                                    document.getElementById('othertext').hidden = true;
-                                }
-                            });
-                        </script>
-                        <div class="form-group">
-                            <label for="location" class="col-sm-4 control-label">Event Location</label>
-                            <div class="col-sm-8">
-                                <select name="location" id="selector1" class="form-control1">
-                                    <option value="">Select Region</option>
-                                    <?php foreach($location as $loc){ ?>
-                                        <option value="<?php echo set_value(print $loc->location_id); ?>" id="location"><?php echo set_value(print $loc->location_name); ?></option>
-                                    <?php } ?>
-                                </select>
+                            <script>
+                                document.getElementById('type').addEventListener('change', function() {
+                                    if (this.value == "other") {
+                                        document.getElementById('othertext').hidden = false;
+                                    } else {
+                                        document.getElementById('othertext').hidden = true;
+                                    }
+                                });
+                            </script>
+                            <div class="form-group">
+                                <label for="location" class="col-sm-4 control-label">Event Location</label>
+                                <div class="col-sm-8">
+                                    <select name="location" id="selector1" class="form-control1">
+                                        <option value="">Select Region</option>
+                                        <?php foreach($location as $loc){ ?>
+                                            <option value="<?php echo set_value(print $loc->location_id); ?>" id="location"><?php echo set_value(print $loc->location_name); ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>

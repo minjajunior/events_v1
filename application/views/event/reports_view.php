@@ -17,7 +17,7 @@
 
 <div class="content-top" >
 
-    <div class="col-md-4 ">
+    <div class="col-sm-4">
         <div class="blank-page">
             <h4>Basic Reports</h4>
             <hr/>
@@ -60,162 +60,165 @@
             </table>
         </div>
     </div>
-    <div class="col-md-8">
-        <div class="blank-page">
-            <h3 class="head-top">Custom Reports</h3>
-            <div class="but_list">
-                <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
-                    <ul id="myTab" class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Members</a></li>
-<!--                        <li role="presentation" class=""><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Budget</a></li>-->
-<!--                        <li role="presentation" class="dropdown">-->
-<!--                            <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">Event<span class="caret"></span></a>-->
-<!--                            <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">-->
-<!--                                <li><a href="#dropdown1" tabindex="-1" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1">@fat</a></li>-->
-<!--                                <li><a href="#dropdown2" tabindex="-1" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2">@mdo</a></li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
-                    </ul>
-                    <div id="myTabContent" class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+    <div class="col-sm-8">
+        <div class="box">
+            <div class="blank-page">
+                <h3 class="head-top">Custom Reports</h3>
+                <div class="but_list">
+                    <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Members</a></li>
+                            <!--                        <li role="presentation" class=""><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Budget</a></li>-->
+                            <!--                        <li role="presentation" class="dropdown">-->
+                            <!--                            <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">Event<span class="caret"></span></a>-->
+                            <!--                            <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">-->
+                            <!--                                <li><a href="#dropdown1" tabindex="-1" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1">@fat</a></li>-->
+                            <!--                                <li><a href="#dropdown2" tabindex="-1" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2">@mdo</a></li>-->
+                            <!--                            </ul>-->
+                            <!--                        </li>-->
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
 
-                            <div class="well well-sm">
-                                <table class="table">
-                                    <tbody>
-                                    <tr class=" table-row">
-                                        <td class="table-text">
-                                            <h6>Members' report with unpaid pledges</h6>
-                                            <p>A report with the list of members who have paid less than the pledge amount </p>
-                                        </td>
-                                        <td class="report_pdf">
-                                            <a href="javascript:void(0)" class="report fa fa-file-pdf-o fa-2x" rel="<?php echo $event_id; ?>" id="less_pledge"></a>
-                                            <p>PDF</p>
-                                        </td>
-                                    </tr>
-                                    <tr class="table-row">
-                                        <td class="table-text">
-                                            <h6>Members' report with full paid pledges</h6>
-                                            <p>A report with the list of members who have full paid their pledge amount</p>
-                                        </td>
-                                        <td class="report_pdf">
-                                            <a href="javascript:void(0)" class="report fa fa-file-pdf-o fa-2x" rel="<?php echo $event_id; ?>" id="full_pledge"></a>
-                                            <p>PDF</p>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <div class="well well-sm">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr class=" table-row">
+                                            <td class="table-text">
+                                                <h6>Members' report with unpaid pledges</h6>
+                                                <p>A report with the list of members who have paid less than the pledge amount </p>
+                                            </td>
+                                            <td class="report_pdf">
+                                                <a href="javascript:void(0)" class="report fa fa-file-pdf-o fa-2x" rel="<?php echo $event_id; ?>" id="less_pledge"></a>
+                                                <p>PDF</p>
+                                            </td>
+                                        </tr>
+                                        <tr class="table-row">
+                                            <td class="table-text">
+                                                <h6>Members' report with full paid pledges</h6>
+                                                <p>A report with the list of members who have full paid their pledge amount</p>
+                                            </td>
+                                            <td class="report_pdf">
+                                                <a href="javascript:void(0)" class="report fa fa-file-pdf-o fa-2x" rel="<?php echo $event_id; ?>" id="full_pledge"></a>
+                                                <p>PDF</p>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="">
+                                    <div class="grid-form1">
+                                        <h4 id="forms-horizontal">Members' report based on the defined member groups</h4>
+                                        <div id="the-message_cat"></div>
+                                        <form class="form-horizontal" id="category_form" rel="<?php echo $event_id; ?>" method="POST" action="">
+                                            <div class="form-group">
+                                                <label for="type" class="col-sm-4 control-label">Choose members category</label>
+                                                <div class="col-sm-6">
+
+                                                    <select name="type" id="m_cat" class="form-control1 ">
+                                                        <?php
+
+                                                        if (!isset($member_group['error'])) {
+
+                                                            foreach ($member_group as $mg) {
+                                                                ?>
+                                                                <option value="<?php echo $mg->group_id; ?>"><?php echo $mg->group_name; ?></option>
+                                                            <?php }
+
+
+                                                        } else{ ?>
+                                                            <option value="error">No member groups created</option>
+
+                                                        <?php  } ?>
+                                                    </select>
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-4 col-sm-8 col-xs-12">
+                                                    <button id="mc_button" type="submit" class="  btn btn-sm btn-primary" style=''>Create PDF Report</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="grid-form1">
+                                        <h4 id="forms-horizontal">Members' report based on the pledge amounts</h4>
+                                        <div id="the-message_pledge"></div>
+                                        <form id="pledge_member_form" rel="<?php echo $event_id; ?>" class="form-horizontal" method="POST" action="">
+                                            <div class="form-group">
+                                                <label for="pledge_amount" class="col-sm-4 col-xs-12 control-label">Pledge Amount equals to:</label>
+                                                <div class="col-sm-6 col-xs-12">
+                                                    <input type="text" name="pledge_amount" class="form-control1" id="pledge_amount" placeholder="Enter pledge amount">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-4 col-sm-8">
+                                                    <button id="" type="submit" class="btn btn-primary">Create PDF Report</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="grid-form1">
+                                        <h4 id="forms-horizontal">Members' report based on the paid amount</h4>
+                                        <div id="the-message_paid"></div>
+                                        <form id="paid_member_form" rel="<?php echo $event_id; ?>" class="form-horizontal" method="POST" action="">
+                                            <div class="form-group">
+                                                <label for="paid_amount" class="col-sm-4 control-label">Paid Amount equals to :</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" name="paid_amount" class="form-control1" id="paid_amount" placeholder="Enter paid amount">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-4 col-sm-8">
+                                                    <button id="" type="submit" class="btn btn-primary">Create PDF Report</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
                             </div>
 
-                            <div class="">
-                                <div class="grid-form1">
-                                    <h4 id="forms-horizontal">Members' report based on the defined member groups</h4>
-                                    <div id="the-message_cat"></div>
-                                    <form class="form-horizontal" id="category_form" rel="<?php echo $event_id; ?>" method="POST" action="">
-                                        <div class="form-group">
-                                            <label for="type" class="col-sm-4 control-label">Choose members category</label>
-                                            <div class="col-sm-6">
+                            <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
+                                <div class="well well-sm">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr class=" table-row">
+                                            <td class="table-text">
+                                                <h6>Collected amount</h6>
+                                                <p>A report that tells how much income collected against the proposed budget</p>
+                                            </td>
+                                            <td class="report_pdf">
+                                                <a href="javascript:void(0)" class="report fa fa-file-pdf-o fa-2x" rel="<?php /*echo $event_id; */?>" id="income"></a>
+                                                <p>PDF</p>
+                                            </td>
+                                        </tr>
+                                        <tr class="table-row">
+                                            <td class="table-text">
+                                                <h6>Amount spent</h6>
+                                                <p>A report that tells more about actual expenses done against the proposed budget</p>
+                                            </td>
+                                            <td class="report_pdf">
+                                                <a href="javascript:void(0)" class="report fa fa-file-pdf-o fa-2x" rel="<?php /*echo $event_id; */?>" id="income"></a>
+                                                <p>PDF</p>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
 
-                                                <select name="type" id="m_cat" class="form-control1 ">
-                                                    <?php
-
-                                                    if (!isset($member_group['error'])) {
-
-                                                    foreach ($member_group as $mg) {
-                                                        ?>
-                                                        <option value="<?php echo $mg->group_id; ?>"><?php echo $mg->group_name; ?></option>
-                                                    <?php }
-
-
-                                                    } else{ ?>
-                                                        <option value="error">No member groups created</option>
-
-                                                 <?php  } ?>
-                                                </select>
-
-
-
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-offset-4 col-sm-8">
-                                                <button id="mc_button" type="submit" class="btn btn-primary" style=''>Create PDF Report</button>
-                                            </div>
-                                        </div>
-                                    </form>
                                 </div>
-
-                                <div class="grid-form1">
-                                    <h4 id="forms-horizontal">Members' report based on the pledge amounts</h4>
-                                    <div id="the-message_pledge"></div>
-                                    <form id="pledge_member_form" rel="<?php echo $event_id; ?>" class="form-horizontal" method="POST" action="">
-                                        <div class="form-group">
-                                            <label for="pledge_amount" class="col-sm-4 control-label">Pledge Amount equals to:</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" name="pledge_amount" class="form-control1" id="pledge_amount" placeholder="Enter pledge amount">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-offset-4 col-sm-8">
-                                                <button id="" type="submit" class="btn btn-primary">Create PDF Report</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <div class="grid-form1">
-                                    <h4 id="forms-horizontal">Members' report based on the paid amount</h4>
-                                    <div id="the-message_paid"></div>
-                                    <form id="paid_member_form" rel="<?php echo $event_id; ?>" class="form-horizontal" method="POST" action="">
-                                        <div class="form-group">
-                                            <label for="paid_amount" class="col-sm-4 control-label">Paid Amount equals to :</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" name="paid_amount" class="form-control1" id="paid_amount" placeholder="Enter paid amount">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-offset-4 col-sm-8">
-                                                <button id="" type="submit" class="btn btn-primary">Create PDF Report</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
                             </div>
+
                         </div>
-
-                        <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
-                            <div class="well well-sm">
-                                <table class="table">
-                                    <tbody>
-                                    <tr class=" table-row">
-                                        <td class="table-text">
-                                            <h6>Collected amount</h6>
-                                            <p>A report that tells how much income collected against the proposed budget</p>
-                                        </td>
-                                        <td class="report_pdf">
-                                            <a href="javascript:void(0)" class="report fa fa-file-pdf-o fa-2x" rel="<?php /*echo $event_id; */?>" id="income"></a>
-                                            <p>PDF</p>
-                                        </td>
-                                    </tr>
-                                    <tr class="table-row">
-                                        <td class="table-text">
-                                            <h6>Amount spent</h6>
-                                            <p>A report that tells more about actual expenses done against the proposed budget</p>
-                                        </td>
-                                        <td class="report_pdf">
-                                            <a href="javascript:void(0)" class="report fa fa-file-pdf-o fa-2x" rel="<?php /*echo $event_id; */?>" id="income"></a>
-                                            <p>PDF</p>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
+
 
 
 

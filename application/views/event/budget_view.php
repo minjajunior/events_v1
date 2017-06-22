@@ -18,18 +18,70 @@
 <div class="blank">
     <?php if(isset($this->session->admin_id)){ ?>
         <div class="blank-page">
-            <h4><div class="col-xs-12 col-sm-3">Budget</div>
+            <h4><div class="col-sm-3 col-xs-12">Budget</div>
             <?php if(date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
                 <div class="col-sm-9">
-                    <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#newItem" data-placement="bottom" title="Add Budget Item">&nbsp;<i class="fa fa-plus-square"></i> New Item&nbsp;</a>
-                    <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#uploadBudget" data-placement="bottom" title="Upload Budget File">&nbsp;<i class="fa fa-upload"></i> Upload Budget&nbsp;</a>
-                    <a href="<?php echo site_url('event/template/budget')?>" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" >&nbsp;<i class="fa fa-download"></i> Download Template&nbsp;</a>
+                <a href="#" class=" col-xs-12 col-sm-3 btn btn-sm btn-success" data-toggle="modal" data-target="#newItem" data-placement="bottom" title="Add Budget Item">&nbsp;<i class="fa fa-plus-square"></i> New Item&nbsp;</a>
+                    <a href="#" class="col-xs-12 col-sm-4 btn btn-sm btn-success" data-toggle="modal" data-target="#uploadBudget" data-placement="bottom" title="Upload Budget File">&nbsp;<i class="fa fa-upload"></i> Upload Budget&nbsp;</a>
+                    <a href="<?php echo site_url('event/template/budget')?>" class=" col-xs-12 col-sm-4 btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" >&nbsp;<i class="fa fa-download"></i> Download Template&nbsp;</a>
                 </div>
             <?php } ?>
             </h4>
             <hr>
             <?php if (isset($budget_details['error']) && $budget_details['error'] == "0") {?>
                 No budget items found create new item or upload your budget file.
+
+            <div class="grid-form1">
+                        <div class="form-group">
+                            <label for="type" class="col-sm-3 control-label">Event Type</label>
+                            <div class="col-sm-9">
+                                <select name="type" id="type" class="form-control1">
+                                    <option value="">Select One</option>
+                                    <option value="Wedding" id="type">Wedding</option>
+                                    <option value="Wedding" id="type">Send Off</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+            </div>
+                        <div class="form-group">
+                            <label for="othertext" class="col-sm-3 control-label"></label>
+                            <div class="col-sm-9">
+                                <input type="text" name="othertext" hidden="true" value="<?php echo set_value('othertext'); ?>" class="form-control1" placeholder="Event Type" id="othertext">
+                            </div>
+                        </div>
+                        <script>
+                            document.getElementById('type').addEventListener('change', function() {
+                                if (this.value == "other") {
+                                    document.getElementById('othertext').hidden = false;
+                                } else {
+                                    document.getElementById('othertext').hidden = true;
+                                }
+                            });
+                        </script>
+
+
+                        <div class="form-group">
+                            <label for="guests" class="col-sm-3 control-label">How many guests</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="guests" value="" class="form-control1" placeholder="Number of guests" id="guests">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="type" class="col-sm-3 control-label">Event Type</label>
+                            <div class="col-sm-9">
+                                <select name="type" id="type" class="form-control1">
+                                    <option value="">Select One</option>
+                                    <option value="high" id="type">High Classic</option>
+                                    <option value="standard" id="type">Classic</option>
+                                    <option value="low">Normal</option>
+                                </select>
+                            </div>
+                        </div>
+
+                <div class="clearfix"> </div>
+
             <?php } else { ?>
                 <div class="tables">
                     <table class="table table-hover">
@@ -38,7 +90,7 @@
                             <th>Item Name</th>
                             <th>Cost (TZS)</th>
                             <th>Paid (TZS)</th>
-                            <th>Balance (TZS)</th>
+                            <th class="hidden-xs">Balance (TZS)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -53,7 +105,7 @@
                                 </td>
                                 <td><?php echo $english_format_number = number_format($bd->item_cost, 0, '.', ',');?></td>
                                 <td><?php echo $english_format_number = number_format($bd->item_paid, 0, '.', ','); ?></td>
-                                <td><?php echo $english_format_number = number_format($bd->item_cost-$bd->item_paid, 0, '.', ','); ?></td>
+                                <td class="hidden-xs"><?php echo $english_format_number = number_format($bd->item_cost-$bd->item_paid, 0, '.', ','); ?></td>
                             </tr>
                         <?php } ?>
                         </tbody>
@@ -77,23 +129,25 @@
             echo form_open('event/new_item/'.$event_id, $attributes);
             ?>
             <div class="modal-body">
-                <div id="the-message"></div>
-                <div class="form-group">
-                    <label for="itemname" class="col-sm-4 control-label">Item Name</label>
-                    <div class="col-sm-8">
-                        <input type="text" name="itemname" value="<?php echo set_value('itemname'); ?>" class="form-control1" id="itemname" placeholder="Item Name">
+                <div class="box">
+                    <div id="the-message"></div>
+                    <div class="form-group">
+                        <label for="itemname" class="col-sm-4 control-label">Item Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="itemname" value="<?php echo set_value('itemname'); ?>" class="form-control1" id="itemname" placeholder="Item Name">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="itemcost" class="col-sm-4 control-label">Item Cost</label>
-                    <div class="col-sm-8">
-                        <input type="text" name="itemcost" value="<?php echo set_value('itemcost'); ?>" class="form-control1" id="itemcost" placeholder="Item Cost">
+                    <div class="form-group">
+                        <label for="itemcost" class="col-sm-4 control-label">Item Cost</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="itemcost" value="<?php echo set_value('itemcost'); ?>" class="form-control1" id="itemcost" placeholder="Item Cost">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="itempaid" class="col-sm-4 control-label">Item Paid</label>
-                    <div class="col-sm-8">
-                        <input type="text" name="itempaid" value="<?php echo set_value('itempaid'); ?>" class="form-control1" id="itempaid" placeholder="Item Paid">
+                    <div class="form-group">
+                        <label for="itempaid" class="col-sm-4 control-label">Item Paid</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="itempaid" value="<?php echo set_value('itempaid'); ?>" class="form-control1" id="itempaid" placeholder="Item Paid">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,12 +172,14 @@
                 echo form_open_multipart('event/upload_budget/'.$event_id, $attributes);
             ?>
             <div class="modal-body">
-                <div id="upload-response"></div>
-                <div class="form-group">
-                    <label for="budget" class="col-sm-4 control-label">Browse File</label>
-                    <div class="col-sm-8">
-                        <input type="file" accept=".xls,.xlsx" name="budget" id="budget">
-                        <p class="help-block">Upload .xls or .xlsx file</p>
+                <div class="box">
+                    <div id="upload-response"></div>
+                    <div class="form-group">
+                        <label for="budget" class="col-sm-4 control-label">Browse File</label>
+                        <div class="col-sm-8">
+                            <input type="file" accept=".xls,.xlsx" name="budget" id="budget">
+                            <p class="help-block">Upload .xls or .xlsx file</p>
+                        </div>
                     </div>
                 </div>
             </div>

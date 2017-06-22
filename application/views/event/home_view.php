@@ -226,23 +226,25 @@
                         echo form_open('member/send_sms/'.base64_encode($event_id), $attributes);
                     ?>
                     <div class="modal-body">
-                        <div id="the-message"></div>
-                        <div class="form-group">
-                            <label for="to" class="col-sm-3 control-label">To:</label>
-                            <div class="col-sm-9">
-                                <select name="to" id="selector1" class="form-control1">
-                                    <option value="0">All members</option>
-                                    <?php if (!isset($member_group['error'])){
-                                    foreach($member_group as $mg){ ?>
-                                        <option value="<?php echo set_value(print $mg->group_id); ?>" id="location"><?php echo set_value(print $mg->group_name); ?></option>
-                                    <?php } }?>
-                                </select>
+                        <div class="box">
+                            <div id="the-message"></div>
+                            <div class="form-group">
+                                <label for="to" class="col-sm-3 control-label">To:</label>
+                                <div class="col-sm-9">
+                                    <select name="to" id="selector1" class="form-control1">
+                                        <option value="0">All members</option>
+                                        <?php if (!isset($member_group['error'])){
+                                            foreach($member_group as $mg){ ?>
+                                                <option value="<?php echo set_value(print $mg->group_id); ?>" id="location"><?php echo set_value(print $mg->group_name); ?></option>
+                                            <?php } }?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="message" class="col-sm-3 control-label">Sms</label>
-                            <div class="col-sm-9">
-                                <textarea name="sms" maxlength="160" rows="4" class="form-control" id="sms" placeholder="Type your text here..." required></textarea>
+                            <div class="form-group">
+                                <label for="message" class="col-sm-3 control-label">Sms</label>
+                                <div class="col-sm-9">
+                                    <textarea name="sms" maxlength="160" rows="4" class="form-control" id="sms" placeholder="Type your text here..." required></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>

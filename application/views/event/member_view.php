@@ -20,22 +20,21 @@
     <?php if(isset($this->session->admin_id)) {
         if (isset($member_details['error']) && $member_details['error'] == "0") { ?>
             <div class="blank-page">
-                <h4>
-                    <div class="col-md-3"> All Members</div>
-                    <div class="col-md-9">
+                <h4><div class="col-sm-2 col-xs-12">All Members</div>
+<!--                    <div class="col-md-9">-->
                         <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
-                            <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#newGroup" data-placement="bottom" title="Create Group"><i class="fa fa-users"></i> Create Group</a>&nbsp;
-                            <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#newMember" data-placement="bottom" title="New Member"><i class="fa fa-user-plus"></i> New Member</a>&nbsp;
-                            <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#uploadMembers" data-placement="bottom" title="Upload Members File"><i class="fa fa-upload"></i> Upload Members</a>
-                            <a href="<?php echo site_url('event/template/member')?>" class="btn btn-xs btn-success pull-right" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" >&nbsp;<i class="fa fa-download"></i> Download Template&nbsp;</a>
+                            <a href="#" class="col-xs-12 btn btn-sm btn-success " data-toggle="modal" data-target="#newGroup" data-placement="bottom" title="Create Group"><i class="fa fa-users"></i> Create Group&nbsp;</a>&nbsp;
+                            <a href="#" class="col-xs-12 btn btn-sm btn-success" data-toggle="modal" data-target="#newMember" data-placement="bottom" title="New Member"><i class="fa fa-user-plus"></i> New Member&nbsp;</a>&nbsp;
+                            <a href="#" class="col-xs-12 btn btn-sm btn-success" data-toggle="modal" data-target="#uploadMembers" data-placement="bottom" title="Upload Members File"><i class="fa fa-upload"></i> Upload Members&nbsp;</a>
+                            <a href="<?php echo site_url('event/template/member')?>" class="col-xs-12 btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" >&nbsp;<i class="fa fa-download"></i> Download Template&nbsp;&nbsp;</a>
                         <?php } ?>
-                    </div>
+<!--                    </div>-->
                 </h4>
                 <hr>
                 No members found. Create <a href="#" data-toggle="modal" data-target="#newMember">new member</a> or upload your members file.
             </div>
         <?php } else { ?>
-            <div class="col-md-3 compose">
+            <div class="col-sm-3 compose">
                 <nav class="nav-sidebar">
                     <ul class="nav tabs">
                         <li class="active"><a href="#allMembers" data-toggle="tab">All Members</a></li>
@@ -46,17 +45,17 @@
                     </ul>
                 </nav>
             </div>
-            <div class="col-md-9 tab-content tab-content-in">
+            <div class="col-sm-9 tab-content tab-content-in">
                 <div class="tab-pane active text-style" id="allMembers">
                     <div class="blank-page">
                         <h4>
-                            <div class="col-md-3"> All Members</div>
-                            <div class="col-md-9">
+                            <div class="col-sm-3 col-xs-12"> All Members</div>
+                            <div class="col-sm-9 col-xs-12">
                             <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
-                                <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#newGroup" data-placement="bottom" title="Create Group"><i class="fa fa-users"></i> Create Group</a>&nbsp;
-                                <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#newMember" data-placement="bottom" title="New Member"><i class="fa fa-user-plus"></i> New Member</a>&nbsp;
-                                <a href="#" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#uploadMembers" data-placement="bottom" title="Upload Members File"><i class="fa fa-upload"></i> Upload Members</a>
-                                <a href="<?php echo site_url('event/template/member')?>" class="btn btn-xs btn-success pull-right" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" >&nbsp;<i class="fa fa-download"></i> Download Template&nbsp;</a>
+                                <a href="#" class="col-xs-12 col-sm-3 btn btn-sm btn-success" data-toggle="modal" data-target="#newGroup" data-placement="bottom" title="Create Group"><i class="fa fa-users"></i>Create Group</a>
+                                <a href="#" class="col-xs-12 col-sm-3 btn btn-sm btn-success" data-toggle="modal" data-target="#newMember" data-placement="bottom" title="New Member"><i class="fa fa-user-plus"></i>New Member</a>
+                                <a href="#" class="col-xs-12 col-sm-3 btn btn-sm btn-success" data-toggle="modal" data-target="#uploadMembers" data-placement="bottom" title="Upload Members File"><i class="fa fa-upload"></i>Upload Members</a>
+                                <a href="<?php echo site_url('event/template/member')?>" class="col-xs-12 col-sm-3 btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" ><i class="fa fa-download"></i>Download Template</a>
                             <?php } ?>
                             </div>
                         </h4>
@@ -72,10 +71,10 @@
                                 <thead>
                                 <tr>
                                     <th>Member Name</th>
-                                    <th>Phone Number</th>
+                                    <th class="hidden-xs">Phone Number</th>
                                     <th>Pledge (TZS)</th>
                                     <th>Cash (TZS)</th>
-                                    <th>Balance (TZS)</th>
+                                    <th class="hidden-xs">Balance (TZS)</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -88,13 +87,13 @@
                                                 echo $md->member_name;
                                             } ?>
                                         </td>
-                                        <td><?php echo $md->member_phone ?></td>
+                                        <td class="hidden-xs"><?php echo $md->member_phone ?></td>
                                         <td><?php echo $english_format_number = number_format($md->member_pledge, 0, '.', ',');?></td>
                                         <td><?php echo $english_format_number = number_format($md->member_cash, 0, '.', ','); ?></td>
                                         <?php if($md->member_pledge >= $md->member_cash) {
                                             $balance = $md->member_pledge - $md->member_cash;
                                         } else { $balance = 0; } ?>
-                                        <td><?php echo $english_format_number = number_format($balance, 0, '.', ','); ?></td>
+                                        <td class="hidden-xs"><?php echo $english_format_number = number_format($balance, 0, '.', ','); ?></td>
                                     </tr>
                                 <?php } ?>
                                 </tbody>
@@ -183,46 +182,48 @@
             echo form_open('event/new_member/'.$event_id, $attributes);
             ?>
             <div class="modal-body">
-                <div id="the-message"></div>
-                <div class="form-group">
-                    <label for="membername" class="col-sm-4 control-label">Member Name</label>
-                    <div class="col-sm-8">
-                        <input type="text" name="membername" value="<?php echo set_value('membername'); ?>" class="form-control1" id="membername" placeholder="Member Name">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="memberpledge" class="col-sm-4 control-label">Member Pledge</label>
-                    <div class="col-sm-8">
-                        <input type="text" name="memberpledge" value="<?php echo set_value('memberpledge'); ?>" class="form-control1" id="memberpledge" placeholder="Member Pledge">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="membercash" class="col-sm-4 control-label">Member Cash</label>
-                    <div class="col-sm-8">
-                        <input type="text" name="membercash" value="<?php echo set_value('membercash'); ?>" class="form-control1" id="membercash" placeholder="Member Cash">
-                        <?php echo form_error('membercash'); ?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="memberphone" class="col-sm-4 control-label">Phone Number</label>
-                    <div class="col-sm-8">
-                        <input type="text" name="memberphone" value="<?php echo set_value('memberphone'); ?>" class="form-control1" id="memberphone" placeholder="Phone Number">
-                        <?php echo form_error('memberphone'); ?>
-                    </div>
-                </div>
-                <?php if (!isset($member_group['error'])) {?>
+                <div class="box">
+                    <div id="the-message"></div>
                     <div class="form-group">
-                        <label for="group" class="col-sm-4 control-label">Group</label>
+                        <label for="membername" class="col-sm-4 control-label">Member Name</label>
                         <div class="col-sm-8">
-                            <select name="group" id="selector1" class="form-control1">
-                                <option value="">Select Group</option>
-                                <?php foreach($member_group as $mg){ ?>
-                                    <option value="<?php echo $mg->group_id; ?>" id="group"><?php echo $mg->group_name; ?></option>
-                                <?php } ?>
-                            </select>
+                            <input type="text" name="membername" value="<?php echo set_value('membername'); ?>" class="form-control1" id="membername" placeholder="Member Name">
                         </div>
                     </div>
-                <?php } ?>
+                    <div class="form-group">
+                        <label for="memberpledge" class="col-sm-4 control-label">Member Pledge</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="memberpledge" value="<?php echo set_value('memberpledge'); ?>" class="form-control1" id="memberpledge" placeholder="Member Pledge">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="membercash" class="col-sm-4 control-label">Member Cash</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="membercash" value="<?php echo set_value('membercash'); ?>" class="form-control1" id="membercash" placeholder="Member Cash">
+                            <?php echo form_error('membercash'); ?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberphone" class="col-sm-4 control-label">Phone Number</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="memberphone" value="<?php echo set_value('memberphone'); ?>" class="form-control1" id="memberphone" placeholder="Phone Number">
+                            <?php echo form_error('memberphone'); ?>
+                        </div>
+                    </div>
+                    <?php if (!isset($member_group['error'])) {?>
+                        <div class="form-group">
+                            <label for="group" class="col-sm-4 control-label">Group</label>
+                            <div class="col-sm-8">
+                                <select name="group" id="selector1" class="form-control1">
+                                    <option value="">Select Group</option>
+                                    <?php foreach($member_group as $mg){ ?>
+                                        <option value="<?php echo $mg->group_id; ?>" id="group"><?php echo $mg->group_name; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Cancel</button>
@@ -245,11 +246,13 @@
             echo form_open('member/new_group/'.$event_id, $attributes);
             ?>
             <div class="modal-body">
-                <div id="the-response"></div>
-                <div class="form-group">
-                    <label for="groupname" class="col-sm-4 control-label">Group Name</label>
-                    <div class="col-sm-8">
-                        <input type="text" name="groupname" value="<?php echo set_value('groupname'); ?>" class="form-control1" id="groupname" placeholder="Group Name">
+                <div class="box">
+                    <div id="the-response"></div>
+                    <div class="form-group">
+                        <label for="groupname" class="col-sm-4 control-label">Group Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="groupname" value="<?php echo set_value('groupname'); ?>" class="form-control1" id="groupname" placeholder="Group Name">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -274,12 +277,14 @@
             echo form_open_multipart('event/upload_members/'.$event_id, $attributes);
             ?>
             <div class="modal-body">
-                <div id="upload-response"></div>
-                <div class="form-group">
-                    <label for="members" class="col-sm-4 control-label">Browse File</label>
-                    <div class="col-sm-8">
-                        <input type="file" accept=".xls,.xlsx" name="members" id="members">
-                        <p class="help-block">Upload .xls or .xlsx file</p>
+                <div class="box">
+                    <div id="upload-response"></div>
+                    <div class="form-group">
+                        <label for="members" class="col-sm-4 control-label">Browse File</label>
+                        <div class="col-sm-8">
+                            <input type="file" accept=".xls,.xlsx" name="members" id="members">
+                            <p class="help-block">Upload .xls or .xlsx file</p>
+                        </div>
                     </div>
                 </div>
             </div>
