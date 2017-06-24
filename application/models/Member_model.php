@@ -84,6 +84,11 @@ class Member_model extends CI_Model {
         $this->db->delete('member');
     }
 
+    public function delete_all_member($id){
+        $this->db->where('event_id', $id);
+        $this->db->delete('member');
+    }
+
     /*
      * This function returns member details of the selected member
      */

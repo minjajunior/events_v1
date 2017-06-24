@@ -1724,9 +1724,19 @@ label.control-label {
     border-color: #009cde;
 }
 
-.btn-danger:hover, .btn-danger:focus {
+.btn-danger:hover, .btn-danger:focus, .btn-danger:disabled {
     background: #009cde;
     border-color: #009cde;
+}
+
+.btn-warning {
+    background: #d9534f;
+    border-color: #d43f3a;
+}
+
+.btn-warning:hover, .btn-warning:focus {
+    background: #d43f3a;
+    border-color: #d9534f;
 }
 /*--calendar--*/
 .calendar{

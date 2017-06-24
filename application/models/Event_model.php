@@ -264,6 +264,14 @@ class Event_model extends CI_Model {
     }
 
     /*
+     * This function is deleting all items
+     */
+    public function delete_all_items($id){
+        $this->db->where('event_id', $id);
+        $this->db->delete('budget');
+    }
+
+    /*
      * This function returns the sum of pledge of the selected event
      */
     public function pledge_sum($id){

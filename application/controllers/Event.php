@@ -42,7 +42,6 @@ class Event extends CI_Controller
             $data['event_details'] = $this->event_model->event_details($id);
             $data['event_id'] = $id;
             $this->load->view('event/default_view', $data);
-
         }else{
             redirect(base_url());
         }
@@ -725,6 +724,12 @@ class Event extends CI_Controller
 
     public function delete_item($id){
         $this->event_model->delete_item($id);
+        $data = array('success' => true);
+        echo json_encode($data);
+    }
+
+    public function delete_all_items($id){
+        $this->event_model->delete_all_items($id);
         $data = array('success' => true);
         echo json_encode($data);
     }

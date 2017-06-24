@@ -20,15 +20,15 @@
     <?php if(isset($this->session->admin_id)) {
         if (isset($member_details['error']) && $member_details['error'] == "0") { ?>
             <div class="blank-page">
-                <h4><div class="col-sm-2 col-xs-12">All Members</div>
-<!--                    <div class="col-md-9">-->
+                <h4><div class="col-sm-3 col-xs-12">All Members</div>
+                    <div class="col-sm-9">
                         <?php if (date_add(date_create($event_date), date_interval_create_from_date_string('7 days')) > date_create(date('Y-m-d'))) { ?>
-                            <a href="#" class="col-xs-12 btn btn-sm btn-success " data-toggle="modal" data-target="#newGroup" data-placement="bottom" title="Create Group"><i class="fa fa-users"></i> Create Group&nbsp;</a>&nbsp;
-                            <a href="#" class="col-xs-12 btn btn-sm btn-success" data-toggle="modal" data-target="#newMember" data-placement="bottom" title="New Member"><i class="fa fa-user-plus"></i> New Member&nbsp;</a>&nbsp;
-                            <a href="#" class="col-xs-12 btn btn-sm btn-success" data-toggle="modal" data-target="#uploadMembers" data-placement="bottom" title="Upload Members File"><i class="fa fa-upload"></i> Upload Members&nbsp;</a>
-                            <a href="<?php echo site_url('event/template/member')?>" class="col-xs-12 btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" >&nbsp;<i class="fa fa-download"></i> Download Template&nbsp;&nbsp;</a>
+                            <a href="#" class="col-xs-12 col-sm-3 btn btn-sm btn-success" data-toggle="modal" data-target="#newGroup" data-placement="bottom" title="Create Group"><i class="fa fa-users"></i> Create Group</a>
+                            <a href="#" class="col-xs-12 col-sm-3 btn btn-sm btn-success" data-toggle="modal" data-target="#newMember" data-placement="bottom" title="New Member"><i class="fa fa-user-plus"></i> New Member</a>
+                            <a href="#" class="col-xs-12 col-sm-3 btn btn-sm btn-success" data-toggle="modal" data-target="#uploadMembers" data-placement="bottom" title="Upload Members File"><i class="fa fa-upload"></i> Upload Members</a>
+                            <a href="<?php echo site_url('event/template/member')?>" class="col-xs-12 col-sm-3 btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Download Budget Template" ><i class="fa fa-download"></i> Download Template</a>
                         <?php } ?>
-<!--                    </div>-->
+                    </div>
                 </h4>
                 <hr>
                 No members found. Create <a href="#" data-toggle="modal" data-target="#newMember">new member</a> or upload your members file.
@@ -67,7 +67,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <a href="#" class="btn btn-xs btn-danger pull-right" data-toggle="modal" data-target="#newGroup"> <i class="fa fa-trash"></i> Delete All</a>
+                            <a href="#" class="col-xs- 12 btn btn-sm btn-warning pull-right" data-toggle="modal" data-target="#deleteAll"> <i class="fa fa-trash"></i> Delete All</a>
                         </div>
                         <div class="tables">
                             <table class="table table-hover" id="members-list">
@@ -293,9 +293,30 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-danger">Upload</button>
+                <button type="submit" id="uploadBtn" data-loading-text="Uploading..." data-complete-text="Uploaded" class="btn btn-primary" autocomplete="off">
+                    Upload
+                </button>
             </div>
             </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="deleteAll" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h2 class="modal-title">Delete All Members</h2>
+            </div>
+            <div class="modal-body">
+                <div class="delete-message"></div>
+                <p>Are you sure you want to delete all members?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Cancel</button>
+                <a href="javascript:void(0)" class="delete_all_member btn btn-danger" rel="<?php echo $event_id; ?>" id="member_view">Delete</a>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
@@ -383,6 +404,8 @@
             var formD = $(form)[0];
             var formData = new FormData(formD);
 
+            var $btn = $('#uploadBtn').button('loading')
+
             $.ajax({
                 url: form.attr('action'),
                 type: 'post',
@@ -394,6 +417,7 @@
                 processData: false,
                 success: function (response) {
                     if(response.success == true){
+                        $btn.button('complete');
                         $('#upload-response').append('<div class="alert alert-success">' +
                             '<i class="fa fa-check"></i>' +
                             ' Members Uploaded Successfully' +
@@ -426,6 +450,7 @@
                                 $(this).remove();
                             });
                         });
+                        $btn.button('reset');
                     }
                 }
             });
@@ -497,6 +522,40 @@
                     if(response.success == true) {
                         $('#delete'+group_id).modal('hide');
                         getContentView(postValue);
+                    }
+                }
+            });
+        });
+
+        $('.modal-footer').on("click", ".delete_all_member", function () {
+            var view_name = 'member_view';
+
+            var postValue = {
+                'view_name': view_name,
+                'event_id': <?php echo $event_id?>,
+            };
+
+            $.ajax({
+                type:"POST",
+                url: "<?php echo base_url('member/delete_all_member/'.$event_id)?>",
+                //data:"id="+view_name,
+                data:postValue,
+                dataType: "json",
+                success: function(response) {
+                    if(response.success == true) {
+                        $('.delete-message').append('<div class="alert alert-success">' +
+                            '<i class="fa fa-check"></i>' +
+                            'All Members Deleted Successfully' +
+                            '</div>');
+
+
+                        $('.alert-success').delay(500).show(10, function() {
+                            $(this).delay(300).hide(10, function() {
+                                $('#deleteAll').modal('hide');
+
+                                getContentView(postValue);
+                            });
+                        });
                     }
                 }
             });
