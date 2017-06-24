@@ -148,5 +148,11 @@ class Member extends CI_Controller {
         $data = array('success' => true);
         echo json_encode($data);
     }
+
+    public function delete_all_member($id){
+        $this->member_model->delete_all_member($id);
+        $data = array('success' => true);
+        echo json_encode($data);
+    }
 }
 ?>
