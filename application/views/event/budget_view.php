@@ -138,6 +138,7 @@
             $attributes = array('class' => 'form-horizontal', 'id' => 'new_item');
             echo form_open('event/new_item/'.$event_id, $attributes);
             ?>
+
             <div class="modal-body">
                 <div class="box">
                     <div id="the-message"></div>
@@ -178,19 +179,20 @@
                 <h2 class="modal-title">Budget Estimator</h2>
             </div>
             <?php
-            $attributes = array('class' => 'form-horizontal', 'id' => 'estimator');
+            $attributes = array('class' => 'form-horizontal', 'id' => 'budget_estimate');
             echo form_open('event/estimator/'.$event_id, $attributes);
             ?>
             <div class="modal-body">
                 <div class="box">
+                    <div id="the-message"></div>
                     <div class="alert alert-info">
                         <i class="fa fa-info-circle"></i> This function is still under construction
                     </div>
                     <div id="the-message"></div>
                     <div class="form-group">
-                        <label for="guestno" class="col-sm-4 control-label">No of Guests</label>
+                        <label for="guest_no" class="col-sm-4 control-label">Number of Guests</label>
                         <div class="col-sm-8">
-                            <input type="text" name="guestno" value="<?php echo set_value('guestno'); ?>" class="form-control1" id="guestno" placeholder="No of Guests">
+                            <input type="text" name="guest_no" value="<?php echo set_value('guestno'); ?>" class="form-control1" id="guest_no" placeholder="Number of Guests">
                         </div>
                     </div>
                     <div class="form-group">
@@ -208,7 +210,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-danger disabled">Submit</button>
+                <button id="budget_s_button" type="submit" class="  btn btn-primary" style=''>Submit</button>
             </div>
             </form>
         </div><!-- /.modal-content -->
@@ -271,105 +273,59 @@
 <script>
     $(document).ready(function() {
 
-
-        $('#b_estimate_form').submit(function(e) {
-
+        $('#budget_estimate').submit(function(e) {
             e.preventDefault();
 
-            var id = document.getElementById("event_type");
-            var event_t = id.options[id.selectedIndex].value;
+            var me = $(this);
 
-            var n_guests=$('#n_guests').val();
+            $.ajax({
+                url: me.attr('action'),
+                type: 'post',
+                data: me.serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    if(response.success == true){
+                        $('#the-message').append('<div class="alert alert-success">' +
+                            '<i class="fa fa-check"></i>' +
+                            'Budget Created Successfully' +
+                            '</div>');
+                        $('.form-group').removeClass('has-error')
+                            .removeClass('has-success');
+                        $('.text-danger').remove();
 
-            var id2 = document.getElementById("e_standard");
-            var event_s = id2.options[id2.selectedIndex].value;
+                        // reset the form
+                        me[0].reset();
 
-            var event_id = $(this).attr("rel");
-
-
-            if((event_s='error')||(event_t='error')||(n_guests==="")){
-
-                $('#the-message_cat').append('<div class="alert alert-danger">' +
-                    '<span class="glyphicon glyphicon-ok"></span>' +
-                    'Unable to create the budget, Please complete all the details' +
-                    '</div>');
-
-
-                $('.alert-danger').delay(500).show(10, function() {
-                    $(this).delay(3000).hide(10, function() {
-                        $(this).remove();
-                    });
-                });
-
-            } else{
-
-                if($.isNumeric(n_guests)){
-
-                    var postData = {
-                        'event_s': event_s,
-                        'event_t':event_t,
-                        'event_id': event_id,
-                        'n_guests':n_guests
-                    };
-
-                    getEstimateBudget(postData);
-
-
-                } else{
-
-                    $('#the-message_cat').append('<div class="alert alert-danger">' +
-                        '<span class="glyphicon glyphicon-ok"></span>' +
-                        'Amounts must contain numbers only.' +
-                        '</div>');
-
-
-                    $('.alert-danger').delay(500).show(10, function() {
-                        $(this).delay(3000).hide(10, function() {
-                            $(this).remove();
+                        // close the message after seconds
+                        $('.alert-success').delay(500).show(10, function() {
+                            $(this).delay(3000).hide(10, function() {
+                                $(this).remove();
+                                $('#newItem').modal('hide');
+                                var postData = {
+                                    'view_name' : 'budget_view',
+                                    'event_id' : '<?php echo $event_id ?>'
+                                };
+                                getContentView(postData);
+                            });
+                        })
+                    }else {
+                        $.each(response.messages, function (key, value) {
+                            var element = $('#' + key);
+                            element.closest('div.form-group')
+                                .removeClass('has-error')
+                                .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                                .find('.text-danger')
+                                .remove();
+                            element.after(value)
                         });
-                    });
-
+                    }
                 }
+            });
 
-            }
 
         });
 
-        var getEstimateBudget = function(postData) {
 
-            $.ajax(
-                {
-                    type:"POST",
-                    url: "<?php echo base_url('reports/pdf_reports')?>",
-                    data:postData,
-                    dataType: 'json',
-                    success: function(data) {
-
-                        if(data.success == true){
-
-                            var $a = $("<a>");
-                            $a.attr("href",data.file);
-                            $("body").append($a);
-                            $a.attr("download",data.report_name);
-                            $a[0].click();
-                            $a.remove();
-                        } else if(data.success == false){
-
-                            //$('.alert-danger').remove();
-                            $('#pdf-response').html('<div >' +
-                                data.error + '</div>'
-                            );
-
-                            $("#pdf-error-dialog").modal("show");
-
-
-                        }
-
-                    },
-
-
-                });
-        }
 
         var getContentView = function(postData) {
             $.ajax({

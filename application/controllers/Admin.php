@@ -341,17 +341,6 @@ class Admin extends CI_Controller {
 
     }
 
-    public function estimator(){
-        $data['admin_details'] = $this->admin_model->admin_details($this->session->admin_id);
-        $data['location'] = $this->event_model->get_location();
-
-        if (!empty($this->session->admin_id)){
-            $this->load->view('admin/cost_estimate_view', $data);
-        } else {
-            redirect(base_url());
-        }
-    }
-
 
     public function settings(){
         $data['admin_details'] = $this->admin_model->admin_details($this->session->admin_id);
