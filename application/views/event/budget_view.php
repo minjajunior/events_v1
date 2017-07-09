@@ -30,71 +30,14 @@
             <hr>
             <?php if (isset($budget_details['error']) && $budget_details['error'] == "0") {?>
                 No budget items found. Create <a href="#" data-toggle="modal" data-target="#newItem"> new item</a> or upload your budget file or use our budget <a href="#" data-toggle="modal" data-target="#estimator"> estimator </a> to create your budget.
-<!--                <div class="grid-form1">-->
-<!--                    <h4 id="forms-horizontal">You can generate an estimate budget and customise it based on your need by completing below details</h4>-->
-<!--                    <div id="the-message_cat"></div>-->
-<!--                    <form class="form-horizontal" id="b_estimate_form" rel="--><?php //echo $event_id; ?><!--" method="POST" action="">-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="event_type" class="col-sm-3 control-label">Event Type</label>-->
-<!--                            <div class="col-sm-6">-->
-<!--                                <select name="event_type" id="event_type" class="form-control1">-->
-<!--                                    <option value="error">Select One</option>-->
-<!--                                    <option value="Wedding" >Wedding</option>-->
-<!--                                    <option value="Wedding" >Send Off</option>-->
-<!--                                    <option value="other">Other</option>-->
-<!--                                </select>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="othertext" class="col-sm-3 control-label"></label>-->
-<!--                            <div class="col-sm-6">-->
-<!--                                <input type="text" name="othertext" hidden="true" value="--><?php //echo set_value('othertext'); ?><!--" class="form-control1" placeholder="Event Type" id="othertext">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!---->
-<!--                        <script>-->
-<!--                            document.getElementById('event_type').addEventListener('change', function() {-->
-<!--                                if (this.value == "other") {-->
-<!--                                    document.getElementById('othertext').hidden = false;-->
-<!--                                } else {-->
-<!--                                    document.getElementById('othertext').hidden = true;-->
-<!--                                }-->
-<!--                            });-->
-<!--                        </script>-->
-<!---->
-<!--                        <div class="form-group">-->
-<!--                            <label for="n_guests" class="col-sm-3 control-label">How many guests</label>-->
-<!--                            <div class="col-sm-6">-->
-<!--                                <input type="text" name="n_guests" value="" class="form-control1" placeholder="Number of guests" id="n_guests">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="e_standard" class="col-sm-3 control-label">Event Standard</label>-->
-<!--                            <div class="col-sm-6">-->
-<!--                                <select name="e_standard" id="e_standard" class="form-control1">-->
-<!--                                    <option value="error">Select One</option>-->
-<!--                                    <option value="high" id="type">High Classic</option>-->
-<!--                                    <option value="standard" id="type">Classic</option>-->
-<!--                                    <option value="low">Normal</option>-->
-<!--                                </select>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <div class="col-sm-offset-3 col-sm-8 col-xs-12">-->
-<!--                                <button id="budget_s_button" type="submit" class="  btn btn-sm btn-primary" style=''>Create Budget Report</button>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </form>-->
-<!--                </div>-->
-
                 <div class="clearfix"></div>
 
             <?php } else { ?>
                 <div class="col-md-12">
-                    <a href="#" class="col-xs- 12 btn btn-sm btn-warning pull-right" data-toggle="modal" data-target="#deleteAll"> <i class="fa fa-trash"></i> Delete All</a>
+                    <a href="#" class=" col-sm-2 col-xs-12 btn btn-sm btn-warning pull-right" data-toggle="modal" data-target="#deleteAll"> <i class="fa fa-trash"></i> Delete All</a>
                 </div>
                 <div class="tables">
-                    <table class="table table-hover">
+                    <table id="table_item" class="table table-hover">
                         <thead>
                         <tr>
                             <th>Item Name</th>
@@ -272,6 +215,11 @@
 
 <script>
     $(document).ready(function() {
+
+        $('#table_item').DataTable({
+            "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>"+"<'row'<'col-sm-12'tr>>"+"<'row'<'col-sm-6 col-xs-12' i><'col-sm-6 col-xs-12'p>>",
+//            "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>"+"<'row'<'col-sm-12'tr>>"+"<'row'<'col-sm-6 col-xs-12' i><'col-sm-6 col-xs-12'p>>",
+        });
 
         $('#budget_estimate').submit(function(e) {
             e.preventDefault();

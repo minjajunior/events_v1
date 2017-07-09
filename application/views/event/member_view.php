@@ -60,17 +60,17 @@
                             </div>
                         </h4>
                         <br><br>
-                        <div class="col-md-6">
-                            <div class="input-group input-group-in">
-                                <input type="text" id="search" onkeyup="searchFunction()" class="form-control2 input-search" placeholder="Search...">
-                                <span class="input-group-btn"><button class="btn btn-danger" type="button"><i class="fa fa-search"></i></button></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <a href="#" class="col-xs- 12 btn btn-sm btn-warning pull-right" data-toggle="modal" data-target="#deleteAll"> <i class="fa fa-trash"></i> Delete All</a>
+<!--                        <div class="col-md-6">-->
+<!--                            <div class="input-group input-group-in">-->
+<!--                                <input type="text" id="search" onkeyup="searchFunction()" class="form-control2 input-search" placeholder="Search...">-->
+<!--                                <span class="input-group-btn"><button class="btn btn-danger" type="button"><i class="fa fa-search"></i></button></span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <div class="col-md-12">
+                            <a href="#" class=" col-sm-2 col-xs-12 btn btn-sm btn-warning pull-right" data-toggle="modal" data-target="#deleteAll"> <i class="fa fa-trash"></i>Delete All</a>
                         </div>
                         <div class="tables">
-                            <table class="table table-hover" id="members-list">
+                            <table class="table table-hover" id="table_members">
                                 <thead>
                                 <tr>
                                     <th>Member Name</th>
@@ -323,8 +323,13 @@
 
 <script>
     $(document).ready(function() {
-        /*$('#members-list').DataTable();*/
-        var getContentView = function(postData) {
+
+        $('#table_members').DataTable({
+             "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>"+"<'row'<'col-sm-12'tr>>"+"<'row'<'col-sm-6 col-xs-12' i><'col-sm-6 col-xs-12'p>>",
+//            "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>"+"<'row'<'col-sm-12'tr>>"+"<'row'<'col-sm-6 col-xs-12' i><'col-sm-6 col-xs-12'p>>",
+        });
+
+        var getContentView = function(postData){
             $.ajax({
                 type:"POST",
                 url: "<?php echo base_url('event/load_views')?>",

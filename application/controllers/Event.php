@@ -736,6 +736,8 @@ class Event extends CI_Controller
 
     public function estimator($id){
 
+        $event_details = $this->event_model->event_details($id);
+
         $data['event_id'] = $id;
         if (!empty($this->session->admin_id)) {
 
@@ -754,114 +756,398 @@ class Event extends CI_Controller
                 }
             } else {
 
-                if ($standard == 'royal') {
 
-                    $venue = 3000000;
-                    $catering = $guest_no * 20000;
-                    $wed_cake = 800000;
-                    $grilled_goal = 500000;
-                    $beverage = $guest_no * 2500 * 8;
-                    $b_bouquet = 100000;
-                    $e_decor = 2000000;
-                    $Boutonnieres = 50000;
-                    $Corsages = 50000;
-                    $b_maid_Bouquets = 60000;
-                    $Flower_Petals = 50000;
-                    $wed_car = 400000;
-                    $p_m_cars = 300000;
-                    $g_shuttles = 300000;
-                    $photo_video = 1500000;
-                    $b_wed_dress = 100000;
-                    $maid_dress = 500000;
-                    $gr_suit = 500000;
-                    $b_hair_makeup = 300000;
-                    $b_accessories = 500000;
-                    $gr_accessories = 200000;
-                    $music_mc = 2000000;
-                    $gifts_par = 300000;
-                    $gifts_guests = $guest_no *6500;
-                    $eng_ring = 800000;
-                    $wed_ring = 1000000;
-                    $in_cards = $guest_no *5500;
-                    $guest_book = 150000;
-                    $honey_moon = 1500000;
+                if($event_details[0]->event_type=='Wedding'){
 
 
-                } elseif ($standard == 'classic') {
+                    if ($standard == 'royal') {
 
-                    $venue = 2000000;
-                    $catering = $guest_no * 16000;
-                    $wed_cake = 500000;
-                    $grilled_goal = 400000;
-                    $beverage = $guest_no * 2500 * 5;
-                    $b_bouquet = 70000;
-                    $e_decor = 1500000;
-                    $Boutonnieres = 50000;
-                    $Corsages = 50000;
-                    $b_maid_Bouquets = 60000;
-                    $Flower_Petals = 50000;
-                    $wed_car = 400000;
-                    $p_m_cars = 300000;
-                    $g_shuttles = 300000;
-                    $photo_video = 1500000;
-                    $b_wed_dress = 700000;
-                    $maid_dress = 350000;
-                    $gr_suit = 300000;
-                    $b_hair_makeup = 200000;
-                    $b_accessories = 400000;
-                    $gr_accessories = 300000;
-                    $music_mc = 1500000;
-                    $gifts_par = 200000;
-                    $gifts_guests = $guest_no * 4500;
-                    $eng_ring = 400000;
-                    $wed_ring = 600000;
-                    $in_cards = $guest_no *3500;
-                    $guest_book = 150000;
-                    $honey_moon = 1000000;
+                        $venue = 3000000;
+                        $catering = $guest_no * 20000;
+                        $wed_cake = 800000;
+                        $grilled_goal = 500000;
+                        $beverage = $guest_no * 2500 * 8;
+                        $b_bouquet = 100000;
+                        $e_decor = 2000000;
+                        $Boutonnieres = 50000;
+                        $Corsages = 50000;
+                        $b_maid_Bouquets = 60000;
+                        $Flower_Petals = 50000;
+                        $wed_car = 400000;
+                        $p_m_cars = 300000;
+                        $g_shuttles = 300000;
+                        $photo_video = 1500000;
+                        $b_wed_dress = 100000;
+                        $maid_dress = 500000;
+                        $gr_suit = 500000;
+                        $b_hair_makeup = 300000;
+                        $b_accessories = 500000;
+                        $gr_accessories = 200000;
+                        $music_mc = 2000000;
+                        $gifts_par = 300000;
+                        $gifts_guests = $guest_no *6500;
+                        $eng_ring = 800000;
+                        $wed_ring = 1000000;
+                        $in_cards = $guest_no *5500;
+                        $guest_book = 150000;
+                        $honey_moon = 1500000;
 
-                } elseif ($standard == 'normal') {
+                        $items = array("Venue" => $venue, "Catering" => $catering, "Wedding Cake" => $wed_cake, "Whole Grilled Goat" => $grilled_goal, "Beverage" => $beverage, "Bride Bouquet" => $b_bouquet
+                        , "Event Decoration" => $e_decor, "Boutonnieres" => $Boutonnieres, "Corsages" => $Corsages, "Bride Maid Bouquets" => $b_maid_Bouquets, "Flower Petals" => $Flower_Petals
+                        , "Special Wedding Car" => $wed_car, "Parents & Maids Cars" => $p_m_cars, "Guests Shuttles " => $g_shuttles, "Photography & Video" => $photo_video, "Bride's Wedding Dress" => $b_wed_dress
+                        , "Groom's Suit/Tuxedo" => $gr_suit, "Bride's Hair & Makeup" => $b_hair_makeup, "Maids Dresses"=>$maid_dress,  "Bride's Accessories (Includes headpiece, veil, shoes, lingerie, jewelry, sash, handbag, garter, etc.)" => $b_accessories
+                        , "Groom's Accessories((Includes cuff links, cummerbund, tie, pocket square, shoes, jewelry, etc.)" => $gr_accessories, "Music & MC " => $music_mc
+                        , "Gifts for Parents" => $gifts_par, "Gifts for Guests" => $gifts_guests, "Engagement Ring" => $eng_ring, "Wedding Ring" => $wed_ring, "Invitation Cards" => $in_cards
+                        , "Guest Book" => $guest_book, "Honey Moon" => $honey_moon);
 
 
-                    $venue = 1500000;
-                    $catering = $guest_no * 12000;
-                    $wed_cake = 300000;
-                    $grilled_goal = 300000;
-                    $beverage = $guest_no * 2500 * 3;
-                    $b_bouquet = 70000;
-                    $e_decor = 1000000;
-                    $Boutonnieres = 50000;
-                    $Corsages = 50000;
-                    $b_maid_Bouquets = 60000;
-                    $Flower_Petals = 50000;
-                    $wed_car = 300000;
-                    $p_m_cars = 200000;
-                    $g_shuttles = 200000;
-                    $photo_video = 1000000;
-                    $b_wed_dress = 400000;
-                    $maid_dress = 250000;
-                    $gr_suit = 250000;
-                    $b_hair_makeup = 150000;
-                    $b_accessories = 200000;
-                    $gr_accessories = 200000;
-                    $music_mc = 1000000;
-                    $gifts_par = 200000;
-                    $gifts_guests = $guest_no * 2500;
-                    $eng_ring = 200000;
-                    $wed_ring = 400000;
-                    $in_cards = $guest_no *2500;
-                    $guest_book = 150000;
-                    $honey_moon = 700000;
 
+                    } elseif ($standard == 'classic') {
+
+                        $venue = 2000000;
+                        $catering = $guest_no * 16000;
+                        $wed_cake = 500000;
+                        $grilled_goal = 400000;
+                        $beverage = $guest_no * 2500 * 5;
+                        $b_bouquet = 70000;
+                        $e_decor = 1500000;
+                        $Corsages = 50000;
+                        $b_maid_Bouquets = 60000;
+                        $Flower_Petals = 50000;
+                        $wed_car = 400000;
+                        $p_m_cars = 300000;
+                        $g_shuttles = 300000;
+                        $photo_video = 1500000;
+                        $b_wed_dress = 700000;
+                        $maid_dress = 350000;
+                        $gr_suit = 300000;
+                        $b_hair_makeup = 200000;
+                        $b_accessories = 400000;
+                        $gr_accessories = 300000;
+                        $music_mc = 1500000;
+                        $gifts_par = 200000;
+                        $gifts_guests = $guest_no * 4500;
+                        $eng_ring = 400000;
+                        $wed_ring = 600000;
+                        $in_cards = $guest_no *3500;
+                        $guest_book = 150000;
+                        $honey_moon = 1000000;
+
+                        $items = array("Venue" => $venue, "Catering" => $catering, "Wedding Cake" => $wed_cake, "Whole Grilled Goat" => $grilled_goal, "Beverage" => $beverage, "Bride Bouquet" => $b_bouquet
+                        , "Event Decoration" => $e_decor, "Corsages" => $Corsages, "Bride Maid Bouquets" => $b_maid_Bouquets, "Flower Petals" => $Flower_Petals
+                        , "Special Wedding Car" => $wed_car, "Parents & Maids Cars" => $p_m_cars, "Guests Shuttles " => $g_shuttles, "Photography & Video" => $photo_video, "Bride's Wedding Dress" => $b_wed_dress
+                        , "Groom's Suit/Tuxedo" => $gr_suit, "Bride's Hair & Makeup" => $b_hair_makeup, "Maids Dresses"=>$maid_dress,  "Bride's Accessories (Includes headpiece, veil, shoes, lingerie, jewelry, sash, handbag, garter, etc.)" => $b_accessories
+                        , "Groom's Accessories((Includes cuff links, cummerbund, tie, pocket square, shoes, jewelry, etc.)" => $gr_accessories, "Music & MC " => $music_mc
+                        , "Gifts for Parents" => $gifts_par, "Gifts for Guests" => $gifts_guests, "Engagement Ring" => $eng_ring, "Wedding Ring" => $wed_ring, "Invitation Cards" => $in_cards
+                        , "Guest Book" => $guest_book, "Honey Moon" => $honey_moon);
+
+                    } elseif ($standard == 'normal') {
+
+
+                        $venue = 1500000;
+                        $catering = $guest_no * 12000;
+                        $wed_cake = 300000;
+                        $beverage = $guest_no * 2500 * 3;
+                        $b_bouquet = 70000;
+                        $e_decor = 1000000;
+                        $b_maid_Bouquets = 60000;
+                        $wed_car = 300000;
+                        $p_m_cars = 200000;
+                        $g_shuttles = 200000;
+                        $photo_video = 1000000;
+                        $b_wed_dress = 400000;
+                        $maid_dress = 250000;
+                        $gr_suit = 250000;
+                        $b_hair_makeup = 150000;
+                        $b_accessories = 200000;
+                        $gr_accessories = 200000;
+                        $music_mc = 1000000;
+                        $gifts_par = 200000;
+                        $eng_ring = 200000;
+                        $wed_ring = 400000;
+                        $in_cards = $guest_no *2500;
+
+                        $items = array("Venue" => $venue, "Catering" => $catering, "Wedding Cake" => $wed_cake, "Beverage" => $beverage, "Bride Bouquet" => $b_bouquet
+                        , "Event Decoration" => $e_decor, "Bride Maid Bouquets" => $b_maid_Bouquets, "Special Wedding Car" => $wed_car, "Parents & Maids Cars" => $p_m_cars,
+                            "Guests Shuttles " => $g_shuttles, "Photography & Video" => $photo_video, "Bride's Wedding Dress" => $b_wed_dress
+                        , "Groom's Suit/Tuxedo" => $gr_suit, "Bride's Hair & Makeup" => $b_hair_makeup, "Maids Dresses"=>$maid_dress,  "Bride's Accessories (Includes headpiece, veil, shoes, lingerie, jewelry, sash, handbag, garter, etc.)" => $b_accessories
+                        , "Groom's Accessories((Includes cuff links, cummerbund, tie, pocket square, shoes, jewelry, etc.)" => $gr_accessories, "Music & MC " => $music_mc
+                        , "Gifts for Parents" => $gifts_par, "Engagement Ring" => $eng_ring, "Wedding Ring" => $wed_ring, "Invitation Cards" => $in_cards
+                        );
+
+                    }
+
+
+
+
+                }else if($event_details[0]->event_type=='Send Off'){
+
+                    if ($standard == 'royal') {
+
+                        $venue = 3000000;
+                        $catering = $guest_no * 20000;
+                        $wed_cake = 800000;
+                        $grilled_goal = 500000;
+                        $beverage = $guest_no * 2500 * 8;
+                        $b_bouquet = 100000;
+                        $e_decor = 2000000;
+                        $Corsages = 50000;
+                        $b_maid_Bouquets = 60000;
+                        $Flower_Petals = 50000;
+                        $wed_car = 400000;
+                        $p_m_cars = 300000;
+                        $g_shuttles = 300000;
+                        $photo_video = 1500000;
+                        $b_wed_dress = 100000;
+                        $maid_dress = 500000;
+                        $b_hair_makeup = 300000;
+                        $b_accessories = 500000;
+                        $gr_accessories = 200000;
+                        $music_mc = 2000000;
+                        $gifts_par = 300000;
+                        $gifts_guests = $guest_no *6500;
+                        $in_cards = $guest_no *5500;
+                        $guest_book = 150000;
+
+                        $items = array("Venue" => $venue, "Catering" => $catering, "Send Off Cake" => $wed_cake, "Whole Grilled Goat" => $grilled_goal, "Beverage" => $beverage, "Betrothed Bouquet" => $b_bouquet
+                        , "Event Decoration" => $e_decor, "Corsages" => $Corsages, "Betrothed Maid Bouquets" => $b_maid_Bouquets, "Flower Petals" => $Flower_Petals
+                        , "Special Car for Betrothed" => $wed_car, "Parents & Maids Cars" => $p_m_cars, "Guests Shuttles " => $g_shuttles, "Photography & Video" => $photo_video, "Betrothed's Wedding Dress" => $b_wed_dress
+                        , "Betrothed's Hair & Makeup" => $b_hair_makeup, "Maids Dresses"=>$maid_dress,  "Betrothed's Accessories (Includes headpiece, veil, shoes, lingerie, jewelry, sash, handbag, garter, etc.)" => $b_accessories
+                        , "Groom's Accessories((Includes cuff links, cummerbund, tie, pocket square, shoes, jewelry, etc.)" => $gr_accessories, "Music & MC " => $music_mc
+                        , "Gifts for Parents" => $gifts_par, "Gifts for Guests" => $gifts_guests,"Invitation Cards" => $in_cards
+                        , "Guest Book" => $guest_book);
+
+
+
+                    } elseif ($standard == 'classic') {
+
+                        $venue = 2000000;
+                        $catering = $guest_no * 16000;
+                        $wed_cake = 500000;
+                        $grilled_goal = 400000;
+                        $beverage = $guest_no * 2500 * 5;
+                        $b_bouquet = 70000;
+                        $e_decor = 1500000;
+                        $b_maid_Bouquets = 60000;
+                        $wed_car = 400000;
+                        $p_m_cars = 300000;
+                        $g_shuttles = 300000;
+                        $photo_video = 1500000;
+                        $b_wed_dress = 700000;
+                        $maid_dress = 350000;
+                        $b_hair_makeup = 200000;
+                        $b_accessories = 400000;
+                        $music_mc = 1500000;
+                        $gifts_par = 200000;
+                        $in_cards = $guest_no *3500;
+                        $guest_book = 150000;
+
+
+                        $items = array("Venue" => $venue, "Catering" => $catering, "Send Off Cake" => $wed_cake, "Whole Grilled Goat" => $grilled_goal, "Beverage" => $beverage, "Betrothed Bouquet" => $b_bouquet
+                        , "Event Decoration" => $e_decor, "Betrothed Maid Bouquets" => $b_maid_Bouquets
+                        , "Special Car for Betrothed" => $wed_car, "Parents & Maids Cars" => $p_m_cars, "Guests Shuttles " => $g_shuttles, "Photography & Video" => $photo_video, "Betrothed's Wedding Dress" => $b_wed_dress
+                        , "Betrothed's Hair & Makeup" => $b_hair_makeup, "Maids Dresses"=>$maid_dress,  "Betrothed's Accessories (Includes headpiece, veil, shoes, lingerie, jewelry, sash, handbag, garter, etc.)" => $b_accessories
+                        , "Music & MC " => $music_mc
+                        , "Gifts for Parents" => $gifts_par,"Invitation Cards" => $in_cards
+                        , "Guest Book" => $guest_book);
+
+                    } elseif ($standard == 'normal') {
+
+
+                        $venue = 1500000;
+                        $catering = $guest_no * 12000;
+                        $wed_cake = 300000;
+                        $grilled_goal = 300000;
+                        $beverage = $guest_no * 2500 * 3;
+                        $b_bouquet = 70000;
+                        $e_decor = 1000000;
+                        $b_maid_Bouquets = 60000;
+                        $wed_car = 300000;
+                        $p_m_cars = 200000;
+                        $g_shuttles = 200000;
+                        $photo_video = 1000000;
+                        $b_wed_dress = 400000;
+                        $maid_dress = 250000;
+                        $b_hair_makeup = 150000;
+                        $b_accessories = 200000;
+                        $music_mc = 1000000;
+                        $gifts_par = 200000;
+                        $in_cards = $guest_no *2500;
+
+                        $items = array("Venue" => $venue, "Catering" => $catering, "Send Off Cake" => $wed_cake, "Whole Grilled Goat" => $grilled_goal, "Beverage" => $beverage, "Betrothed Bouquet" => $b_bouquet
+                        , "Event Decoration" => $e_decor, "Betrothed Maid Bouquets" => $b_maid_Bouquets
+                        , "Special Car for Betrothed" => $wed_car, "Parents & Maids Cars" => $p_m_cars, "Guests Shuttles " => $g_shuttles, "Photography & Video" => $photo_video, "Betrothed's Wedding Dress" => $b_wed_dress
+                        , "Betrothed's Hair & Makeup" => $b_hair_makeup, "Maids Dresses"=>$maid_dress,  "Betrothed's Accessories (Includes headpiece, veil, shoes, lingerie, jewelry, sash, handbag, garter, etc.)" => $b_accessories
+                        , "Music & MC " => $music_mc
+                        , "Gifts for Parents" => $gifts_par,"Invitation Cards" => $in_cards
+                       );
+
+                    }
+
+
+
+
+                }else if($event_details[0]->event_type=='Kitchen Party'){
+
+                    if ($standard == 'royal') {
+
+                        $venue = 3000000;
+                        $catering = $guest_no * 20000;
+                        $wed_cake = 800000;
+                        $beverage = $guest_no * 2500 * 8;
+                        $b_bouquet = 100000;
+                        $e_decor = 2000000;
+                        $Corsages = 50000;
+                        $b_maid_Bouquets = 60000;
+                        $Flower_Petals = 50000;
+                        $wed_car = 400000;
+                        $p_m_cars = 300000;
+                        $g_shuttles = 300000;
+                        $photo_video = 1500000;
+                        $b_wed_dress = 100000;
+                        $b_hair_makeup = 300000;
+                        $b_accessories = 500000;
+                        $music_mc = 2000000;
+                        $gifts_par = 300000;
+                        $gifts_guests = $guest_no *6500;
+                        $in_cards = $guest_no *5500;
+                        $guest_book = 150000;
+
+
+                        $items = array("Venue" => $venue, "Catering" => $catering, "Cake" => $wed_cake, "Beverage" => $beverage, "Betrothed Bouquet" => $b_bouquet
+                        , "Event Decoration" => $e_decor, "Corsages" => $Corsages, "Betrothed Maid Bouquets" => $b_maid_Bouquets, "Flower Petals" => $Flower_Petals
+                        , "Special Car for Betrothed" => $wed_car, "Parents & Maids Cars" => $p_m_cars, "Guests Shuttles " => $g_shuttles, "Photography & Video" => $photo_video, "Betrothed's Wedding Dress" => $b_wed_dress,
+                        "Betrothed's Hair & Makeup" => $b_hair_makeup, "Betrothed's Accessories (Includes headpiece, veil, shoes, lingerie, jewelry, sash, handbag, garter, etc.)" => $b_accessories
+                        ,"Music & MC " => $music_mc
+                        , "Gifts for Parents" => $gifts_par,"Gifts for Guests" => $gifts_guests,"Invitation Cards" => $in_cards
+                        , "Guest Book" => $guest_book);
+
+
+                    } elseif ($standard == 'classic') {
+
+                        $venue = 2000000;
+                        $catering = $guest_no * 16000;
+                        $wed_cake = 500000;
+                        $beverage = $guest_no * 2500 * 5;
+                        $b_bouquet = 70000;
+                        $e_decor = 1500000;
+                        $Corsages = 50000;
+                        $b_maid_Bouquets = 60000;
+                        $Flower_Petals = 50000;
+                        $wed_car = 400000;
+                        $p_m_cars = 300000;
+                        $g_shuttles = 300000;
+                        $photo_video = 1500000;
+                        $b_wed_dress = 700000;
+                        $b_hair_makeup = 200000;
+                        $b_accessories = 400000;
+                        $music_mc = 1500000;
+                        $gifts_par = 200000;
+                        $gifts_guests = $guest_no * 4500;
+                        $in_cards = $guest_no *3500;
+                        $guest_book = 150000;
+
+                        $items = array("Venue" => $venue, "Catering" => $catering, "Cake" => $wed_cake, "Beverage" => $beverage, "Betrothed Bouquet" => $b_bouquet
+                        , "Event Decoration" => $e_decor, "Corsages" => $Corsages, "Betrothed Maid Bouquets" => $b_maid_Bouquets, "Flower Petals" => $Flower_Petals
+                        , "Special Car for Betrothed" => $wed_car, "Parents & Maids Cars" => $p_m_cars, "Guests Shuttles " => $g_shuttles, "Photography & Video" => $photo_video, "Betrothed's Wedding Dress" => $b_wed_dress,
+                            "Betrothed's Hair & Makeup" => $b_hair_makeup, "Betrothed's Accessories (Includes headpiece, veil, shoes, lingerie, jewelry, sash, handbag, garter, etc.)" => $b_accessories
+                        ,"Music & MC " => $music_mc
+                        , "Gifts for Parents" => $gifts_par,"Gifts for Guests" => $gifts_guests,"Invitation Cards" => $in_cards
+                        , "Guest Book" => $guest_book);
+
+                    } elseif ($standard == 'normal') {
+
+                        $venue = 1500000;
+                        $catering = $guest_no * 12000;
+                        $wed_cake = 300000;
+                        $beverage = $guest_no * 2500 * 3;
+                        $b_bouquet = 70000;
+                        $e_decor = 1000000;
+                        $b_maid_Bouquets = 60000;
+                        $wed_car = 300000;
+                        $p_m_cars = 200000;
+                        $g_shuttles = 200000;
+                        $photo_video = 1000000;
+                        $b_wed_dress = 400000;
+                        $b_hair_makeup = 150000;
+                        $b_accessories = 200000;
+                        $music_mc = 1000000;
+                        $gifts_par = 200000;
+                        $in_cards = $guest_no *2500;
+
+
+                        $items = array("Venue" => $venue, "Catering" => $catering, "Cake" => $wed_cake, "Beverage" => $beverage, "Betrothed Bouquet" => $b_bouquet
+                        , "Event Decoration" => $e_decor, "Betrothed Maid Bouquets" => $b_maid_Bouquets
+                        , "Special Car for Betrothed" => $wed_car, "Parents & Maids Cars" => $p_m_cars, "Guests Shuttles " => $g_shuttles, "Photography & Video" => $photo_video, "Betrothed's Wedding Dress" => $b_wed_dress,
+                            "Betrothed's Hair & Makeup" => $b_hair_makeup, "Betrothed's Accessories (Includes headpiece, veil, shoes, lingerie, jewelry, sash, handbag, garter, etc.)" => $b_accessories
+                        ,"Music & MC " => $music_mc
+                        , "Gifts for Parents" => $gifts_par,"Invitation Cards" => $in_cards
+                        );
+
+                    }
+
+
+                }else{
+
+                    if ($standard == 'royal') {
+
+                        $venue = 3000000;
+                        $catering = $guest_no * 20000;
+                        $wed_cake = 800000;
+                        $beverage = $guest_no * 2500 * 8;
+                        $e_decor = 2000000;
+                        $g_shuttles = 300000;
+                        $photo_video = 1500000;
+                        $music_mc = 2000000;
+                        $in_cards = $guest_no *5500;
+                        $guest_book = 150000;
+
+
+                        $items = array("Venue" => $venue, "Catering" => $catering, "Cake" => $wed_cake, "Beverage" => $beverage
+                        , "Event Decoration" => $e_decor,
+                            "Guests Shuttles " => $g_shuttles, "Photography & Video" => $photo_video, "Music & MC " => $music_mc
+                        ,"Invitation Cards" => $in_cards
+                        , "Guest Book" => $guest_book);
+
+
+                    } elseif ($standard == 'classic') {
+
+                        $venue = 2000000;
+                        $catering = $guest_no * 16000;
+                        $wed_cake = 500000;
+                        $beverage = $guest_no * 2500 * 5;
+                        $e_decor = 1500000;
+                        $g_shuttles = 300000;
+                        $photo_video = 1500000;
+                        $music_mc = 1500000;
+                        $in_cards = $guest_no *3500;
+
+                        $items = array("Venue" => $venue, "Catering" => $catering, "Cake" => $wed_cake, "Beverage" => $beverage
+                        , "Event Decoration" => $e_decor,
+                            "Guests Shuttles " => $g_shuttles, "Photography & Video" => $photo_video, "Music & MC " => $music_mc
+                        ,"Invitation Cards" => $in_cards);
+
+                    } elseif ($standard == 'normal') {
+
+
+                        $venue = 1500000;
+                        $catering = $guest_no * 12000;
+                        $wed_cake = 300000;
+                        $beverage = $guest_no * 2500 * 3;
+                        $e_decor = 1000000;
+                        $g_shuttles = 200000;
+                        $photo_video = 1000000;
+                        $music_mc = 1000000;
+                        $in_cards = $guest_no *2500;
+
+                        $items = array("Venue" => $venue, "Catering" => $catering, "Cake" => $wed_cake, "Beverage" => $beverage
+                        , "Event Decoration" => $e_decor, "Guests Shuttles " => $g_shuttles, "Photography & Video" => $photo_video, "Music & MC " => $music_mc
+                        ,"Invitation Cards" => $in_cards);
+
+                    }
                 }
 
 
-                $items = array("Venue" => $venue, "Catering" => $catering, "Wedding Cake" => $wed_cake, "Whole Grilled Goat" => $grilled_goal, "Beverage" => $beverage, "Bride Bouquet" => $b_bouquet
-                , "Event Decoration" => $e_decor, "Boutonnieres" => $Boutonnieres, "Corsages" => $Corsages, "Bride Maid Bouquets" => $b_maid_Bouquets, "Flower Petals" => $Flower_Petals
-                , "Special Wedding Car" => $wed_car, "Parents & Maids Cars" => $p_m_cars, "Guests Shuttles " => $g_shuttles, "Photography & Video" => $photo_video, "Bride's Wedding Dress" => $b_wed_dress
-                , "Groom's Suit/Tuxedo" => $gr_suit, "Bride's Hair & Makeup" => $b_hair_makeup, "Maids Dresses"=>$maid_dress,  "Bride's Accessories (Includes headpiece, veil, shoes, lingerie, jewelry, sash, handbag, garter, etc.)" => $b_accessories
-                , "Groom's Accessories((Includes cuff links, cummerbund, tie, pocket square, shoes, jewelry, etc.)" => $gr_accessories, "Music & MC " => $music_mc
-                , "Gifts for Parents" => $gifts_par, "Gifts for Guests" => $gifts_guests, "Engagement Ring" => $eng_ring, "Wedding Ring" => $wed_ring, "Invitation Cards" => $in_cards
-                , "Guest Book" => $guest_book, "Honey Moon" => $honey_moon);
 
                 foreach ($items as $key => $item) {
 
@@ -870,7 +1156,6 @@ class Event extends CI_Controller
                         'item_cost' => $item,
                         'item_paid' => 0,
                         'event_id' => $id
-
                     );
 
                     $this->event_model->insert_budget($values);

@@ -29,6 +29,10 @@
     <script src="<?php echo base_url('assets/js/custom.js')?>"></script>
     <script src="<?php echo base_url('assets/js/screenfull.js')?>"></script>
     <script src="<?php echo base_url('assets/js/jquery-ui.js')?>"></script>
+    <!-- Data Table-->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/DataTables/datatables.min.css')?>">
+    <script type="text/javascript" charset="utf8" src="<?php echo base_url('assets/DataTables/datatables.min.js')?>"></script>
+
     <script>
         $(function () {
             $('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
