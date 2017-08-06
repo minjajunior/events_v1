@@ -346,6 +346,10 @@ class Event extends CI_Controller
      * This function process the PHPExcel library to upload budget items to the database
      */
     public function upload_budget($id) {
+        $budget_details = $this->event_model->budget_details($id);
+        $temp_array = get_object_vars($budget_details);
+         $rr = in_array( "Bevarage", $temp_array );
+        print_r($rr);
 
         $config['upload_path'] = './upload/';
         $config['allowed_types'] = 'xlsx|xls';
