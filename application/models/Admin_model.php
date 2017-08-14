@@ -137,4 +137,26 @@ class Admin_model extends CI_Model {
         return $query->result_array();
 
     }
+
+    public function admin_email($mail){
+        $this->db->select('*');
+        $this->db->from('admin');
+        $this->db->where('admin_email', $mail);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        }
+    }
+
+    public function admin_phone($phone){
+        $this->db->select('*');
+        $this->db->from('admin');
+        $this->db->where('admin_phone', $phone);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        }
+    }
 }

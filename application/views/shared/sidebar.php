@@ -45,6 +45,7 @@
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="home_view"><i class="fa fa-home nav_icon "></i><span class="nav-label">Home</span> </a></li>
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="budget_view"><i class="fa fa-money nav_icon "></i><span class="nav-label">Budget</span> </a></li>
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="member_view"><i class="fa fa-users nav_icon "></i><span class="nav-label">Members</span> </a></li>
+                        <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="gift_view"><i class="fa fa-gift nav_icon "></i><span class="nav-label">Gifts</span> </a></li>
                         <li><a href="javascript:void(0)" class="menu_item hvr-bounce-to-right" rel="<?php echo $event_id; ?>" id="reports_view"><i class="fa fa-files-o nav_icon "></i><span class="nav-label">Reports</span></a></li>
                         <?php } ?>
                         <li>

@@ -73,6 +73,8 @@ class Event extends CI_Controller
                     $data['item_id'] = $_POST['item_id'];
                     $data['item_detail'] = $this->event_model->budget_detail($_POST['item_id']);
                     $id = $this->event_model->event_iid($_POST['item_id']);
+                }else if (!empty($_POST['gift_id'])){
+                    $data['gift_detail'] = $this->event_model->gift_detail($_POST['gift_id']);
                 } else {
                     $id = $_POST['event_id'];
                 }
@@ -90,6 +92,7 @@ class Event extends CI_Controller
                 $data['admin_role'] = $this->admin_model->get_role($id);
                 $data['event_date'] = $this->event_model->event_date($id);
                 $data['sms_list'] = $this->member_model->sms_list($id);
+                $data['gift_list'] = $this->event_model->gift_list($id);
                 $data['event_id'] = $id;
                 $view_name = $_POST['view_name'];
 
@@ -515,6 +518,51 @@ class Event extends CI_Controller
                 );
 
                 $this->event_model->insert_budget($values);
+            }
+            echo json_encode($data);
+        } else {
+            redirect('admin');
+        }
+    }
+
+    /*
+     * This function add new gift item in the selected event
+     */
+    public function new_gift($id){
+
+        if (!empty($this->session->admin_id)) {
+
+            $data = array('success' => false, 'messages' => array());
+
+            $this->form_validation->set_rules('giftname', 'Gift Name', 'required');
+            $status = 0;
+            $offered_by = null;
+            if ($this->input->post('status') == "group") {
+                $this->form_validation->set_rules('group', 'Group', 'required');
+                $status = 1;
+                $offered_by = $this->input->post('group');
+            }
+            if ($this->input->post('status') == "person") {
+                $this->form_validation->set_rules('person', 'Person', 'required');
+                $status = 2;
+                $offered_by = $this->input->post('person');
+            }
+            $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
+
+            if ($this->form_validation->run() == FALSE) {
+                foreach ($_POST as $key => $value) {
+                    $data['messages'][$key] = form_error($key);
+                }
+            } else {
+                $data['success'] = true;
+                $values = array(
+                    'gift_name' => $this->input->post('giftname'),
+                    'gift_status' => $status,
+                    'offered_by' => $offered_by,
+                    'event_id' => $id
+                );
+
+                $this->event_model->insert_gift($values);
             }
             echo json_encode($data);
         } else {

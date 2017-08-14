@@ -194,6 +194,28 @@ class Event_model extends CI_Model {
         }
     }
 
+
+    /*
+     * This function returns the list of all gift registered on selected event
+     */
+    public function gift_list($id){
+        $this->db->select('*');
+        $this->db->from('gift');
+        $this->db->where('event_id', $id);
+        $this->db->order_by('gift_name', 'asc');
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0){
+            foreach ($query->result() as $row) {
+                $response[] = $row;
+            }
+            return $response;
+        }else{
+            $response['error'] = '0';
+            return $response;
+        }
+    }
+
     /*
      * This function insert new event details into database
      */
@@ -359,5 +381,32 @@ class Event_model extends CI_Model {
         $query = $this->db->get();
         $row = $query->row_array();
         return $row['event_date'];
+    }
+
+    /*
+     * This function insert gift item details into database
+     */
+    public function insert_gift($values){
+        $this->db->insert('gift', $values);
+    }
+
+    /*
+     * This function returns the gift details of the selected gift
+     */
+    public function gift_detail($id){
+        $this->db->select('*');
+        $this->db->from('gift');
+        $this->db->where('gift_id', $id);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0){
+            foreach ($query->result() as $row) {
+                $response[] = $row;
+            }
+            return $response;
+        }else{
+            $response['error'] = '0';
+            return $response;
+        }
     }
 }
