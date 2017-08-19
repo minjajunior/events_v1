@@ -77,7 +77,7 @@
                 <div class="box">
                     <div id="the-message"></div>
                     <div class="form-group">
-                        <label for="itemname" class="col-sm-4 control-label">Gift Name</label>
+                        <label for="giftname" class="col-sm-4 control-label">Gift Name</label>
                         <div class="col-sm-8">
                             <input type="text" name="giftname" value="<?php echo set_value('giftname'); ?>" class="form-control1" id="giftname" placeholder="Gift Name">
                         </div>
@@ -155,7 +155,18 @@
                     alert('An error has occured trying to get the page details');
                 }
             });
-        }
+        };
+
+        $('.table').on("click", ".edit_gift", function() {
+            var view_name = $(this).attr("id");
+            var gift_id = $(this).attr("rel");
+            var postData = {
+                'view_name': view_name,
+                'gift_id': gift_id,
+            };
+
+            getContentView(postData);
+        });
 
         $('#new_gift').submit(function(e) {
             e.preventDefault();

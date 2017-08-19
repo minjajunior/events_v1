@@ -374,6 +374,15 @@ class Event_model extends CI_Model {
         return $row['event_id'];
     }
 
+    public function id_from_gift($id){
+        $this->db->select('event_id');
+        $this->db->from('gift');
+        $this->db->where('gift_id', $id);
+        $query = $this->db->get();
+        $row = $query->row_array();
+        return $row['event_id'];
+    }
+
     public function event_date($id){
         $this->db->select('event_date');
         $this->db->from('event');

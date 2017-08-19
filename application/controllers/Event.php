@@ -75,6 +75,8 @@ class Event extends CI_Controller
                     $id = $this->event_model->event_iid($_POST['item_id']);
                 }else if (!empty($_POST['gift_id'])){
                     $data['gift_detail'] = $this->event_model->gift_detail($_POST['gift_id']);
+                    $data['gift_id'] = $_POST['gift_id'];
+                    $id = $this->event_model->id_from_gift($_POST['gift_id']);
                 } else {
                     $id = $_POST['event_id'];
                 }
