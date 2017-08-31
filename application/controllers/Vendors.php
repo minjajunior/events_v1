@@ -6,17 +6,23 @@
  * Time: 11:56
  */
 
-class Services extends CI_Controller {
+class Vendors extends CI_Controller {
 
+
+    public function vendor(){
+
+        $this->load->view('vendor/find_vendor');
+
+    }
 
     public function register() {
 
         $this->form_validation->set_message('required', 'This field required');
         $this->form_validation->set_rules('fullname', 'Full Name', 'required');
-        $this->form_validation->set_rules('email', 'E-mail Address', 'required|valid_email|is_unique[s_providers.sp_email]');
+        $this->form_validation->set_rules('email', 'E-mail Address', 'required|valid_email|is_unique[vendors.vendor_email]');
         $this->form_validation->set_message('valid_email', 'Email address you have entered is not a valid email address.');
         $this->form_validation->set_message('is_unique', '{field} you have entered is already registered in an account with us.');
-        $this->form_validation->set_rules('phone', 'Phone Number', 'required|is_unique[s_providers.sp_phone]|exact_length[12]|numeric');
+        $this->form_validation->set_rules('phone', 'Phone Number', 'required|is_unique[vendors.vendor_phone]|exact_length[12]|numeric');
         $this->form_validation->set_message('exact_length', 'The phone number must be in a 255XXXXXXXXX format.');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
         $this->form_validation->set_message('min_length', '{field} must be at least {param} characters long.');
@@ -25,7 +31,7 @@ class Services extends CI_Controller {
 
         if (empty($this->session->provider_id)){
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('service/register_p_view');
+                $this->load->view('vendor/register_v_view');
             } else {
 
                 //generate a token
@@ -35,10 +41,10 @@ class Services extends CI_Controller {
                 $token_to_db = hash('sha256',$token);
 
                 $values = array(
-                    'sp_name' => $this->input->post('fullname'),
-                    'sp_email' => $this->input->post('email'),
-                    'sp_phone' => $this->input->post('phone'),
-                    'sp_password' => md5($this->input->post('password')),
+                    'vendor_name' => $this->input->post('fullname'),
+                    'vendor_email' => $this->input->post('email'),
+                    'vendor_phone' => $this->input->post('phone'),
+                    'vendor_password' => md5($this->input->post('password')),
                     'hashed_token'=>$token_to_db,
                     'reg_status'=>0
                 );
@@ -84,7 +90,7 @@ class Services extends CI_Controller {
                     if($this->email->send()){
 
                         $data['email_status']= '<div class="alert alert-danger">Registration successfully, Email Sent</div>';
-                        $this->load->view('service/register_p_view', $data);
+                        $this->load->view('vendor/register_v_view', $data);
                         //on success sending email
 
                     }else {
@@ -95,7 +101,7 @@ class Services extends CI_Controller {
 
                 }else{
                     $data['reg_status']= '<div class="alert alert-danger">Something went wrong! Please complete your registration again</div>';
-                    $this->load->view('service/register_p_view', $data);
+                    $this->load->view('vendor/register_v_view', $data);
                 }
 
                 redirect(base_url());

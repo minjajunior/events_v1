@@ -6,14 +6,14 @@
  * Time: 14:16
  */
 
-class Service_model extends CI_Model
+class VendorsModel extends CI_Model
 {
 
     /*
      * This function insert new admin details into database
      */
     public function register($values){
-        $this->db->insert('s_providers', $values);
+        $this->db->insert('vendors', $values);
         $id = $this->db->insert_id();
         return $id;
     }
@@ -21,8 +21,8 @@ class Service_model extends CI_Model
 
     public function provider_info($id){
         $this->db->select('*');
-        $this->db->from('s_providers');
-        $this->db->where('sp_id', $id);
+        $this->db->from('vendors');
+        $this->db->where('vendor_id', $id);
         $query = $this->db->get();
 
         if ($query->num_rows() > 0){
@@ -34,11 +34,11 @@ class Service_model extends CI_Model
 
     public function update_provider($id,$values){
 
-        $this->db->where('sp_id', $id);
-        $result =  $this->db->update('s_providers', $values);
+        $this->db->where('vendor_id', $id);
+        $result =  $this->db->update('vendors', $values);
 
         if($result){
-            $query = $this->db->get_where('s_providers', array('sp_id' => $id));
+            $query = $this->db->get_where('vendors', array('vendor_id' => $id));
         }
 
         return $query->result_array();
@@ -47,8 +47,8 @@ class Service_model extends CI_Model
 
     public function provider_phone($phone){
         $this->db->select('*');
-        $this->db->from('s_providers');
-        $this->db->where('sp_phone', $phone);
+        $this->db->from('vendors');
+        $this->db->where('vendor_phone', $phone);
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {

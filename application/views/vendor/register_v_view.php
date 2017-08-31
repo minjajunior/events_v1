@@ -37,7 +37,7 @@ $this->load->view('shared/login_header');
         <div class="col-sm-10 col-sm-offset-1 col-md-3 ">
             <div class="login-bottom">
                 <h2>Register as Service Provider</h2>
-                <?php echo form_open('services/register'); ?>
+                <?php echo form_open('vendors/register'); ?>
                 <div id="reg-response"></div>
                 <div class="col-md-12">
                     <?php echo form_error('fullname')?>
