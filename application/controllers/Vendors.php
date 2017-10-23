@@ -49,7 +49,7 @@ class Vendors extends CI_Controller {
                     'reg_status'=>0
                 );
 
-                $provider_id = $this->service_model->register($values);
+                $provider_id = $this->vendors_model->register($values);
 
                 if(isset($provider_id) && is_numeric($provider_id)){
 

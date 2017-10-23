@@ -10,33 +10,21 @@ $this->load->view('shared/login_header');
 ?>
 
     <div class="row login">
-        <div class="col-sm-10 col-md-6 col-sm-offset-1">
 
-            <div class="jumbotron">
-                <div class="col-md-12">
-                    <h1>Demi Events!</h1>
-                    <p > Is a platform that simplify local event planning and management. It's an ideal solution for organizers when planning events such as Wedding, Send off , Kitchen party etc</p>
-                </div>
+        <div class="col-sm-10 col-sm-offset-1 col-md-6 ">
+
+            <div style="background-image:url(/assets/images/headbg.png); height:40px; background-repeat:no-repeat; margin-left:28px;">
+                <ul id="headprocess">
+                    <li style="padding-left:60px;">Create Account</li>
+                    <li style="padding-left:110px;">Add Services</li>
+                    <li style="padding-left:140px;">Provide Details</li>
+                    <li style="padding-left:140px;">Get Started</li>
+                </ul>
             </div>
 
-            <div class="land-list">
-                <div class="col-md-12">
-                    <h3><i class="fa fa-codepen"></i> Event Management</h3>
-                    <p>Easily track and manage budget details and attendee details such as pledges, cash etc <br /><br /></p>
-                </div>
-                <div class="col-md-12">
-                    <h3><i class="fa fa-file-o"> </i> Powerful Reports</h3>
-                    <p>Easy to use reporting tools that deliver real time data on the event budget and attendee details <br /><br /></p>
-                </div>
-                <div class="col-md-12">
-                    <h3><i class="fa fa-envelope-o"></i> Message Notifications</h3>
-                    <p>Demi Events allows you to send message notifications to all event members with a single click <br /><br /></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-10 col-sm-offset-1 col-md-3 ">
             <div class="login-bottom">
-                <h2>Register as Service Provider</h2>
+                <h2>Create a New Account</h2>
+                <h5>Get started by creating your free account. This information will be used for the brides to contact you and for you to receive proposals.</h5>
                 <?php echo form_open('vendors/register'); ?>
                 <div id="reg-response"></div>
                 <div class="col-md-12">

@@ -1268,9 +1268,10 @@ input#disabledTextInput,select#disabledSelect {
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 .form-control1 {
-    border: 1px solid #e0e0e0;
+    border: 1px solid #0070ba;
+    border-radius: 4px;
     padding: 5px 8px;
-    color: #616161;
+    color: #0070ba;
     width: 100%;
     font-size: 0.85em;
     font-weight: 300;
@@ -1278,7 +1279,7 @@ input#disabledTextInput,select#disabledSelect {
     -webkit-appearance: none;
 	outline: none;
 	font-family: 'Muli-Regular';
-	background: none;
+	background: #fff;
    box-shadow:none !important;
 }
 .input-lg {
@@ -2938,4 +2939,21 @@ ul.dropdown-menu.dropdown-menu-right {
 .top-content label {
     font-size: 1.6em;
 }
+}
+
+#headprocess {
+    padding: 0;
+    margin: 0;
+    color: #fff;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    white-space: nowrap;
+    list-style-type: none;
+    padding-top: 10px;
+}
+
+#headprocess li {
+    display: inline;
+    color: #FFF;
 }

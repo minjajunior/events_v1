@@ -13,6 +13,19 @@ $this->load->view('shared/login_header');
     <div class="row login">
         <div class="col-sm-10 col-md-6 col-sm-offset-1">
 
+            <div class="form-group">
+                <div class="">
+                <select name="selector1" id="selector1" class=" form-control1">
+                        <option>Venues</option>
+                        <option>Photo & Video</option>
+                        <option>Cakes</option>
+                        <option>Catering</option>
+                    </select>
+                </div>
+            </div>
+
+
+
             <div class="jumbotron">
                 <div class="col-md-12">
                     <h1>Demi Events!</h1>
