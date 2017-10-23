@@ -18,8 +18,19 @@ class Vendors_model extends CI_Model
         return $id;
     }
 
+    public function vendor_login($mail){
+        $this->db->select('*');
+        $this->db->from('vendors');
+        $this->db->where('vendor_email', $mail);
+        $query = $this->db->get();
 
-    public function provider_info($id){
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        }
+    }
+
+
+    public function vendor_info($id){
         $this->db->select('*');
         $this->db->from('vendors');
         $this->db->where('vendor_id', $id);
@@ -32,7 +43,7 @@ class Vendors_model extends CI_Model
         }
     }
 
-    public function update_provider($id,$values){
+    public function update_vendor($id,$values){
 
         $this->db->where('vendor_id', $id);
         $result =  $this->db->update('vendors', $values);

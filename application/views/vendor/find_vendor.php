@@ -52,7 +52,7 @@ $this->load->view('shared/login_header');
             <div class="login-bottom">
                 <h2>Login</h2>
                 <?php $attributes = array('id' => 'login_form');
-                echo form_open('login', $attributes); ?>
+                echo form_open('vendors/login_vendor', $attributes); ?>
                 <div id="login-response"></div>
                 <div class="col-md-12 login-do">
                     <div class="login-mail">
@@ -65,7 +65,7 @@ $this->load->view('shared/login_header');
                     </label>
                     <div id="reg-link">
                         <p>Do not have an account ?</p>
-                        <a href="<?php echo base_url('admin/register')?>" class="hvr-shutter-in-horizontal login-sub"><b>Register</b></a>
+                        <a href="<?php echo base_url('vendors/register')?>" class="hvr-shutter-in-horizontal login-sub"><b>Register</b></a>
                     </div>
                 </div>
                 <div class="clearfix"> </div>
@@ -126,7 +126,7 @@ if(isset($reg_status)){ ?>
                                     $(this).remove();
                                 });
                             });
-                        } else if(response.loginStatus == 'admin'){
+                        } else if(response.loginStatus == 'vendor'){
                             $('#mailphone').replaceWith('<input type="password" name="password" class="form-control" id="password" placeholder="Enter Password">');
                             $('.login-mail').append('<input type="hidden" name="mailphone" value="'+ response.email +'" id="email" />');
                             $('#next').replaceWith('<input type="submit" name="submit" value="login" id="submit" />');

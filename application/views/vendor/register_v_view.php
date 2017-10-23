@@ -13,7 +13,8 @@ $this->load->view('shared/login_header');
 
         <div class="col-sm-10 col-sm-offset-1 col-md-6 ">
 
-            <div style="background-image:url(/assets/images/headbg.png); height:40px; background-repeat:no-repeat; margin-left:28px;">
+            <!--
+             <div style="background-image:url(/assets/images/headbg.png); height:40px; background-repeat:no-repeat; margin-left:28px;">
                 <ul id="headprocess">
                     <li style="padding-left:60px;">Create Account</li>
                     <li style="padding-left:110px;">Add Services</li>
@@ -21,6 +22,7 @@ $this->load->view('shared/login_header');
                     <li style="padding-left:140px;">Get Started</li>
                 </ul>
             </div>
+-->
 
             <div class="login-bottom">
                 <h2>Create a New Account</h2>

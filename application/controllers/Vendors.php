@@ -15,6 +15,109 @@ class Vendors extends CI_Controller {
 
     }
 
+    public function home(){
+
+        $this->load->view('vendor/home_vendor');
+
+    }
+
+
+    public function login_vendor(){
+
+        if(isset($this->session->vendor_id)){
+            redirect('vendors/home');
+        } else {
+            $this->form_validation->set_rules('mailphone', 'Phone or Email', 'required');
+            if ($this->form_validation->run() == FALSE) {
+                $this->load->view('vendor/find_vendor');
+            } else {
+                if(!is_null($this->login_model->member_login($this->input->post('mailphone')))) {
+                    $curl = curl_init();
+                    if (!is_null($this->input->post('pin'))){
+                        $data = array('msisdn'=>$this->input->post('mailphone') );
+                        json_decode(json_encode($data['msisdn']));
+                        $value = array('member_phone' => json_decode(json_encode($data['msisdn'])));
+                        $this->session->set_userdata($value);
+                        $pin = $this->input->post('pin');
+                        curl_setopt_array($curl, array(
+                            CURLOPT_URL => "http://api.infobip.com/2fa/1/pin/".$this->input->post('pinId')."/verify",
+                            CURLOPT_RETURNTRANSFER => true,
+                            CURLOPT_ENCODING => "",
+                            CURLOPT_MAXREDIRS => 10,
+                            CURLOPT_TIMEOUT => 30,
+                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                            CURLOPT_CUSTOMREQUEST => "POST",
+                            CURLOPT_POSTFIELDS => "{ \"pin\":\"$pin\" }",
+                            CURLOPT_HTTPHEADER => array(
+                                "accept: application/json",
+                                "authorization: App f5af8ed1007bb7678b6bed837c6cbced-6c9059a6-69bd-43cd-9469-e619c0880406",
+                                "content-type: application/json"
+                            ),
+                        ));
+                        $response = curl_exec($curl);
+                        $err = curl_error($curl);
+                        curl_close($curl);
+                        if ($err) {
+                            echo "cURL Error #:" . $err;
+                        } else {
+                            echo $response;
+                        }
+                    } else {
+
+                        $pn = $this->input->post('mailphone');
+                        curl_setopt_array($curl, array(
+                            CURLOPT_URL => "http://api.infobip.com/2fa/1/pin?ncNeeded=true",
+                            CURLOPT_RETURNTRANSFER => true,
+                            CURLOPT_ENCODING => "",
+                            CURLOPT_MAXREDIRS => 10,
+                            CURLOPT_TIMEOUT => 30,
+                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                            CURLOPT_CUSTOMREQUEST => "POST",
+                            CURLOPT_POSTFIELDS => "{ \"applicationId\":\"396812BC7ACFA9799689F61DDC936027\", \"messageId\":\"CEFC1BF7C29F4DAB2E21C250777925D0\", \"from\":\"Demi Corp\", \"to\":\"$pn\" }",
+                            CURLOPT_HTTPHEADER => array(
+                                "accept: application/json",
+                                "authorization: App f5af8ed1007bb7678b6bed837c6cbced-6c9059a6-69bd-43cd-9469-e619c0880406",
+                                "content-type: application/json"
+                            ),
+                        ));
+                        $response = curl_exec($curl);
+                        $err = curl_error($curl);
+                        curl_close($curl);
+                        if ($err) {
+                            echo "cURL Error #:" . $err;
+                        } else {
+                            echo $response;
+                        }
+                    }
+                }elseif(!is_null($this->vendors_model->vendor_login($this->input->post('mailphone')))) {
+                    $value = $this->vendors_model->vendor_login($this->input->post('mailphone'));
+                    if(!is_null($this->input->post('password'))) {
+                        if($value['vendor_password'] == md5($this->input->post('password'))){
+                            $this->session->set_userdata($value);
+                            $data = array('verified' => true, 'user' => 'vendor');
+                            echo json_encode($data);
+                        }else{
+                            $data = array('loginStatus' => 'password');
+                            echo json_encode($data);
+                        }
+                    }elseif($value['reg_status'] == 1) {
+                        $data = array('loginStatus' => 'vendor', 'email' => $this->input->post('mailphone'));
+                        echo json_encode($data);
+                    } else{
+                        $data = array('loginStatus' => 'reg_status');
+                        echo json_encode($data);
+                    }
+                } else {
+                    $data = array('loginStatus' => false);
+                    echo json_encode($data);
+                }
+            }
+        }
+
+
+
+}
+
     public function register() {
 
         $this->form_validation->set_message('required', 'This field required');
@@ -56,7 +159,7 @@ class Vendors extends CI_Controller {
                     $token_to_email = base64_encode($token);
                     $provider_id = base64_encode($provider_id);
                     $site_url = site_url();
-                    $email_url = $site_url . 'services/provider_confirm/' . $provider_id . '/' . $token_to_email;
+                    $email_url = $site_url . 'vendors/vendor_confirm/' . $provider_id . '/' . $token_to_email;
 
                     $from = "noreply@demi.co.tz";
                     $to = $this->input->post('email');
@@ -112,15 +215,15 @@ class Vendors extends CI_Controller {
     }
 
 
-    public function provider_confirm($provider_id,$token){
+    public function vendor_confirm($vendor_id,$token){
 
-        $provider_id_decoded = base64_decode($provider_id);
+        $vendor_id_decoded = base64_decode($vendor_id);
         $token_decoded = base64_decode($token);
 
         //hash token to be matched with db
         $token_to_email = hash('sha256', $token_decoded);
 
-        $result = $this->service_model->provider_info($provider_id_decoded);
+        $result = $this->vendors_model->vendor_info($vendor_id_decoded);
 
         //$token_expire = $result[0]['token_expire'];
         $token_to_db = $result[0]['hashed_token'];
@@ -130,15 +233,15 @@ class Vendors extends CI_Controller {
 
             $values = array('reg_status'=>1);
 
-            $this->service_model->update_provider($provider_id_decoded,$values);
+            $this->vendors_model->update_vendor($vendor_id_decoded,$values);
 
             $data['reg_status']= '<div class="alert alert-danger">Your registration completed successfully! You can now login </div>';
-            $this->load->view('login/login_view',$data);
+            $this->load->view('vendor/find_vendor',$data);
 
         }else if(($token_to_db == $token_to_email)&&($reg_status==1)){
 
             $data['reg_status']= '<div class="alert alert-danger">Your registration completed successfully! You can now login </div>';
-            $this->load->view('login/login_view',$data);
+            $this->load->view('vendor/find_vendor',$data);
 
         }
     }
