@@ -6,7 +6,7 @@
  * Time: 14:16
  */
 
-class VendorsModel extends CI_Model
+class Vendors_model extends CI_Model
 {
 
     /*
